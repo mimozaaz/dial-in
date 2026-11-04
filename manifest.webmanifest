@@ -1,0 +1,16 @@
+{
+  "name": "Dial-In Bench",
+  "short_name": "Dial-In",
+  "description": "แปลงค่าบด คำนวณน้ำ สูตรแชมป์ และเครื่องมือซ้อมชงกาแฟ",
+  "lang": "th",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eff1ee",
+  "theme_color": "#a3283c",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
