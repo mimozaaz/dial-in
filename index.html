@@ -59,7 +59,7 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .ion-drops div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:120px}
 .ion-drops b.readout{font-size:28px;color:var(--accent);line-height:1.1;display:block}
 .cup{gap:14px}
-.cp-score{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:5;align-self:flex-end;display:flex;align-items:baseline;gap:10px;background:var(--accent-soft);border:1px solid var(--line);border-radius:999px;padding:6px 16px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.cp-score{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--subnav-h,62px) - 6px);z-index:5;display:flex;align-items:baseline;justify-content:space-between;gap:10px;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -16px;padding:6px 16px 8px}
 .cp-score b{font-size:26px;color:var(--accent);font-weight:600}
 .cp-roast{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .cp-roast button{font:600 12px var(--body);display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px;border-radius:10px;border:1px dashed var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
@@ -304,6 +304,27 @@ ol.steps li{grid-template-columns:auto 1fr;padding:9px 0;font-size:14.5px;line-h
 ol.steps .t{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 6px;min-width:52px;box-sizing:border-box;white-space:nowrap;text-align:center;align-self:start;font-size:13px}
 ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-space:nowrap}
 .rc h3{line-height:1.3}
+
+/* ---- UX pass: no clipped rows, no overlaps ---- */
+.seg{max-width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.seg::-webkit-scrollbar{display:none}
+.seg.ovf,#ap-vols.ovf{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent);padding-right:28px}
+.seg button{flex:0 0 auto;white-space:nowrap}
+.cp-tgtseg{display:flex}.cp-modeseg button,.cp-tgtseg button,.cp-mini .seg button,.cp-aro3 .seg button,#cp-defI button{flex:1 1 0}
+.cp-meta{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+@media (max-width:360px){.cp-meta{grid-template-columns:1fr}}
+.cp-roast button{font-size:11.5px;line-height:1.2}
+.scale svg{overflow:visible}
+@media (max-width:560px){
+  .tbl.stack{border:0;background:transparent;overflow:visible}
+  .tbl.stack table{min-width:0}
+  .tbl.stack thead{display:none}
+  .tbl.stack tr{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+  .tbl.stack td{display:grid;grid-template-columns:88px 1fr;gap:8px;border:0;padding:5px 0;font-size:14px}
+  .tbl.stack td::before{content:attr(data-l);font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+  .tbl.stack td:first-child{font-weight:600;font-size:15px}
+  .tbl.stack td>*{justify-self:start;align-self:start}
+}
 </style>
 
 <div class="wrap">
@@ -946,14 +967,17 @@ function methodsFor(um){return M.filter(m=>um>=m.a&&um<=m.z).map(m=>m.k)}
 
 function drawScale(um){
   const W=400,max=1260,x=v=>8+(Math.min(v,max)/max)*(W-16);
-  let s='';
-  const rows=[[0,2,4,6],[1,3,5,7]];
-  rows.forEach((r,ri)=>r.forEach(i=>{const m=M[i];const y=6+ri*24;
-    s+=`<rect x="${x(m.a)}" y="${y}" width="${x(m.z)-x(m.a)}" height="18" rx="4" fill="var(--sunk)" stroke="var(--line)"/>`;
-    s+=`<text x="${(x(m.a)+x(m.z))/2}" y="${y+13}" font-size="11" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Sans Thai,system-ui">${m.k}</text>`}));
-  [0,300,600,900,1200].forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="56" y2="62" stroke="var(--line)"/><text x="${x(t)}" y="76" font-size="11" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${t}</text>`});
-  if(Number.isFinite(um)){s+=`<line x1="${x(um)}" x2="${x(um)}" y1="2" y2="60" stroke="var(--accent)" stroke-width="2.5"/><circle cx="${x(um)}" cy="60" r="3.5" fill="var(--accent)"/>`}
-  s+=`<text x="${W-8}" y="92" font-size="10" text-anchor="end" fill="var(--muted)" font-family="IBM Plex Sans Thai,system-ui">µm</text>`;
+  let s='';const lanes=[];const idx=M.map((m,i)=>i).sort((p,q)=>M[p].a-M[q].a);const place=[];
+  const tw=t=>[...t].length*7.6+10;idx.forEach(i=>{const m=M[i];const end=Math.max(x(m.z),x(m.a)+tw(m.k));let L=lanes.findIndex(e=>e<=x(m.a)-3);if(L<0){L=lanes.length;lanes.push(0)}lanes[L]=end;place[i]=L});
+  const H=24,top=6,nL=lanes.length,axisY=top+nL*H+4;
+  M.forEach((m,i)=>{const y=top+place[i]*H,x0=x(m.a),w=x(m.z)-x0,on=Number.isFinite(um)&&um>=m.a&&um<=m.z;
+    s+=`<rect x="${x0}" y="${y}" width="${w}" height="20" rx="5" fill="${on?'var(--accent-soft)':'var(--sunk)'}" stroke="${on?'var(--accent)':'var(--line)'}"/>`;
+    const t=m.k,fits=tw(t)<=w;
+    s+=`<text x="${fits?x0+w/2:x0+5}" y="${y+14.5}" font-size="13" text-anchor="${fits?'middle':'start'}" fill="${on?'var(--accent)':'var(--muted)'}" font-weight="${on?600:400}" font-family="IBM Plex Sans Thai,system-ui">${t}</text>`});
+  [0,300,600,900,1200].forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${axisY}" y2="${axisY+6}" stroke="var(--line)"/><text x="${x(t)}" y="${axisY+20}" font-size="11" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${t}</text>`});
+  if(Number.isFinite(um)){s+=`<line x1="${x(um)}" x2="${x(um)}" y1="2" y2="${axisY+4}" stroke="var(--accent)" stroke-width="2.5"/><circle cx="${x(um)}" cy="${axisY+4}" r="3.5" fill="var(--accent)"/>`}
+  s+=`<text x="${W-8}" y="${axisY+34}" font-size="10" text-anchor="end" fill="var(--muted)" font-family="IBM Plex Sans Thai,system-ui">µm</text>`;
+  $('#r-scale').setAttribute('viewBox',`0 0 ${W} ${axisY+40}`);
   $('#r-scale').innerHTML=s;
 }
 
@@ -2179,34 +2203,38 @@ const W=[ // SCA/WCR Coffee Taster's Flavor Wheel (2016) + x:1 = extra local des
 const NODE={};
 (function walk(arr,pre,col,d){arr.forEach(o=>{const id=pre?pre+'>'+o.n:o.n;o.id=id;o.d=d;o.col=col||o.c;NODE[id]=o;if(o.ch)walk(o.ch,id,o.col,d+1)})})(W,'',null,0);
 const EXTRA={
- 'Floral>Floral':['Lavender','Hibiscus','Honeysuckle','Elderflower','Lilac','Violet','Magnolia','Ylang Ylang','Frangipani','Lotus','Gardenia','Coffee Blossom','Rose Water','Geranium'],
- 'Floral>Tea-like':['Earl Grey','Green Tea','Darjeeling','Rooibos','Thai Tea','Chrysanthemum Tea','Genmaicha','Hojicha'],
- 'Fruity>Berry':['Blackcurrant','Redcurrant','Cranberry','Mulberry','Gooseberry','Boysenberry','Elderberry','Goji','Wild Strawberry'],
+ 'Floral>Floral':['Jasmine','Rose','Chamomile','Orange Blossom','Water Jasmine','Osmanthus','Lavender','Hibiscus','Honeysuckle','Elderflower','Lilac','Violet','Magnolia','Ylang Ylang','Frangipani','Lotus','Gardenia','Peony','Lily','Acacia','Wisteria','Coffee Blossom','Lemon Blossom','Rose Water','Rose Hip','Geranium'],
+ 'Floral>Tea-like':['Black Tea','Earl Grey','Oolong','Jasmine Tea','Green Tea','White Tea','Darjeeling','Rooibos','Thai Tea','Chrysanthemum Tea','Genmaicha','Hojicha','Barley Tea'],
+ 'Fruity>Berry':['Strawberry','Wild Strawberry','Raspberry','Black Raspberry','Blueberry','Blackberry','Blackcurrant','Redcurrant','Cranberry','Mulberry','Gooseberry','Boysenberry','Elderberry','Huckleberry','Lingonberry','Goji'],
  'Fruity>Stone Fruit':['Peach','White Peach','Yellow Peach','Apricot','Nectarine','Plum','Black Plum','Cherry','Black Cherry','Sour Cherry','Marian Plum'],
- 'Fruity>Pome & Grape':['Green Apple','Red Apple','Baked Apple','Pear','Asian Pear','Quince','Grape','White Grape','Red Grape','Muscat','Kyoho','Concord Grape'],
- 'Fruity>Citrus Fruit':['Mandarin','Tangerine','Blood Orange','Pink Grapefruit','Pomelo','Kumquat','Key Lime','Makrut Lime','Citrus Peel','Orange Zest','Lemon Zest','Lemonade'],
- 'Fruity>Tropical':['Green Mango','Pineapple','Banana','Coconut','Rambutan','Mangosteen','Jackfruit','Durian','Dragon Fruit','Santol','Salak','Tamarind','Kiwi','Persimmon','Soursop','Pomegranate','Fig','Acerola','Cacao Fruit','Cascara'],
+ 'Fruity>Pome & Grape':['Apple','Green Apple','Red Apple','Baked Apple','Pear','Asian Pear','Quince','Grape','White Grape','Red Grape','Muscat','Kyoho','Concord Grape'],
+ 'Fruity>Citrus Fruit':['Lemon','Meyer Lemon','Lime','Key Lime','Makrut Lime','Orange','Blood Orange','Mandarin','Tangerine','Clementine','Grapefruit','Pink Grapefruit','Pomelo','Bergamot','Yuzu','Sudachi','Kumquat','Calamansi','Som Sa','Citrus Peel','Orange Zest','Lemon Zest','Lime Zest','Lemonade'],
+ 'Fruity>Tropical':['Mango','Green Mango','Pineapple','Passion Fruit','Papaya','Guava','Banana','Coconut','Lychee','Longan','Rambutan','Mangosteen','Jackfruit','Durian','Dragon Fruit','Star Fruit','Rose Apple','Sapodilla','Santol','Salak','Tamarind','Kiwi','Persimmon','Soursop','Feijoa','Jabuticaba','Pomegranate','Fig','Acerola','Cacao Fruit','Cascara'],
  'Fruity>Melon':['Melon','Cantaloupe','Honeydew','Watermelon'],
- 'Fruity>Dried Fruit':['Date','Dried Fig','Dried Apricot','Dried Mango','Dried Cranberry','Dried Longan','Candied Fruit','Fruit Cake'],
- 'Fruity>Jam & Juice':['Jam','Marmalade','Compote','Fruit Punch','Fruit Juice','Candied Peel','Fruit Tea'],
- 'Sour/Fermented>Alcohol/Fermented':['Red Wine','White Wine','Rosé','Rum','Brandy','Cider','Sake','Liqueur','Kombucha','Yogurt','Boozy'],
- 'Sour/Fermented>Sour':['Vinegar','Lactic','Sour Plum'],
- 'Green/Vegetative>Herb-like':['Mint','Basil','Thai Basil','Lemongrass','Pandan','Kaffir Leaf','Eucalyptus','Sage','Thyme','Rosemary'],
- 'Green/Vegetative>Green/Vegetative':['Grass','Green Pepper','Tomato','Cucumber','Green Bean'],
- 'Roasted>Cereal':['Toast','Biscuit','Graham Cracker','Bread Crust','Rice Cracker','Oat'],
- 'Roasted>Burnt':['Charred'],
- 'Spices>Brown Spice':['Star Anise','Cardamom','Ginger','Allspice','Licorice'],
- 'Spices>Pepper':['Black Pepper','Pink Pepper','Sichuan Pepper'],
- 'Nutty/Cocoa>Nutty':['Walnut','Pecan','Macadamia','Cashew','Pistachio','Chestnut','Sesame','Marzipan','Praline'],
- 'Nutty/Cocoa>Cocoa':['Milk Chocolate','Cocoa Nib','Cocoa Powder','White Chocolate','Mocha','Brownie'],
- 'Sweet>Brown Sugar':['Palm Sugar','Toffee','Butterscotch','Dulce de Leche','Cane Sugar','Brûlée'],
- 'Sweet>Candy':['Marshmallow','Cotton Candy','Bubblegum','Gummy Bear','Hard Candy','Nougat','Lollipop'],
- 'Sweet>Creamy':['Cream','Butter','Condensed Milk','Custard','Milk Tea','Yogurt Drink','Whipped Cream'],
- 'Sweet>Vanilla':['Vanilla Bean']};
-const LIB={};(function(){const add=(par,n)=>{(LIB[par]=LIB[par]||[]);if(!LIB[par].includes(n))LIB[par].push(n)};
-  const walk=(arr)=>arr.forEach(o=>{if(o.ch){if(o.ch.some(c=>!c.ch))o.ch.filter(c=>!c.ch).forEach(c=>add(o.id,c.n));walk(o.ch)}else if(o.d===1)add(o.id.split('>')[0]+'>'+o.n,o.n)});
-  walk(W);for(const k in EXTRA)EXTRA[k].forEach(n=>add(k,n));
-  /* top-level single leaves (e.g. Black Tea, Olive Oil): keep under their own group */})();
+ 'Fruity>Dried Fruit':['Raisin','Prune','Date','Dried Fig','Dried Apricot','Dried Cherry','Dried Mango','Dried Cranberry','Dried Longan','Dried Persimmon','Candied Fruit','Fruit Cake'],
+ 'Fruity>Jam & Juice':['Jam','Marmalade','Compote','Fruit Punch','Fruit Juice','Fruit Tea','Candied Peel','Grenadine','Fruit Leather','Cherry Cola'],
+ 'Sour/Fermented>Sour':['Sour Aromatics','Citric Acid','Malic Acid','Acetic Acid','Butyric Acid','Isovaleric Acid','Lactic','Vinegar','Sour Plum'],
+ 'Sour/Fermented>Alcohol/Fermented':['Winey','Red Wine','White Wine','Rosé','Champagne','Port','Sherry','Plum Wine','Mead','Sake','Cider','Kombucha','Yogurt','Whiskey','Rum','Brandy','Cognac','Liqueur','Boozy','Fermented','Overripe'],
+ 'Green/Vegetative>Herb-like':['Herb-like','Mint','Basil','Thai Basil','Lemongrass','Pandan','Kaffir Leaf','Eucalyptus','Sage','Thyme','Rosemary','Tarragon','Bay Leaf'],
+ 'Green/Vegetative>Green/Vegetative':['Fresh','Under-ripe','Peapod','Snap Pea','Green Bean','Dark Green','Vegetative','Hay-like','Grass','Green Pepper','Tomato','Cucumber','Celery','Olive Oil','Raw','Beany'],
+ 'Roasted>Cereal':['Grain','Malt','Toast','Biscuit','Graham Cracker','Bread Crust','Rice Cracker','Oat','Granola','Popcorn'],
+ 'Roasted>Burnt':['Brown, Roast','Smoky','Ashy','Acrid','Charred'],
+ 'Roasted>Tobacco':['Tobacco','Pipe Tobacco'],
+ 'Spices>Brown Spice':['Cinnamon','Clove','Nutmeg','Anise','Star Anise','Cardamom','Ginger','Allspice','Licorice','Fennel','Saffron'],
+ 'Spices>Pepper':['Pepper','Black Pepper','Pink Pepper','Sichuan Pepper','Pungent'],
+ 'Nutty/Cocoa>Nutty':['Almond','Hazelnut','Peanuts','Walnut','Pecan','Macadamia','Cashew','Pistachio','Brazil Nut','Chestnut','Sesame','Peanut Butter','Marzipan','Praline'],
+ 'Nutty/Cocoa>Cocoa':['Chocolate','Milk Chocolate','Dark Chocolate','Bittersweet Chocolate','White Chocolate','Cocoa Nib','Cocoa Powder','Cacao','Mocha','Chocolate Fudge'],
+ 'Sweet>Brown Sugar':['Honey','Molasses','Maple Syrup','Caramelized','Panela','Palm Sugar','Cane Sugar','Golden Syrup','Treacle','Burnt Sugar','Agave','Toffee','Butterscotch','Dulce de Leche','Brûlée'],
+ 'Sweet>Vanilla':['Vanilla','Vanillin','Vanilla Bean'],
+ 'Sweet>Candy':['Marshmallow','Cotton Candy','Bubblegum','Gummy Bear','Jelly Bean','Hard Candy','Caramel Candy','Rock Sugar','Nougat','Lollipop'],
+ 'Sweet>Creamy':['Cream','Whipped Cream','Butter','Condensed Milk','Coconut Milk','Custard','Milk Tea','Mascarpone','Cheesecake','Panna Cotta'],
+ 'Sweet>Baked':['Brownie','Cake','Cookie','Shortbread','Pie Crust','Croissant','Pastry','Cinnamon Roll'],
+ 'Sweet>Overall':['Overall Sweet','Sweet Aromatics']};
+const LIB={};const LIBDUP=[];(function(){const wid={};
+  (function walk(arr){arr.forEach(o=>{if(o.ch)walk(o.ch);else if(o.d>=1)wid[o.n.toLowerCase()]=wid[o.n.toLowerCase()]||o.id})})(W);
+  const seen=new Set();const put=(g,n,id)=>{const k=n.toLowerCase();if(seen.has(k)){LIBDUP.push(n);return}seen.add(k);(LIB[g]=LIB[g]||[]).push({n,id})};
+  for(const g in EXTRA)EXTRA[g].forEach(n=>put(g,n,wid[n.toLowerCase()]||g+'>'+n));
+  (function walk(arr){arr.forEach(o=>{if(o.ch)walk(o.ch);else if(o.d>=1&&!o.id.startsWith('Other>')&&!seen.has(o.n.toLowerCase()))put(o.id.split('>').slice(0,-1).join('>'),o.n,o.id)})})(W);})();
 const LIBN=Object.values(LIB).reduce((a,b)=>a+b.length,0);
 const colorOf=id=>{const t=W.find(o=>o.n===id.split('>')[0]);return t?t.c:'#888'};
 const leafW=o=>o.ch?o.ch.reduce((a,c)=>a+leafW(c),0):1;
@@ -2283,17 +2311,15 @@ function render(){
   <div class="cp-score" id="cp-score"></div>
   <div class="panel stack" style="gap:12px">
     <label class="f"><span class="k">ชื่อกาแฟ / ตัวอย่าง</span><input type="text" id="cp-name" placeholder="เช่น Panama Geisha Natural" value="${esc(S.name)}" autocomplete="off"></label>
-    <div class="row">
-      <label class="f"><span class="k">วันที่</span><input type="date" id="cp-date" value="${S.date}"></label>
-      <label class="f"><span class="k">จำนวนถ้วย</span>${dots('cp-cups',5,S.cups,1)}</label>
-    </div>
+    <div class="cp-meta"><label class="f"><span class="k">วันที่</span><input type="date" id="cp-date" value="${S.date}"></label>
+      <div class="f"><span class="k">จำนวนถ้วย</span>${dots('cp-cups',5,S.cups,1)}</div></div>
     <div class="f"><span class="k">ระดับคั่ว</span><div class="cp-roast" id="cp-roast">${ROAST.map((r,i)=>`<button type="button" data-v="${i}" aria-pressed="${S.roast===i}"><i style="background:${r[1]}"></i>${r[0]}</button>`).join('')}</div></div>
     ${seg('cp-mode',[['coe','COE'],['cva','SCA CVA'],['note','Tasting note']],S.mode,'cp-modeseg')}
     <p class="note" style="margin:0">${S.mode==='note'?'ไม่มีคะแนน · จดแค่ว่ากาแฟเป็นยังไง':S.mode==='coe'?'ฟอร์มแข่ง Cup of Excellence · 0–8 + 36':'SCA Coffee Value Assessment · ให้คะแนน 1–9 + บรรยาย'}</p>
   </div>
 
   <div class="panel stack" style="gap:10px">
-    <div class="status" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><h3>Flavor wheel</h3>${seg('cp-tgt',[['aro','กลิ่น · Fragrance/Aroma'],['fla','รส · Flavor/Aftertaste']],wTgt)}</div>
+    <h3>Flavor wheel</h3>${seg('cp-tgt',[['aro','กลิ่น (Aroma)'],['fla','รส (Flavor)']],wTgt,'cp-tgtseg')}
     <svg id="cp-wheel" viewBox="0 0 360 360" role="img" aria-label="Flavor wheel แตะหมวดเพื่อซูม แตะชื่อเพื่อเลือก"></svg>
     <div class="note" style="margin:0;text-align:center" id="cp-whint"></div>
     <div id="cp-sel"></div>
@@ -2319,16 +2345,17 @@ function render(){
 function coeHTML(){const c=S.coe;
   const extra={acid:`<div class="cp-mini"><span class="k">ความแรง</span>${seg('cp-acI',[['L','L'],['M','M'],['H','H']],c.acI)}</div>`,mouth:`<div class="cp-mini"><span class="k">ความแรง</span>${seg('cp-mfI',[['L','L'],['M','M'],['H','H']],c.mfI)}</div>`};
   return `<div class="panel stack" style="gap:10px"><div class="status" style="justify-content:space-between"><h3>คะแนน COE</h3><span class="note">0–8 · ครึ่งแต้ม · 6 = Fine</span></div>
-  <div class="cp-grid">${COE_A.map(([k,l])=>`<div class="cp-card${k==='clean'||k==='overall'?'':''}"><div class="cp-ct">${l}<span class="cp-lbl" data-lbl="${k}">${COE_LBL(+c.sc[k])}</span></div>${stepper(k,c.sc[k])}${k==='flavor'?`<button type="button" class="cp-w-go" data-gofla>เลือกรสใน wheel ↑ · ${S.fla.length}</button>`:''}${extra[k]||''}${WORDS[k]?`<details class="cp-w"${S.words[k].length?' open':''}><summary>คำบรรยาย${S.words[k].length?' · '+S.words[k].length:''}</summary>${chipRow(k,WORDS[k],S.words[k])}</details>`:''}</div>`).join('')}</div>
+  <div class="cp-grid">${COE_A.map(([k,l])=>`<div class="cp-card${k==='clean'||k==='overall'?'':''}"><div class="cp-ct">${l}<span class="cp-lbl" data-lbl="${k}">${COE_LBL(+c.sc[k])}</span></div>${stepper(k,c.sc[k])}${k==='flavor'?`<button type="button" class="cp-w-go" data-gofla>เลือกรส ↑ (${S.fla.length})</button>`:''}${extra[k]||''}${WORDS[k]?`<details class="cp-w"${S.words[k].length?' open':''}><summary>คำบรรยาย${S.words[k].length?' · '+S.words[k].length:''}</summary>${chipRow(k,WORDS[k],S.words[k])}</details>`:''}</div>`).join('')}</div>
   <div class="cp-def"><b>ตำหนิ (หักคะแนน)</b><div class="row" style="align-items:flex-end">
-    <label class="f"><span class="k">ความแรง (I) · 1 เล็กน้อย – 3 แรง</span>${seg('cp-defI',[[1,'1'],[2,'2'],[3,'3']],c.defI)}</label>
+    <label class="f"><span class="k">ความแรง (I) 1–3</span>${seg('cp-defI',[[1,'1'],[2,'2'],[3,'3']],c.defI)}</label>
     <label class="f"><span class="k">จำนวนถ้วย (N)</span>${dots('cp-defN',S.cups,c.defN)}</label></div>
     <div class="note" style="margin:0" id="cp-defout"></div>${defHTML()}</div>
   <p class="note" style="margin:0">คะแนนรวม = ผลรวม 8 ข้อ + 36 − (I × N × 4) · ถ้าข้อไหนได้ 0 คะแนนรวมเป็น 0 ตามกติกา COE</p></div>`}
 
 function defHTML(){return `<div class="cp-sub"><b>ตำหนิที่เจอ</b> <span class="note">แตะได้หลายตัว</span><div class="cp-chips" data-words="def">${DEF.map(([e,t])=>`<button type="button" class="cp-chip cp-defc" data-w="${e}" aria-pressed="${S.def.includes(e)}">${e} <small>${t}</small></button>`).join('')}</div></div>`}
 function lvSeg(k,l){return `<div class="cp-lv"><span class="k">${l}</span>${seg('cp-lv-'+k,LV[k].map((t,i)=>[i+1,t]),S.lv[k])}</div>`}
-function noteHTML(){const blk=(k,title,lv,lvl)=>`<div class="panel stack cp-nb" style="gap:8px"><div class="status" style="justify-content:space-between;flex-wrap:wrap;gap:6px"><h3>${title}</h3>${lv?lvSeg(lv,lvl):''}</div>${chipRow(k,WORDS[k],S.words[k])}</div>`;
+const LVDUP=['Light','Medium','Full','Heavy','Long','Short','Low'];
+function noteHTML(){const blk=(k,title,lv,lvl)=>`<div class="panel stack cp-nb" style="gap:8px"><div class="status" style="justify-content:space-between;flex-wrap:wrap;gap:6px"><h3>${title}</h3>${lv?lvSeg(lv,lvl):''}</div>${chipRow(k,WORDS[k].filter(w=>!LVDUP.includes(w)),S.words[k])}</div>`;
   return `<div class="panel stack" style="gap:6px"><h3>Flavor</h3><p class="note" style="margin:0">เลือกจาก wheel หรือคลังกลิ่นรสด้านบน · กลิ่น ${S.aro.length} · รส ${S.fla.length}</p><button type="button" class="cp-w-go" data-gofla style="align-self:flex-start">ไปเลือกรส ↑</button></div>
   ${blk('sweet','Sweetness · หวานแบบไหน','sweet','ระดับ')}
   ${blk('acid','Acidity · เปรี้ยวแบบไหน','acid','ระดับ')}
@@ -2376,9 +2403,9 @@ function renderSel(){const el=document.getElementById('cp-sel');const lst=t=>S[t
 let libTop='';
 function renderLib(){const body=document.getElementById('cp-lbody');if(!body)return;const q=(document.getElementById('cp-lq').value||'').trim().toLowerCase();const sel=new Set(S[wTgt]);
   const TH={'Floral':'ดอกไม้','Fruity':'ผลไม้','Sour/Fermented':'เปรี้ยว/หมัก','Green/Vegetative':'สมุนไพร/ผัก','Other':'อื่นๆ','Roasted':'คั่ว/ธัญพืช','Spices':'เครื่องเทศ','Nutty/Cocoa':'ถั่ว/ช็อกโกแลต','Sweet':'หวาน'};
-  const groups={};for(const par in LIB){const top=par.split('>')[0];if(top==='Other'||(libTop&&top!==libTop&&!q))continue;const items=LIB[par].filter(n=>!q||n.toLowerCase().includes(q)||par.toLowerCase().includes(q)||(TH[top]||'').includes(q));if(items.length)(groups[top]=groups[top]||[]).push([par,items])}
+  const groups={};for(const par in LIB){const top=par.split('>')[0];if(top==='Other'||(libTop&&top!==libTop&&!q))continue;const items=LIB[par].filter(e=>!q||e.n.toLowerCase().includes(q)||par.toLowerCase().includes(q)||(TH[top]||'').includes(q));if(items.length)(groups[top]=groups[top]||[]).push([par,items])}
   const tp=document.getElementById('cp-ltops');if(tp)tp.innerHTML=['',...W.map(o=>o.n).filter(n=>n!=='Other')].map(n=>`<button type="button" class="cp-chip" data-ltop="${n}" aria-pressed="${libTop===n}"${n?` style="border-left:4px solid ${colorOf(n)}"`:''}>${n?(TH[n]||n):'ทั้งหมด'}</button>`).join('');
-  body.innerHTML=Object.keys(groups).map(top=>`<div class="cp-lg"><div class="cp-lgt" style="--c:${colorOf(top)}">${top} <span class="note">${TH[top]||''}</span></div>${groups[top].map(([par,items])=>`<div class="cp-lsub">${par.split('>')[1]&&par.split('>')[1]!==items[0]?`<span class="cp-lsn">${par.split('>').slice(1).join(' › ')}</span>`:''}<div class="cp-chips" style="margin-top:4px">${items.map(n=>{const id=par+'>'+n;const id2=par.split('>').length===2&&par.split('>')[1]===n?par:id;return `<button type="button" class="cp-chip" data-lib="${esc(id2)}" aria-pressed="${sel.has(id2)}" style="--c:${colorOf(top)}">${esc(n)}</button>`}).join('')}</div></div>`).join('')}</div>`).join('')||'<p class="note">ไม่เจอคำนี้ · กด + เพิ่มเอง ในหัวข้อด้านล่างได้</p>';}
+  body.innerHTML=Object.keys(groups).map(top=>`<div class="cp-lg"><div class="cp-lgt" style="--c:${colorOf(top)}">${top} <span class="note">${TH[top]||''}</span></div>${groups[top].map(([par,items])=>`<div class="cp-lsub">${par.split('>')[1]?`<span class="cp-lsn">${par.split('>').slice(1).join(' › ')}</span>`:''}<div class="cp-chips" style="margin-top:4px">${items.map(e=>`<button type="button" class="cp-chip" data-lib="${esc(e.id)}" aria-pressed="${sel.has(e.id)}" style="--c:${colorOf(top)}">${esc(e.n)}</button>`).join('')}</div></div>`).join('')}</div>`).join('')||'<p class="note">ไม่เจอคำนี้ · กด + เพิ่มเอง ในหัวข้อด้านล่างได้</p>';}
 function cvaCat(id){const p=id.split('>'),a=p[0],b=p[1]||'',c=p[2]||'';
   if(a==='Fruity')return ['Berry','Dried Fruit','Citrus Fruit'].includes(b)?'Fruity › '+b:'Fruity';
   if(a==='Sour/Fermented')return b==='Sour'?'Sour/Fermented › Sour':b?'Sour/Fermented › Fermented':'Sour/Fermented';
@@ -2452,7 +2479,7 @@ function openSummary(_,src){const s=fixS(src||S);const cv=drawCard(s);const ov=d
       try{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}catch(e){}
       ov.querySelector('[data-hint]').innerHTML='<b>กดค้างที่รูป</b> แล้วเลือก "บันทึกไปยังรูปภาพ" (หรือคลิกขวา → บันทึกรูป)';},'image/png');};}
 
-function drawCard(s){const Wd=1080,Ht=1440,cv=document.createElement('canvas');cv.width=Wd;cv.height=Ht;const x=cv.getContext('2d');
+function drawCard(s,H){if(!H){const m=drawCard(s,6000);return drawCard(s,Math.max(1440,Math.ceil((m._end+150)/10)*10))}const Wd=1080,Ht=H,cv=document.createElement('canvas');cv.width=Wd;cv.height=Ht;const x=cv.getContext('2d');
   const C={bg:'#f4f2ec',card:'#ffffff',fg:'#1b1f1d',mu:'#6a716c',ac:'#a3283c',line:'#dcdfd9',soft:'#f3dde1'};
   const F=(w,sz,fam)=>`${w} ${sz}px ${fam==='m'?'"IBM Plex Mono",ui-monospace,monospace':fam==='d'?'"Bai Jamjuree","IBM Plex Sans Thai",sans-serif':'"IBM Plex Sans Thai",sans-serif'}`;
   x.fillStyle=C.bg;x.fillRect(0,0,Wd,Ht);
@@ -2479,22 +2506,28 @@ function drawCard(s){const Wd=1080,Ht=1440,cv=document.createElement('canvas');c
   const sel=[...new Set([...s.aro,...s.fla])];miniWheel(x,800,620,210,sel,C,F);
   x.fillStyle=C.mu;x.font=F(500,20,'b');x.textAlign='center';x.fillText(sel.length?'กลิ่นรสที่เลือก':'ยังไม่ได้เลือกกลิ่นรส',800,860);x.textAlign='left';
   // details
-  let y=920;x.strokeStyle=C.line;x.lineWidth=2;x.beginPath();x.moveTo(90,y-24);x.lineTo(Wd-90,y-24);x.stroke();
-  const leaf=id=>id.split('>').pop();
-  const rows=[];
-  if(s.aro.length)rows.push(['กลิ่น',s.aro.map(leaf).join(', ')]);
-  if(s.fla.length)rows.push(['รส',s.fla.map(leaf).join(', ')]);
-  if(s.mode==='note'){}
-  else if(s.mode==='coe'){rows.push(['Acidity',[s.coe.acI,...s.words.acid].join(' · ')]);rows.push(['Mouthfeel',[s.coe.mfI,...s.words.mouth].join(' · ')]);
-    if(s.words.sweet.length)rows.push(['Sweetness',s.words.sweet.join(', ')]);if(s.words.after.length)rows.push(['Aftertaste',s.words.after.join(', ')]);if(s.words.balance.length)rows.push(['Balance',s.words.balance.join(', ')]);
-    rows.push(['Aroma',`Dry ${s.coe.dry} · Crust ${s.coe.crust} · Break ${s.coe.brk}`]);}
-  else{const I=s.cva.int;rows.push(['Intensity',CVA_I.map(([k,l])=>l+' '+I[k]).join(' · ')]);
-    if(s.words.acid.length)rows.push(['Acidity',s.words.acid.join(', ')]);if(s.words.sweet.length)rows.push(['Sweetness',s.words.sweet.join(', ')]);
-    if(s.cva.tastes.length||s.cva.mfc.length)rows.push(['Taste/Body',[...s.cva.tastes,...s.cva.mfc].join(', ')]);}
-  if(s.mode==='note'&&s.words.balance.length)rows.push(['Balance',s.words.balance.join(', ')]);
-  if(s.def.length)rows.push(['ตำหนิ',s.def.join(', ')]);
-  if(s.note)rows.push(['โน้ต',s.note]);
-  for(const [k,v] of rows){if(y>Ht-110)break;x.fillStyle=C.ac;x.font=F(700,24,'b');x.fillText(k,90,y);x.fillStyle=C.fg;x.font=F(500,26,'b');y=wrap(x,v,270,y,Wd-360,38,k==='โน้ต'?4:2)+54;}
+  let y=920;x.strokeStyle=C.line;x.lineWidth=2;x.beginPath();x.moveTo(90,y-30);x.lineTo(Wd-90,y-30);x.stroke();
+  const leaf=id=>id.split('>').pop();const N=t=>({t}),D=id=>({t:leaf(id),col:colorOf(id)});
+  const secs=[];
+  if(s.aro.length)secs.push(['กลิ่น · Aroma',s.aro.map(D)]);
+  if(s.fla.length)secs.push(['รส · Flavor',s.fla.map(D)]);
+  if(s.mode==='coe'){secs.push(['Acidity',[{t:'ความแรง '+s.coe.acI,lv:1},...s.words.acid.map(N)]]);secs.push(['Mouthfeel',[{t:'ความแรง '+s.coe.mfI,lv:1},...s.words.mouth.map(N)]]);
+    if(s.words.sweet.length)secs.push(['Sweetness',s.words.sweet.map(N)]);if(s.words.after.length)secs.push(['Aftertaste',s.words.after.map(N)]);if(s.words.balance.length)secs.push(['Balance',s.words.balance.map(N)]);
+    secs.push(['Aroma (Dry · Crust · Break)',[{t:'Dry '+s.coe.dry,lv:1},{t:'Crust '+s.coe.crust,lv:1},{t:'Break '+s.coe.brk,lv:1}]]);}
+  else if(s.mode==='cva'){const I=s.cva.int;secs.push(['Intensity 0–15',CVA_I.map(([k,l])=>({t:l+' '+I[k],lv:1}))]);
+    if(s.words.acid.length)secs.push(['Acidity',s.words.acid.map(N)]);if(s.words.sweet.length)secs.push(['Sweetness',s.words.sweet.map(N)]);
+    if(s.cva.tastes.length||s.cva.mfc.length)secs.push(['Main tastes · Mouthfeel',[...s.cva.tastes,...s.cva.mfc].map(N)]);}
+  else if(s.words.balance.length)secs.push(['Balance',s.words.balance.map(N)]);
+  if(s.def.length)secs.push(['ตำหนิ · Defects',s.def.map(t=>({t,bad:1}))]);
+  const L=90,R=Wd-90,CH=48,GAP=12;
+  for(const [lab,chips] of secs){x.fillStyle=C.ac;x.font=F(700,22,'b');x.fillText(lab,L,y);y+=18;let cx=L;x.font=F(500,25,'b');
+    for(const c of chips){const tw=x.measureText(c.t).width,w=tw+(c.col?54:36);if(cx+w>R&&cx>L){cx=L;y+=CH+GAP}
+      x.fillStyle=c.bad?'#fbe4e4':c.col?shade(c.col,.84):c.lv?'#f3dde1':'#eef0ec';x.beginPath();x.roundRect?x.roundRect(cx,y,w,CH,CH/2):x.rect(cx,y,w,CH);x.fill();
+      if(c.col){x.fillStyle=c.col;x.beginPath();x.arc(cx+24,y+CH/2,8,0,7);x.fill()}
+      x.fillStyle=c.bad?'#9b1c1c':c.lv?C.ac:C.fg;x.textBaseline='middle';x.fillText(c.t,cx+(c.col?42:18),y+CH/2+1);x.textBaseline='alphabetic';cx+=w+10;}
+    y+=CH+44;}
+  if(s.note){x.fillStyle=C.ac;x.font=F(700,22,'b');x.fillText('โน้ต',L,y);y+=40;x.fillStyle=C.fg;x.font=F(500,26,'b');y=wrap(x,s.note,L,y,R-L,38,40)+40;}
+  cv._end=y;
   x.fillStyle=C.mu;x.font=F(400,18,'b');x.fillText(s.mode==='coe'?'COE: ผลรวม 8 ข้อ + 36 − ตำหนิ':s.mode==='cva'?'SCA-104: 0.65625 × ผลรวม + 52.75 − 2u − 4d':'Tasting note · Dial-In Bench',90,Ht-72);
   return cv;}
 function wrap(x,t,X,Y,w,lh,maxL){const words=String(t).split(/(\s+|(?<=,))/);let line='',n=0;
@@ -2533,6 +2566,14 @@ function miniWheel(x,cx,cy,R,sel,C,F){if(!sel.length){x.strokeStyle=C.line;x.lin
 render();
 })();
 
+
+/* ---- UX helpers ---- */
+(function(){const setH=()=>{const n=[...document.querySelectorAll('.subnav')].find(e=>e.offsetParent);if(n)document.documentElement.style.setProperty('--subnav-h',n.offsetHeight+'px')};
+  addEventListener('hashchange',()=>setTimeout(setH,50));addEventListener('resize',setH);setTimeout(setH,300);
+  const lab=t=>{const th=[...t.querySelectorAll('thead th')].map(e=>e.textContent.trim());if(th.length<3)return;t.closest('.tbl')&&t.closest('.tbl').classList.add('stack');
+    t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,i)=>{if(!td.dataset.l)td.dataset.l=th[i]||''}))};
+  const all=()=>{document.querySelectorAll('.tbl table').forEach(lab);document.querySelectorAll('.seg,#ap-vols').forEach(g=>g.classList.toggle('ovf',g.scrollWidth>g.clientWidth+2))};all();addEventListener('hashchange',()=>setTimeout(all,80));
+  new MutationObserver(()=>{clearTimeout(all.t);all.t=setTimeout(all,60)}).observe(document.body,{subtree:true,childList:true});})();
 </script>
 
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
