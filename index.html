@@ -1238,9 +1238,12 @@ function apScaleNote(){const el=$('#ap-scale-note');const v=apVol();
   el.innerHTML=h;
   const live=$('#ap-pnote-live');if(live)live.innerHTML=`ขวดเรา (น้ำ ${fmt(v,0)} ml): <b class="readout">${$('#ap-tds').textContent}</b> · ${$('#ap-total').textContent}${$('#ap-need').textContent?'<br>'+$('#ap-need').innerHTML:''}`;}
 const HOF='https://apaxlab.com/blogs/hall-of-fames/';
-const FLAG={Thailand:'🇹🇭',Panama:'🇵🇦',Colombia:'🇨🇴',Ethiopia:'🇪🇹',Mexico:'🇲🇽',Bolivia:'🇧🇴','Costa Rica':'🇨🇷',Indonesia:'🇮🇩',Nicaragua:'🇳🇮',Guatemala:'🇬🇹',Ecuador:'🇪🇨',Honduras:'🇭🇳',Yemen:'🇾🇪',France:'🇫🇷',Belgium:'🇧🇪',Singapore:'🇸🇬',USA:'🇺🇸','Hong Kong':'🇭🇰','New Zealand':'🇳🇿',Turkey:'🇹🇷',Egypt:'🇪🇬',Japan:'🇯🇵',Norway:'🇳🇴',Austria:'🇦🇹',Spain:'🇪🇸',Australia:'🇦🇺',Germany:'🇩🇪',Denmark:'🇩🇰',Poland:'🇵🇱',Greece:'🇬🇷',Netherlands:'🇳🇱',Canada:'🇨🇦',UAE:'🇦🇪',Romania:'🇷🇴',Taiwan:'🇹🇼',Chile:'🇨🇱',World:'🌍'};
+const FLAG={Thailand:'🇹🇭',Panama:'🇵🇦',Colombia:'🇨🇴',Ethiopia:'🇪🇹',Mexico:'🇲🇽',Bolivia:'🇧🇴','Costa Rica':'🇨🇷',Indonesia:'🇮🇩',Nicaragua:'🇳🇮',Guatemala:'🇬🇹',Ecuador:'🇪🇨',Honduras:'🇭🇳',Yemen:'🇾🇪',France:'🇫🇷',Belgium:'🇧🇪',Singapore:'🇸🇬',USA:'🇺🇸','Hong Kong':'🇭🇰','New Zealand':'🇳🇿',Turkey:'🇹🇷',Egypt:'🇪🇬',Japan:'🇯🇵',Norway:'🇳🇴',Austria:'🇦🇹',Spain:'🇪🇸',Australia:'🇦🇺',Germany:'🇩🇪',Denmark:'🇩🇰',Poland:'🇵🇱',Greece:'🇬🇷',Netherlands:'🇳🇱',Canada:'🇨🇦',UAE:'🇦🇪',Romania:'🇷🇴',Taiwan:'🇹🇼',Chile:'🇨🇱',World:'🌍',India:'🇮🇳'};
 /* k: n natural · w washed · h honey · f หมัก/โพรเซสพิเศษ */
 const CH=[
+ {who:'Sabin Whang',cat:'ori',at:'Canada',yr:2026,pl:'ORIGAMI CUP Canada · อันดับ 2',src:'https://roguewavecoffee.ca/blogs/news-updates/origami-cup-canada-2026-recap',
+  cf:[{c:'India',farm:'Ratnagiri Estate (Ashok Patre) · Coffee Wallas',v:'Catuai',p:'Anaerobic natural 54 ชม. หมักเชื้อแล็บ',k:'f'}],
+  w:[{vol:600,base:0,bn:'น้ำกลั่น',d:{Tonik:5,Jamm:2,Lylac:4,Konflux:8}}],x:'เป้า 75 ppm · ผ่านเครื่อง Wavemaker 1 นาทีก่อนใช้ · ชง 91°C'},
  {who:'Ponlasit Peepanich',cat:'ap',at:'Thailand',yr:2026,src:'hall-of-fame-ponlasit-peepanich-2026-thailand-aeropress-champion',
   cf:[{c:'Thailand',farm:'Omkoi เชียงใหม่ · Khun Tuen',v:'',p:'Natural',k:'n'}],
   w:[{lb:'น้ำชง',vol:1000,base:0,d:{Tonik:9,TANAT:5,Konflux:5},as:'ต้นทางไม่บอกปริมาณน้ำ แอปตั้งไว้ 1 L'},{lb:'น้ำ bypass',vol:1000,base:0,d:{Jamm:4,Lylac:8},as:'ต้นทางไม่บอกปริมาณน้ำ แอปตั้งไว้ 1 L'},{lb:'สูตรโปรด',vol:1000,base:0,d:{Tonik:7,Jamm:2,Lylac:9},as:'สูตร APAX สูตรแรกที่เขาใช้แข่ง AeroPress (ไม่ใช่สูตรปี 2026) · ไม่บอกปริมาณน้ำ แอปตั้งไว้ 1 L'}],x:'แยกน้ำชงกับน้ำเจือ: น้ำชงเน้นสดใส ส่วนน้ำ bypass เติมความหวานและกลิ่นดอกไม้'},
@@ -1402,7 +1405,7 @@ const CH=[
  {who:'TANAT Lucid · 2 หยด/200 ml',cat:'guide',w:[{vol:200,base:0,d:{TANAT:2}}]},
  {who:'La Cabra · 3 หยด/100 ml',cat:'guide',w:[{vol:100,base:0,bn:'น้ำกลั่น',d:{'La Cabra':3},as:'ผู้ผลิตบอก 2–3 หยดได้ราว 30–50 ppm'}]}
 ];
-const CAT={bc:'Brewers Cup',ap:'AeroPress',wbc:'World Brewers Cup',wac:'World AeroPress',other:'ทีมแข่ง',guide:'คู่มือ/ผู้ผลิต'};
+const CAT={ori:'ORIGAMI CUP',bc:'Brewers Cup',ap:'AeroPress',wbc:'World Brewers Cup',wac:'World AeroPress',other:'ทีมแข่ง',guide:'คู่มือ/ผู้ผลิต'};
 const apName=k=>{const a=AP.find(a=>a.n.startsWith(k));return a?a.n.replace(/ \(.*/,''):k};
 const fx=n=>String(+(+n).toFixed(2));
 function chDrops(w,exact){const D=dpg(),L=w.vol/1000,o={};const Mr=exact?(x=>x):Math.round;
@@ -1434,7 +1437,7 @@ function renderCh(){const q=($('#ch-q').value||'').trim().toLowerCase();
     return `<article class="rc ch"><div class="meta"><span class="chip acc">${CAT[e.cat]}</span>${comp}</div>
     <h3>${e.who}${e.info2?' <span style="font-weight:400;color:var(--muted);font-size:14px">· '+e.info2+'</span>':''}</h3>${cf}${ws}
     ${e.info?`<div class="note">🔒 ${e.info}</div>`:''}${e.x?`<div class="note">${e.x}</div>`:''}
-    ${e.src?`<a class="note ch-src" href="${HOF+e.src}" target="_blank" rel="noopener">อ่านต้นทางที่ APAX ↗</a>`:''}</article>`}).join('')||'<div class="note">ไม่เจอสูตรที่ตรง ลองคำอื่น</div>';}
+    ${e.src?`<a class="note ch-src" href="${/^https?:/.test(e.src)?e.src:HOF+e.src}" target="_blank" rel="noopener">${/^https?:/.test(e.src)?'อ่านต้นทาง ↗':'อ่านต้นทางที่ APAX ↗'}</a>`:''}</article>`}).join('')||'<div class="note">ไม่เจอสูตรที่ตรง ลองคำอื่น</div>';}
 function applyCh(i,j,quiet){const e=CH[i],w=e.w[j];chCur={i,j};
   if(!quiet)$('#ap-vol').value=w.vol;$('#ap-base').value=w.base;$('#ap-target').value=w.ppm||'';
   const src=chDrops(w,1);apPerL=AP.map(a=>{const key=Object.keys(src).find(s=>a.n.startsWith(s));return key?src[key]*1000/w.vol:0});
@@ -1678,25 +1681,29 @@ const R=[
   bean:'🇮🇩 Java · Wanoja · Anaerobic Honey (กาแฟกลาง)',spec:[['กาแฟ','15.5 g'],['น้ำรวม','217 ml'],['อุณหภูมิ','85°C → 75°C'],['เจือ','+10–15 ml']],
   grind:'Comandante 25 คลิก',conv:{g:'c40',c:25},src:'https://origami-kai.com/blogs/special-feature/origami-cup-tokyo-2023-report',
   steps:[['0:00','จนรวม 55 ml'],['0:40','จนรวม 170 ml'],['1:10','จนรวม 217 ml น้ำ 75°C'],['เจือ','เติมน้ำอุณหภูมิห้อง 10–15 ml']]},
+ {cat:'ori',gr:'1Zpresso ZP6 Special',t:'ORIGAMI CUP Belgium 2026 · อันดับ 1',who:'Matti (@matticoffee13)',dev:'Origami สีชมพู + เซิร์ฟเวอร์ Origami · กระดาษกรวย (ดูจากคลิป)',
+  bean:'🇨🇴 Colombia (กาแฟกลาง สารจาก Velvet Coffee คั่วโดย Benjamin Brassart แชมป์คั่วโลก 2026 ของ BOO) · ไม่ระบุโพรเซส · คัดเมล็ด quaker ทิ้งก่อนบด',spec:[['กาแฟ','16 g'],['น้ำชง','190 g'],['อุณหภูมิ','89°C'],['เติมน้ำ','+30 ml ในแก้ว (รวม 220)']],
+  grind:'ZP6 เบอร์ 5.8 · น้ำกรอง Brita · ทริก: ทำ salami shot ตอนซ้อมแล้วพบว่าช่วงต้นของการชงอร่อยสุด เลยชงเข้มแค่ 190 g แล้วเติมน้ำแทนการชงต่อ · รอบใหญ่เทกาสูงคุม flow ให้กวนน้อยที่สุด',conv:{g:'zp6',c:58},src2t:'ถอดจากคลิปและแคปชันของแชมป์เอง (Brussels Coffee Show 7 พ.ย. 2026) · อันดับ 2 @dalescoffeechannel',src:'https://www.instagram.com/reels/DfkV5WpIdNG/',
+  steps:[['0:00','bloom 1: เท 45 g'],['0:30','bloom 2: เทอีก 45 g (รวม 90 g)'],['1:00','เทรอบใหญ่ 100 g (รวม 190 g) ยกกาสูง คุมให้กวนน้อย'],['<1:50','จบการไหล'],['เจือ','เติมน้ำ 30 ml ลงแก้ว']]},
  {cat:'ori',gr:'1Zpresso ZP6 Special',t:'ORIGAMI CUP USA 2026 · อันดับ 1',who:'Julie Patadia (สหรัฐฯ)',dev:'Origami (ไม่ระบุรุ่น)',
   bean:'กาแฟกลางที่ผู้จัดให้ · น้ำกลั่นผสมแร่ APAX ตามกติกา',spec:[['กาแฟ','~15 g (คิดจาก 1:15)'],['น้ำรวม','225 g'],['อุณหภูมิ','93°C (200°F)'],['อัตราส่วน','1:15']],
   grind:'ZP6 เบอร์ 3.5',conv:{g:'zp6',c:35},src:'https://origami-kai.com/en/blogs/special-feature/2026_origami_cup_us_canada_report',
   steps:[['0:00','bloom 30 g 40 วินาที'],['0:40','จนรวม 90 g วนก้นหอย คนปานกลาง'],['1:05','จนรวม 170 g วนก้นหอย คนปานกลาง'],['1:30','เทกลางต่อเนื่องจนรวม 225 g']]},
  {cat:'ori',gr:'Fellow Ode + SSP',t:'ORIGAMI CUP Canada 2026 · อันดับ 1',who:'Andrew Rohrbacher (แคนาดา)',dev:'Air S Resin · กระดาษกรวย Origami · Melodrip',
-  bean:'กาแฟกลาง · คัดเมล็ดแตก เล็กเข้ม ใหญ่ซีดออก',spec:[['กาแฟ','20 g'],['น้ำรวม','250 g'],['อุณหภูมิ','85°C'],['น้ำ','30–40 ppm (ประปากรอง 1 : น้ำกลั่น 3)']],
-  grind:'Fellow Ode Gen 1 ใบมีด SSP บดละเอียดกว่าปกตินิดหน่อย',src:'https://origami-kai.com/en/blogs/special-feature/2026_origami_cup_us_canada_report',
-  steps:[['0:00','60 g ให้เปียกทั่ว'],['1:00','100 g วนเล็กๆ ผ่าน Melodrip'],['1:15','90 g วนเล็กๆ ผ่าน Melodrip'],['1:45','จบ']]},
+  bean:'🇮🇳 India · Ratnagiri · Lab Natural จาก Coffee Wallas (กาแฟกลาง) · คัดเมล็ดตำหนิออกก่อนบด',spec:[['กาแฟ','20 g'],['น้ำรวม','250 g'],['อุณหภูมิ','85°C'],['น้ำ','30–40 ppm (ประปา 1 : น้ำกลั่น 3)']],
+  grind:'Fellow Ode Gen 1 ใบมีด SSP Brew · ละเอียดกว่าค่าที่เขาใช้ปกติ 3 ขั้น',src2t:'ยืนยันกับโพสต์ IG ของ Coffee Wallas (ผู้คั่วกาแฟกลาง) พ.ย. 2026',src:'https://origami-kai.com/en/blogs/special-feature/2026_origami_cup_us_canada_report',
+  steps:[['เตรียม','อุ่นแก้ว Pinot aroma cup'],['0:00','เท 60 g ลงตรงๆ ให้เปียกทั่ว'],['1:00','เท 100 g วนเล็กๆ ผ่าน Melodrip (รวม 160 g)'],['1:15','เทที่เหลือ 90 g วนเล็กๆ ผ่าน Melodrip (รวม 250 g)'],['1:45','จบ · เสิร์ฟร้อน']]},
  {cat:'ori',t:'WBrC 2021 · รอบชิง (ใช้ Origami Air S)',who:'Ply Pasarj (แคนาดา, Rogue Wave)',dev:'Air S · กระดาษกรวย Origami',
   bean:'🇵🇦 เบลนด์ Hacienda Cañas Verdes Gesha anaerobic natural 144 ชม. + Finca Carmen Gesha washed',spec:[['กาแฟ','12.5 g'],['น้ำรวม','200 g'],['อุณหภูมิ','92–94°C'],['เวลา','2:08–2:15']],
   grind:'ไม่ระบุเครื่อง · บดตัว washed ละเอียดกว่าตัว natural เพื่อเก็บกลิ่นดอกไม้',src:'https://www.slowpoursupply.co/blogs/brew-recipes/brewing-origami-air-s-with-ply-rogue-wave-coffee',
   steps:[['0:00','bloom 45 วินาที (ต้นทางเขียน 45 g ขัดกับกาแฟ 12.5 g)'],['0:45','เทจนรวม 130 g ใน 13 วินาที ยกกาสูง 4–5 นิ้ว'],['1:20','ปล่อยไหล รอนิ่ง 10 วินาที'],['1:30','เทจนรวม 200 g ปากกาชิดผิวผง'],['2:10','จบ 2:08–2:15']]},
 {cat:'ori',gr:'Millab M01',t:'ORIGAMI CUP Canada 2026 · อันดับ 2',who:'Sabin Whang (แคนาดา)',dev:'Air Resin S · กระดาษกรวย Origami',
-  bean:'🇮🇳 India · Ratnagiri Estate (Ashok Patre) · Catuai · Anaerobic natural 54 ชม. หมักเชื้อแล็บ (กาแฟกลาง)',spec:[['กาแฟ','18 g'],['น้ำรวม','280 g'],['น้ำ','75 ppm'],['เวลา','2:15']],
-  grind:'Millab M01 เบอร์ 7.0 · น้ำ: น้ำกลั่น 600 ml + APAX Tonik 5 / Jamm 2 / Lylac 4 / Konflux 8 หยด ผ่านเครื่อง Wave 1 นาที (ไม่ระบุอุณหภูมิ)',src:'https://roguewavecoffee.ca/blogs/news-updates/origami-cup-canada-2026-recap',
-  steps:[['0:00','bloom 50 g วนให้เปียกทั่ว'],['0:30','100 g (วน 50 g แล้วกลาง 50 g) รวม 150 g ถึง 1:15'],['1:15','130 g (วน 65 g แล้วกลาง 65 g) รวม 280 g'],['2:15','จบ · หมุนใน ICOSA Cyclone 1 นาที แล้วเทใส่ Pinot server']]},
+  bean:'🇮🇳 India · Ratnagiri Estate (Ashok Patre) · Catuai · Anaerobic natural 54 ชม. หมักเชื้อแล็บ (กาแฟกลาง)',spec:[['กาแฟ','18 g'],['น้ำรวม','280 g'],['อุณหภูมิ','91°C'],['น้ำ','APAX 75 ppm']],
+  grind:'Millab M01 เบอร์ 7.0 · น้ำ: น้ำกลั่น 600 ml + APAX Tonik 5 / Jamm 2 / Lylac 4 / Konflux 8 หยด ผ่านเครื่อง Wavemaker 1 นาที',src2t:'อุณหภูมิ 91°C และจังหวะเท ยืนยันกับโพสต์ IG ของ Coffee Wallas พ.ย. 2026',src:'https://roguewavecoffee.ca/blogs/news-updates/origami-cup-canada-2026-recap',
+  steps:[['0:00','bloom 50 g วนให้เปียกทั่ว'],['0:30','เท 100 g: วน 50 g แล้วต่อด้วยเทกลาง 50 g ที่ 6 ml/s (รวม 150 g)'],['1:15','เท 130 g: วน 65 g แล้วต่อด้วยเทกลาง 65 g (รวม 280 g)'],['2:15','จบ · หมุนใน ICOSA Cyclone 1 นาที แล้วเทใส่ Pinot server']]},
  {cat:'ori',gr:'Comandante C40',t:'ORIGAMI CUP Canada 2026 · อันดับ 3',who:'Shinya Furue (แคนาดา)',dev:'ชง 2 ดริปเปอร์: Air Resin S + พอร์ซเลน S',
   bean:'🇮🇳 India · Ratnagiri Estate · Catuai · Anaerobic natural (กาแฟกลาง)',spec:[['กาแฟ','15 g × 2'],['น้ำชง','90 ml × 2'],['อุณหภูมิ','90°C'],['เจือ','+30–36 g']],
-  grind:'C40: ตัวแรก 25 คลิก ตัวที่สอง 22 คลิก · น้ำ: น้ำกลั่น 450 ml + Lotus Mg 2 / Ca 3 / K 2 หยด',conv:{g:'c40',c:25},src:'https://roguewavecoffee.ca/blogs/news-updates/origami-cup-canada-2026-recap',
+  grind:'C40: ตัวแรก 25 คลิก ตัวที่สอง 22 คลิก · น้ำ: น้ำกลั่น 450 ml + Lotus Mg 2 / Ca 3 / K 2 หยด',conv:{g:'c40',c:25},src2t:'ตรงกับโพสต์ IG ของ Coffee Wallas พ.ย. 2026 (โพสต์บอกแค่ Origami Dripper S ไม่ได้แยกว่าเรซิ่นหรือพอร์ซเลน)',src:'https://roguewavecoffee.ca/blogs/news-updates/origami-cup-canada-2026-recap',
   steps:[['0:00','ดริปเปอร์ 1 เทถึง 30 ml · ดริปเปอร์ 2 เทถึง 45 ml'],['0:30','ทั้งสองเทถึง 90 ml'],['1:00','จบทั้งคู่'],['รวม','ผสมสองถ้วย เติมน้ำ 30–36 g']]},
  {cat:'ori',gr:'Comandante C40',t:'ORIGAMI CUP Australia 2024 · อันดับ 1',who:'Gerard Liew (ออสเตรเลีย)',dev:'Air S · กระดาษ Cafec Abaca',
   bean:'🇨🇴 Colombia · Gesha · Washed · จาก Cafe Imports (กาแฟกลาง)',spec:[['กาแฟ','15 g'],['น้ำรวม','225 g'],['อุณหภูมิ','93°C'],['น้ำ','Pureau + APAX หลังชง']],
@@ -1760,10 +1767,11 @@ const ORI_DIR=`<article class="rc" style="grid-column:1/-1"><div class="meta"><s
 <div>🇯🇵 <b>Japan 2022</b> (ครั้งแรก จัดโดย Trunk Coffee Lab) · 1 Terada (Hazeru Coffee, โทยามะ) · กาแฟกลาง น้ำ/เครื่องบด/กระดาษเลือกเอง เตรียม 5 นาที ชง 8 นาที</div>
 <div>🇵🇪 <b>Peru 2024</b> (Violet Cafe Lab) · 1 @miguel_salvi02 · 2 @guanacoffeeperu · 3 @cordillera27cafe</div>
 <div>🇨🇴 <b>Colombia 2024</b> · 1 Juan José Franco</div>
-<div>🇿🇦 <b>South Africa 2026</b> (Cape Coffee Beans, 11 ก.ค.) · กาแฟกลาง กรรมการชิมแบบปิดตาโหวต · ยังไม่เจอชื่อผู้ชนะ</div>
+<div>🇿🇦 <b>South Africa 2026</b> (ครั้งแรก, Cape Coffee Beans + African School of Coffee, 11 ก.ค.) · กาแฟกลาง Rosetta Ethiopia Wete Konga กรรมการชิมแบบปิดตาโหวต · 1 André Blignaut (African School of Coffee) → World ORIGAMI Cup 2027 · ยังไม่เจอสูตร</div>
+<div>🇧🇪 <b>Belgium 2026</b> (Brussels Coffee Show, 7 พ.ย.) · 1 Matti @matticoffee13 (มีสูตรด้านบน) · 2 @dalescoffeechannel · ชิงร่วมกับ @2nehmeh</div>
 <div>🇦🇷 <b>Argentina 2026</b> (Muy Bueno Co.) · ยังไม่เจอชื่อผู้ชนะ</div>
 <div>🇨🇦 <b>Canada 2025</b> (Vancouver, 15 ส.ค.) · กาแฟกลาง มีน้ำ APAX ให้หรือเอาน้ำมาเองได้ · ยังไม่เจอผล</div>
-<div>🇲🇾 <b>Malaysia 2025/2026</b> (@origamicupmalaysia, จัดโดย Hétam+) · 5 ภาค: กลาง เหนือ ใต้ ตะวันออก มาเลเซียตะวันออก · รอบชิง 18 คน 7 พ.ย. 2026 ที่ Pavilion Bukit Jalil (KL Coffee Festival) แชมป์ไป World ORIGAMI Cup 2027 โตเกียว</div>
+<div>🇲🇾 <b>Malaysia 2025/2026</b> (@origamicupmalaysia, จัดโดย Hétam+) · 5 ภาค: กลาง เหนือ ใต้ ตะวันออก มาเลเซียตะวันออก · รอบชิง 18 คน 7 พ.ย. 2026 ที่ Pavilion Bukit Jalil (KL Coffee Festival) แชมป์ไป World ORIGAMI Cup 2027 โตเกียว · ณ 11 พ.ย. ผู้จัดยังไม่โพสต์ผลรอบชิง</div>
 <div>&nbsp;&nbsp;· <b>ภาคกลาง</b> (24 ม.ค. 2026 ที่ Hétam+ KL, 116 คน, กาแฟ Liten, น้ำสปอนเซอร์ ION+ · วันนั้นขาย ION+ Platina เฉพาะในงาน แต่ไม่มีใครบอกสูตรน้ำที่ใช้แข่งจริง): 1 Edward Foo (One Half) · 2 Kinson Low (แชมป์ PCA Malaysia Brewers Cup 2025) · 3 Syukri Solihin (Liten) · 4 Burhan Rozaiman — ไม่มีใครในสี่คนโพสต์สูตร ORIGAMI · ไอจี Edward เป็นบัญชีส่วนตัว</div>
 <div>&nbsp;&nbsp;· <b>ภาคเหนือ</b> (Rasta Brew Co.): 1 Kai · 2 Yuexia (Afloat) · 3 Wei Jun (Full of Beans) · 4 Ikhmal Hakim</div>
 <div>&nbsp;&nbsp;· <b>ภาคใต้</b> (Vamos, กาแฟ MyLiberica รอบแรก + Falcon micro รอบรองฯ/ชิง): 1 Raymond See (Hiritsu JB) · 2 Vivian Siou · 3 Danny Lee</div>
@@ -1797,7 +1805,7 @@ function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTM
   <div class="specs">${r.spec.map(s=>{const m=String(s[1]).match(/^([^(]+?)\s*\((.+)\)\s*$/);return `<div class="spec"><div class="l">${s[0]}</div><div class="v">${m?m[1]:s[1]}</div>${m?`<div class="sn">${m[2]}</div>`:''}</div>`}).join('')}</div>
   <dl class="rinfo">${r.bean?`<dt>☕ เมล็ด</dt><dd>${r.bean}</dd>`:''}<dt>⚙ บด</dt><dd>${r.grind}</dd></dl>
   <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(s[1])}</span></li>`).join('')}</ol></details>
-  <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}
+  <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}${r.src2t?`<span class="note ch-src" style="display:block">✓ ${r.src2t}</span>`:''}
 </article>`).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');}
 renderRecipes();
 $('#r-grinder').addEventListener('change',renderRecipes);
@@ -2205,16 +2213,18 @@ const NODE={};
 const EXTRA={
  'Floral>Floral':['Jasmine','Rose','Chamomile','Orange Blossom','Water Jasmine','Osmanthus','Lavender','Hibiscus','Honeysuckle','Elderflower','Lilac','Violet','Magnolia','Ylang Ylang','Frangipani','Lotus','Gardenia','Peony','Lily','Acacia','Wisteria','Coffee Blossom','Lemon Blossom','Rose Water','Rose Hip','Geranium'],
  'Floral>Tea-like':['Black Tea','Earl Grey','Oolong','Jasmine Tea','Green Tea','White Tea','Darjeeling','Rooibos','Thai Tea','Chrysanthemum Tea','Genmaicha','Hojicha','Barley Tea'],
- 'Fruity>Berry':['Strawberry','Wild Strawberry','Raspberry','Black Raspberry','Blueberry','Blackberry','Blackcurrant','Redcurrant','Cranberry','Mulberry','Gooseberry','Boysenberry','Elderberry','Huckleberry','Lingonberry','Goji'],
- 'Fruity>Stone Fruit':['Peach','White Peach','Yellow Peach','Apricot','Nectarine','Plum','Black Plum','Cherry','Black Cherry','Sour Cherry','Marian Plum'],
- 'Fruity>Pome & Grape':['Apple','Green Apple','Red Apple','Baked Apple','Pear','Asian Pear','Quince','Grape','White Grape','Red Grape','Muscat','Kyoho','Concord Grape'],
- 'Fruity>Citrus Fruit':['Lemon','Meyer Lemon','Lime','Key Lime','Makrut Lime','Orange','Blood Orange','Mandarin','Tangerine','Clementine','Grapefruit','Pink Grapefruit','Pomelo','Bergamot','Yuzu','Sudachi','Kumquat','Calamansi','Som Sa','Citrus Peel','Orange Zest','Lemon Zest','Lime Zest','Lemonade'],
- 'Fruity>Tropical':['Mango','Green Mango','Pineapple','Passion Fruit','Papaya','Guava','Banana','Coconut','Lychee','Longan','Rambutan','Mangosteen','Jackfruit','Durian','Dragon Fruit','Star Fruit','Rose Apple','Sapodilla','Santol','Salak','Tamarind','Kiwi','Persimmon','Soursop','Feijoa','Jabuticaba','Pomegranate','Fig','Acerola','Cacao Fruit','Cascara'],
- 'Fruity>Melon':['Melon','Cantaloupe','Honeydew','Watermelon'],
- 'Fruity>Dried Fruit':['Raisin','Prune','Date','Dried Fig','Dried Apricot','Dried Cherry','Dried Mango','Dried Cranberry','Dried Longan','Dried Persimmon','Candied Fruit','Fruit Cake'],
- 'Fruity>Jam & Juice':['Jam','Marmalade','Compote','Fruit Punch','Fruit Juice','Fruit Tea','Candied Peel','Grenadine','Fruit Leather','Cherry Cola'],
+ 'Fruity>Berry':['Strawberry','Wild Strawberry','White Strawberry','Raspberry','Golden Raspberry','Black Raspberry','Blueberry','Blackberry','Blackcurrant','Cassis','Redcurrant','Whitecurrant','Cranberry','Mulberry','Black Mulberry','Gooseberry','Boysenberry','Elderberry','Huckleberry','Lingonberry','Goji','Red Berries','Dark Berries','Mixed Berries'],
+ 'Fruity>Stone Fruit':['Peach','White Peach','Yellow Peach','Flat Peach','Apricot','Nectarine','White Nectarine','Yellow Nectarine','Plum','Red Plum','Black Plum','Yellow Plum','Green Plum','Mirabelle','Damson','Cherry','Red Cherry','Black Cherry','Sour Cherry','Rainier Cherry','Marian Plum'],
+ 'Fruity>Pome & Grape':['Apple','Green Apple','Red Apple','Yellow Apple','Baked Apple','Pear','Green Pear','Red Pear','Asian Pear','Quince','Grape','Green Grape','White Grape','Red Grape','Black Grape','Purple Grape','Muscat','Shine Muscat','Kyoho','Concord Grape','Cotton Candy Grape','Grape Skin','Grape Must'],
+ 'Fruity>Wine Grape':['Cabernet Sauvignon','Cabernet Franc','Merlot','Pinot Noir','Syrah','Grenache','Malbec','Gamay','Sangiovese','Nebbiolo','Tempranillo','Zinfandel','Chardonnay','Sauvignon Blanc','Riesling','Gewürztraminer','Moscato','Viognier','Chenin Blanc','Pinot Grigio','Sémillon','Albariño','Torrontés'],
+ 'Fruity>Citrus Fruit':['Lemon','Meyer Lemon','Lime','Key Lime','Makrut Lime','Orange','Blood Orange','Cara Cara Orange','Mandarin','Tangerine','Green Tangerine','Clementine','Grapefruit','Pink Grapefruit','Red Grapefruit','White Grapefruit','Pomelo','Pink Pomelo','Bergamot','Yuzu','Sudachi','Kumquat','Calamansi','Som Sa','Citrus Peel','Orange Zest','Lemon Zest','Lime Zest','Lemonade','Pink Lemonade'],
+ 'Fruity>Tropical':['Mango','Ripe Mango','Green Mango','Pineapple','Golden Pineapple','Passion Fruit','Yellow Passion Fruit','Purple Passion Fruit','Papaya','Red Papaya','Guava','Pink Guava','White Guava','Strawberry Guava','Banana','Ripe Banana','Coconut','Lychee','Longan','Rambutan','Mangosteen','Jackfruit','Durian','Dragon Fruit','Red Dragon Fruit','White Dragon Fruit','Yellow Dragon Fruit','Star Fruit','Rose Apple','Red Rose Apple','Green Rose Apple','Sapodilla','Santol','Salak','Tamarind','Kiwi','Golden Kiwi','Persimmon','Soursop','Feijoa','Jabuticaba','Pomegranate','Fig','Acerola','Cacao Fruit','Cascara'],
+ 'Fruity>Melon':['Melon','Green Melon','Orange Melon','Japanese Melon','Cantaloupe','Honeydew','Watermelon','Yellow Watermelon'],
+ 'Fruity>Dried Fruit':['Raisin','Golden Raisin','Black Raisin','Prune','Date','Dried Fig','Dried Apricot','Dried Cherry','Dried Mango','Dried Cranberry','Dried Longan','Dried Persimmon','Candied Fruit','Fruit Cake'],
+ 'Fruity>Jam & Juice':['Jam','Strawberry Jam','Raspberry Jam','Blackberry Jam','Cooked Fruit','Marmalade','Compote','Fruit Punch','Fruit Juice','Grape Juice','Fruit Tea','Candied Peel','Grenadine','Fruit Leather','Cherry Cola'],
  'Sour/Fermented>Sour':['Sour Aromatics','Citric Acid','Malic Acid','Acetic Acid','Butyric Acid','Isovaleric Acid','Lactic','Vinegar','Sour Plum'],
- 'Sour/Fermented>Alcohol/Fermented':['Winey','Red Wine','White Wine','Rosé','Champagne','Port','Sherry','Plum Wine','Mead','Sake','Cider','Kombucha','Yogurt','Whiskey','Rum','Brandy','Cognac','Liqueur','Boozy','Fermented','Overripe'],
+ 'Sour/Fermented>Wine':['Winey','Red Wine','White Wine','Rosé','Orange Wine','Sparkling Wine','Champagne','Prosecco','Cava','Pét-Nat','Lambrusco','Natural Wine','Late Harvest','Ice Wine','Sauternes','Tokaji','Port','Sherry','Madeira','Marsala','Vermouth','Mulled Wine','Sangria','Plum Wine','Oak','Barrel-aged'],
+ 'Sour/Fermented>Alcohol/Fermented':['Mead','Sake','Cider','Kombucha','Yogurt','Whiskey','Rum','Brandy','Cognac','Liqueur','Boozy','Fermented','Overripe'],
  'Green/Vegetative>Herb-like':['Herb-like','Mint','Basil','Thai Basil','Lemongrass','Pandan','Kaffir Leaf','Eucalyptus','Sage','Thyme','Rosemary','Tarragon','Bay Leaf'],
  'Green/Vegetative>Green/Vegetative':['Fresh','Under-ripe','Peapod','Snap Pea','Green Bean','Dark Green','Vegetative','Hay-like','Grass','Green Pepper','Tomato','Cucumber','Celery','Olive Oil','Raw','Beany'],
  'Roasted>Cereal':['Grain','Malt','Toast','Biscuit','Graham Cracker','Bread Crust','Rice Cracker','Oat','Granola','Popcorn'],
