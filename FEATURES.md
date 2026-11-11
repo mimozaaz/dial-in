@@ -1,0 +1,74 @@
+# Dial-In Bench — มีอะไรบ้าง (dib-v45 · 11 พ.ย. 2026)
+
+แอปช่วยซ้อมชงกาแฟแข่ง ใช้บน iPhone เป็น PWA ผ่าน GitHub Pages
+มี 5 แท็บล่าง: **บด · น้ำ · สูตร · เครื่องมือ · สมุด**
+
+---
+
+## 1. บด (Grind)
+- **แปลงค่าบด** ข้ามเครื่องด้วย µm ต่อคลิก รองรับ **25 เครื่อง**
+  - Comandante: C40 MK4, C40 + Red Clix, C40 Lab Series (Nitro Blade / Tigershark / Hammerhead), C60 Baracuda
+  - 1Zpresso: K-Ultra, K-Max / K-Plus / K-Pro, ZP6 Special, J-Ultra, J-Max, JX-Pro / X-Pro, Q2 / J / JE
+  - Timemore: Chestnut S3, C3 ESP / ESP Pro, C2 / C3 / C3S, Chestnut X Lite
+  - KINGrinder: K6 / K4, K2, P2
+  - Option-O Lagom: 01, P64, Mini
+  - Exagrind และแบบ "กำหนดเอง" (ใส่ µm/คลิกเอง)
+- **ทุกเครื่อง:** ตารางเทียบค่าบดของทุกเครื่องในที่เดียว
+- **ช่วงบดตามวิธีชง:** 8 แบบ ตั้งแต่ตุรกี เอสเพรสโซ โมก้าพอต AeroPress V60 Chemex/Kalita French press ไปจนถึง Cold brew
+
+## 2. น้ำ (Water)
+- **Lotus / น้ำขวด:** เช็กน้ำกับเป้า SCA ใส่ Lotus เป็นหยด และมีพรีเซ็ตน้ำขวด Sant'Anna
+- **APAX:** คิดสูตรผสมหยด ดูกราฟเรดาร์โปรไฟล์รส (1 g ≈ 12 หยด)
+  - ตัวหลัก: Tonik, Jamm, Lylac, Konflux
+  - คอลแลบ 10 ตัว: Nemopop, MOK, La Cabra, DIFFERENTE, MOTORS, TANAT Lucid 2.1, Terres de Café, HYDRANGEA, JULITH, April Custom
+- **ION+ (มาเลเซีย):** คิดจำนวนหยดของ The Bricks, Platina, Esmeraude, Sapphire, Scarlett พร้อมสูตรแชมป์ตั้งต้น
+- **เดินทาง:** คำนวณจับคู่น้ำตอนไปต่างประเทศ เช่นเม็กซิโก
+- **ผสมเกลือเอง:** คิดสูตร DIY จากแร่ 11 ชนิด เช่น MgCl₂, CaCl₂, MgSO₄, NaHCO₃, KHCO₃
+- **แร่คืออะไร:** อธิบายผลของแร่แต่ละตัว เน้นเรื่องรสอย่างเดียว
+
+## 3. สูตร (Recipes)
+- **อุปกรณ์ชง 13 ตัว:** V60 02, Origami, Kono Meimon, Melitta 1×2, Chemex 6 cup, Kalita Wave 185, OREA V4, April, SOLO, Hario Switch, Clever, AeroPress, French Press
+  - กรองตามทรงได้: กรวย / ก้นแบน / ไฮบริด-แช่ / กด
+- **สูตรชง 60 สูตร**
+  - ทุกสูตรเช็กกับแหล่งต้นทางแล้ว ส่วนที่ไม่ชัวร์มีป้ายบอก
+  - แต่ละสูตรมีปุ่ม "จับเวลาสูตรนี้" กับ "แปลงค่าบด"
+  - กรองตาม: แชมป์ AeroPress (8) · แชมป์ Brewers Cup (5) · แชมป์ระดับประเทศ (15) · ORIGAMI CUP (21) · สูตรคลาสสิก (7) · จีน/มาเลเซีย · ไทย · เครื่องบด
+  - ORIGAMI CUP:
+    - Japan 2023–2026
+    - USA 2026
+    - Canada 2026 (อันดับ 1–3)
+    - Australia 2024
+    - Malaysia 2024/25
+    - **Belgium 2026 (ใหม่)**
+- **ทำเนียบ ORIGAMI CUP ประเทศอื่น:** ผลแข่งกว่า 20 ประเทศที่ยังไม่มีสูตร รวมผลล่าสุดของ Belgium, South Africa และ Malaysia 2026
+- **ทำเนียบแชมป์จีน · มาเลเซีย**
+- **สูตรน้ำแชมป์ 62 รายการ:** Brewers Cup 34, AeroPress 12, World Brewers Cup 3, ORIGAMI 1, คู่มือผู้ผลิต 10 และอื่นๆ แต่ละรายการบอกแหล่งปลูกกับโพรเซสของกาแฟที่ใช้แข่ง
+  - กรองได้: Natural / Washed / Honey / หมัก / ไทย
+
+## 4. เครื่องมือ (Tools)
+- **จับเวลา:** ดึงขั้นตอนจากสูตรมาได้เลย
+- **EY:** คิด Extraction Yield มีโหมดบายพาสหรือชงเข้มแล้วเจือ
+- **เจือจาง:** คิดว่าต้องเติมน้ำเท่าไหร่ให้ได้ TDS ที่ต้องการ
+- **แก้รส:** ตารางอาการกับวิธีแก้ราว 47 อาการ
+
+## 5. สมุด (Log)
+- **บันทึก:** จดการชงทีละการ์ดเป็นข้อ ดึงค่าจากแท็บอื่นมาใส่ได้
+- **ย้อนดู:** ดูประวัติการชง
+- **ประเมินกาแฟ:** มี 3 ฟอร์ม
+  - Cup of Excellence (คะแนน 0–8 หักตำหนิ)
+  - SCA CVA (Affective 1–9 กับ Descriptive CATA)
+  - Tasting Note (ไม่มีคะแนน)
+  - ทั้งสามฟอร์มใช้ร่วมกันได้:
+    - วงล้อกลิ่นรส SCA ซูมได้
+    - คลังคำกลิ่นรส 425 คำ ค้นหาได้ มีผลไม้ไทย/อาเซียนและศัพท์ไวน์
+    - Defect 26 แบบ มีชื่อไทย
+    - การ์ดสรุปแชร์ได้ กว้าง 1080 px มีกราฟเรดาร์และวงล้อย่อ
+- **ชิมปิดตา:** ทดลองชิมแบบ blind
+- **สำรอง:** export / import ข้อมูล
+
+---
+
+## อัปเดต
+- repo: `mimozaaz/dial-in` (branch `main`) → GitHub Pages
+- ทุกบิลด์ต้องเปลี่ยน `VERSION` ใน `sw.js` แล้วปิด-เปิดแอปบน iPhone 1–2 รอบ
+- ลิงก์แก้ใน claude.ai: https://claude.ai/artifact/NZBrFSfLZntrneGtRLH5tp
