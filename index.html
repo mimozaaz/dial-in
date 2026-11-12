@@ -376,7 +376,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
         </div>
         <dl class="kv">
           <dt>อ่านบนหน้าปัด</dt><dd id="r-dial">—</dd>
-          <dt>ระยะเฟือง</dt><dd id="r-um">—</dd>
+          <dt>ขนาดเทียบ (สเกล C40)</dt><dd id="r-um">—</dd>
           <dt>ตั้งได้จริง</dt><dd id="r-near">—</dd>
           <dt>ช่วงที่ตกอยู่</dt><dd id="r-range">—</dd>
         </dl>
@@ -388,7 +388,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
     <div data-sub="all" data-sublabel="ทุกเครื่อง" data-order="2" class="section">
       <h3 style="margin-bottom:8px">ค่าเดียวกันบนทุกเครื่อง</h3>
       <div class="tbl"><table>
-        <thead><tr><th>เครื่องบด</th><th style="text-align:right">µm/คลิก</th><th style="text-align:right">คลิก</th><th>หน้าปัด</th></tr></thead>
+        <thead><tr><th>เครื่องบด</th><th style="text-align:right">µm/คลิก (สเกล C40)</th><th style="text-align:right">คลิก</th><th>หน้าปัด</th></tr></thead>
         <tbody id="g-all"></tbody>
       </table></div>
       <p class="note" style="margin-top:8px">* C60 ใช้ค่าที่ปรับเทียบกับ C40 (ไม่ใช่ระยะเฟืองจริง) · ≈ แหล่งข้อมูลไม่ยืนยัน แตะเลือกเป็นเครื่องปลายทางเพื่ออ่านหมายเหตุ</p>
@@ -397,7 +397,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
     <div data-sub="range" data-sublabel="ช่วงบดตามวิธีชง" data-order="3" class="section">
       <h3 style="margin-bottom:8px">ช่วงการบดตามวิธีชง</h3>
       <div class="tbl"><table>
-        <thead><tr><th>วิธีชง</th><th style="text-align:right">ระยะเฟือง (µm)</th><th style="text-align:right">เทียบ C40 (คลิก)</th></tr></thead>
+        <thead><tr><th>วิธีชง</th><th style="text-align:right">ขนาดเทียบ (µm สเกล C40)</th><th style="text-align:right">เทียบ C40 (คลิก)</th></tr></thead>
         <tbody id="g-methods"></tbody>
       </table></div>
       <p class="note" style="margin-top:10px">ช่วงเหล่านี้อิงจากช่วงคลิกที่นิยมบน Comandante C40 แล้วแปลงเป็นไมครอน ใช้เป็นจุดเริ่มต้นเท่านั้น <b>ตัวเลขทั้งหมดคือระยะที่เฟืองขยับ ไม่ใช่ขนาดผงจริง</b> เฟืองต่างทรงกันได้ผงต่างกันแม้ระยะเท่ากัน หลังแปลงแล้วให้ชิมและขยับต่ออีก 1–3 คลิก</p>
@@ -900,7 +900,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
   </section>
 
   <footer>
-    ข้อมูล µm/คลิกมาจากสเปกผู้ผลิตเป็นหลัก ( <a href="https://1zpresso.coffee/grindsetting" target="_blank" rel="noopener">1Zpresso</a> ) และร้านค้า/รีวิว เช่น <a href="https://www.brewcoffeehome.com/timemore-chestnut-s3-review/" target="_blank" rel="noopener">BrewCoffeeHome</a> และ <a href="https://www.home-barista.com/" target="_blank" rel="noopener">Home-Barista</a> ค่าที่มีเครื่องหมาย ≈ แหล่งข้อมูลไม่ตรงกันหรือไม่ได้มาจากผู้ผลิต สูตรแชมป์อ้างจาก <a href="https://aeropress.com/blogs/w-a-c-aeropress-recipes/1st-nemo-pop-australia-2025" target="_blank" rel="noopener">AeroPress</a>, <a href="https://themagicroast.substack.com/p/introducing-2023-world-aeropress" target="_blank" rel="noopener">The Magic Roast</a> และ <a href="https://europeancoffeetrip.com/winning-pourover-recipe-solo-dripper/" target="_blank" rel="noopener">European Coffee Trip</a>
+    ทุกเครื่องเทียบกันบนสเกลเดียว คือคลิก C40 × 30 µm · เครื่องที่มีชาร์ตใน <a href="https://honestcoffeeguide.com/coffee-grind-size-chart/" target="_blank" rel="noopener">Honest Coffee Guide</a> ปรับค่าด้วยการฟิตช่วงบดตามวิธีชงเทียบกับ C40 (สเปก µm/คลิกของผู้ผลิตคือระยะเฟืองขยับ ใช้แปลงข้ามเครื่องตรงๆ ไม่ได้) · ข้อมูลกลไกหน้าปัดจาก <a href="https://1zpresso.coffee/grindsetting" target="_blank" rel="noopener">1Zpresso</a> และร้านค้า/รีวิว เช่น <a href="https://www.brewcoffeehome.com/timemore-chestnut-s3-review/" target="_blank" rel="noopener">BrewCoffeeHome</a> และ <a href="https://www.home-barista.com/" target="_blank" rel="noopener">Home-Barista</a> ค่าที่มีเครื่องหมาย ≈ แหล่งข้อมูลไม่ตรงกันหรือไม่ได้มาจากผู้ผลิต สูตรแชมป์อ้างจาก <a href="https://aeropress.com/blogs/w-a-c-aeropress-recipes/1st-nemo-pop-australia-2025" target="_blank" rel="noopener">AeroPress</a>, <a href="https://themagicroast.substack.com/p/introducing-2023-world-aeropress" target="_blank" rel="noopener">The Magic Roast</a> และ <a href="https://europeancoffeetrip.com/winning-pourover-recipe-solo-dripper/" target="_blank" rel="noopener">European Coffee Trip</a>
   </footer>
 </div>
 
@@ -917,22 +917,25 @@ const G=[
  {id:'c40lab-nb',b:'Comandante',n:'C40 Lab Series · Nitro Blade',um:30,flag:'คิดแบบเดียวกับ C40 MK4 (30 µm/คลิก) ผู้ผลิตยังไม่ประกาศค่าแยกของ Lab Series'},
  {id:'c40lab-ts',b:'Comandante',n:'C40 Lab Series · Tigershark',um:30,flag:'คิดจากระยะคลิกแบบ C40 MK4 แต่ฟันเฟือง Tigershark คนละทรงกับ Nitro Blade คลิกเท่ากันอาจได้ผงไม่เท่ากัน ต้องชิมจูนเพิ่ม'},
  {id:'c40lab-hh',b:'Comandante',n:'C40 Lab Series · Hammerhead',um:30,flag:'คิดจากระยะคลิกแบบ C40 MK4 แต่ฟันเฟือง Hammerhead คนละทรงกับ Nitro Blade คลิกเท่ากันอาจได้ผงไม่เท่ากัน ต้องชิมจูนเพิ่ม'},
- {id:'c60',b:'Comandante',n:'C60 Baracuda (Gold Clix)',um:17.5,o:140,flag:'C60 เฟืองใหญ่คนละทรงกับ C40 ระยะเฟืองตรงๆ (รีวิวระบุ 41.6 µm/คลิก) จึงเทียบข้ามรุ่นไม่ได้ ค่านี้ปรับเทียบจากชาร์ตช่วงคลิกตามวิธีชงของ C60 ให้ตรงกับ C40 ใช้เป็นจุดเริ่มเท่านั้น'},
- {id:'kultra',b:'1Zpresso',n:'K-Ultra',um:20,cpr:100,cpn:10},
- {id:'kmax',b:'1Zpresso',n:'K-Max / K-Plus / K-Pro',um:22,cpr:90,cpn:10},
+ {id:'c60',b:'Comandante',n:'C60 Baracuda (คลิกมาตรฐาน)',um:21.9,flag:'C60 เฟืองใหญ่คนละทรงกับ C40 (รีวิววัดเฟืองขยับ 41.6 µm/คลิก) ค่านี้ปรับเทียบกับ C40 จากชาร์ต Honest Coffee Guide · ถ้าใส่ Gold Clix ให้เลือกอีกตัว เพราะคลิกละเอียดขึ้นเท่าตัว'},
+ {id:'c60gc',b:'Comandante',n:'C60 Baracuda + Gold Clix',um:10.9,flag:'Gold Clix ทำให้คลิกละเอียดขึ้นเท่าตัว (คลิก Gold Clix = 2 คลิกมาตรฐาน) · ค่านี้ปรับเทียบกับ C40 จากชาร์ต Honest Coffee Guide'},
+ {id:'kultra',b:'1Zpresso',n:'K-Ultra',um:8.3,cpr:100,cpn:10,flag:'ผู้ผลิตบอก 20 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'kmax',b:'1Zpresso',n:'K-Max / K-Plus / K-Pro',um:8.8,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 22 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
  {id:'zp6',b:'1Zpresso',n:'ZP6 Special',um:9.9,o:270,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 22 µm/คลิก แต่นั่นคือระยะเฟืองขยับ เฟือง hexagonal ของ ZP6 ทำให้ผงเปลี่ยนน้อยกว่านั้นมาก ถ้าคิด 22 µm จะแปลงไปเครื่องอื่นหยาบเกินจริงราว 1.5 เท่า · ค่านี้ (~270 + 9.9 µm/คลิก) ฟิตจากชาร์ตช่วงบดตามวิธีชงของ ZP6 Special เทียบกับ C40 (Honest Coffee Guide) และตรงกับที่แชมป์ระบุคู่กัน เช่น Tay WAC 2023: ZP6 65 คลิก ≈ C40 29 คลิก · อ่านเบอร์แบบ 5.8 = เลข 5 + 8 คลิก = 58 คลิก'},
- {id:'jultra',b:'1Zpresso',n:'J-Ultra',um:8,cpr:100,cpn:10},
- {id:'jmax',b:'1Zpresso',n:'J-Max',um:8.8,cpr:90,cpn:10},
- {id:'jxpro',b:'1Zpresso',n:'JX-Pro / X-Pro',um:12.5,cpr:40},
- {id:'q2',b:'1Zpresso',n:'Q2 / J / JE (ปรับด้านใน)',um:25,cpr:30,cpn:3},
- {id:'s3',b:'Timemore',n:'Chestnut S3',um:15,cpr:90,cpn:10},
- {id:'c3esp',b:'Timemore',n:'C3 ESP / ESP Pro',um:23,cpr:30},
- {id:'c3',b:'Timemore',n:'C2 / C3 / C3S',um:83,cpr:12,flag:'ค่าจากรีวิว ผู้ผลิตไม่ได้ประกาศ'},
- {id:'xlite',b:'Timemore',n:'Chestnut X Lite',um:42,cpr:24,flag:'ค่าจากรีวิว ผู้ผลิตไม่ได้ประกาศ'},
- {id:'k6',b:'KINGrinder',n:'K6 / K4',um:16,cpr:60},
- {id:'k2',b:'KINGrinder',n:'K2',um:18,cpr:40},
- {id:'p2',b:'KINGrinder',n:'P2',um:33,cpr:30,flag:'ผู้ผลิตระบุ 33 µm แต่มีรีวิวชี้ว่าผงเปลี่ยนน้อยกว่านั้น'},
- {id:'exa',b:'Wacaco',n:'Exagrind',um:33,flag:'ค่าจากร้านค้า'},
+ {id:'jultra',b:'1Zpresso',n:'J-Ultra',um:2.7,cpr:100,cpn:10,flag:'ผู้ผลิตบอก 8 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'jmax',b:'1Zpresso',n:'J-Max',um:2.9,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 8.8 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'jxpro',b:'1Zpresso',n:'JX-Pro / JX-Pro S',um:5,cpr:40,cpn:4,flag:'ผู้ผลิตบอก 12.5 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) · แยกจาก X-Pro แล้ว เพราะ X-Pro หมุนรอบละ 60 คลิก ไม่ใช่ 40'},
+ {id:'xpro',b:'1Zpresso',n:'X-Pro / X-Pro S',um:5.6,cpr:60,cpn:10,flag:'ผู้ผลิตบอก 12.5 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'q2',b:'1Zpresso',n:'Q2 / J / JE (ปรับด้านใน)',um:12.4,cpr:30,cpn:3,flag:'ผู้ผลิตบอก 25 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) (ฟิตจาก Q2 S)'},
+ {id:'s3',b:'Timemore',n:'Chestnut S3',um:9.5,o:370,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 15 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) · เบอร์ 0 ของ S3 ยังไม่ชิดถึงระดับเอสเพรสโซ จึงมีค่าตั้งต้น ~370 µm'},
+ {id:'c3esp',b:'Timemore',n:'C3 ESP / ESP Pro',um:12.3,cpr:30,cpn:3,flag:'ผู้ผลิตบอก 23.3 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'c2',b:'Timemore',n:'C2',um:35.6,flag:'รีวิวบอก 83 µm/คลิก ซึ่งหยาบเกินจริงมาก · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) · แยกจาก C3 แล้ว เพราะเบอร์ไม่ตรงกัน'},
+ {id:'c3',b:'Timemore',n:'C3 / C3S',um:42.4,flag:'รีวิวบอก 83 µm/คลิก ซึ่งหยาบเกินจริงมาก · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'xlite',b:'Timemore',n:'Chestnut X Lite',um:42,cpr:24,flag:'ค่าจากรีวิว ผู้ผลิตไม่ได้ประกาศ · ยังไม่มีชาร์ตเทียบให้ปรับ เครื่องอื่นที่ปรับแล้วส่วนใหญ่ค่าจริงต่ำกว่าสเปกราวครึ่งหนึ่ง เครื่องนี้อาจแปลงออกมาหยาบเกินจริง ใช้เป็นจุดเริ่มเท่านั้น'},
+ {id:'k6',b:'KINGrinder',n:'K6 / K4',um:9.3,cpr:60,flag:'ผู้ผลิตบอก 16 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'k2',b:'KINGrinder',n:'K2',um:8,cpr:40,flag:'ผู้ผลิตบอก 18 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'p2',b:'KINGrinder',n:'P2',um:11.8,cpr:30,flag:'ผู้ผลิตบอก 33 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
+ {id:'exa',b:'Wacaco',n:'Exagrind',um:14.7,o:170,flag:'ร้านค้าบอก 33 µm/คลิก แต่ผงจริงเปลี่ยนน้อยกว่า · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) · คลิก 0 ยังไม่ละเอียดสุดจึงมีค่าตั้งต้น ~170 µm'},
  {id:'lag01',b:'Option-O',n:'Lagom 01 (เลขหน้าปัด)',um:75,flag:'Stepless ตัวเลขที่ได้คือเลขบนหน้าปัด เช่น 4.6 ไม่ใช่คลิก · ผู้ผลิตระบุทุกขีด 0.1 = 7.5 µm (1 เลข = 75 µm) นับจากศูนย์ที่ตั้งมาจากโรงงาน · เป็นเฟืองแบน 98 mm คนละทรงกับกรวยของ C40 ระยะเท่ากันได้ผงไม่เท่ากัน ต้องชิมจูนต่อ'},
  {id:'lagp64',b:'Option-O',n:'Lagom P64 (เลขหน้าปัด 0–10)',um:100,o:245,flag:'Stepless ตัวเลขที่ได้คือเลขบนหน้าปัด ไม่ใช่คลิก · ประมาณจากช่วง 245–1245 µm บนหน้าปัด 0–10 (Honest Coffee Guide) ผู้ผลิตไม่ได้ประกาศ ต้องเทียบจุดศูนย์ของเครื่องตัวเองก่อน'},
  {id:'lagmini-ob',b:'Option-O',n:'Lagom Mini · Obsidian (นับจุด)',um:7.4,flag:'Stepless ตัวเลขที่ได้คือจำนวนจุดนับจากศูนย์ · ประมาณจากช่วง 0–1400 µm ราว 190 จุด (Honest Coffee Guide) ผู้ผลิตไม่ได้ประกาศ'},

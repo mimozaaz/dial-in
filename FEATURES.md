@@ -1,4 +1,4 @@
-# Dial-In Bench — มีอะไรบ้าง (dib-v46 · 11 พ.ย. 2026)
+# Dial-In Bench — มีอะไรบ้าง (dib-v47 · 12 พ.ย. 2026)
 
 แอปช่วยซ้อมชงกาแฟแข่ง ใช้บน iPhone เป็น PWA ผ่าน GitHub Pages
 มี 5 แท็บล่าง: **บด · น้ำ · สูตร · เครื่องมือ · สมุด**
@@ -6,10 +6,10 @@
 ---
 
 ## 1. บด (Grind)
-- **แปลงค่าบด** ข้ามเครื่องด้วย µm ต่อคลิก รองรับ **25 เครื่อง**
-  - Comandante: C40 MK4, C40 + Red Clix, C40 Lab Series (Nitro Blade / Tigershark / Hammerhead), C60 Baracuda
-  - 1Zpresso: K-Ultra, K-Max / K-Plus / K-Pro, ZP6 Special, J-Ultra, J-Max, JX-Pro / X-Pro, Q2 / J / JE
-  - Timemore: Chestnut S3, C3 ESP / ESP Pro, C2 / C3 / C3S, Chestnut X Lite
+- **แปลงค่าบด** ข้ามเครื่องด้วย µm ต่อคลิก รองรับ **27 เครื่อง** ทุกเครื่องเทียบบนสเกลเดียวกับ C40 (ปรับจากชาร์ต Honest Coffee Guide ไม่ใช้สเปกระยะเฟืองของผู้ผลิตตรงๆ)
+  - Comandante: C40 MK4, C40 + Red Clix, C40 Lab Series (Nitro Blade / Tigershark / Hammerhead), C60 Baracuda (คลิกมาตรฐาน / Gold Clix)
+  - 1Zpresso: K-Ultra, K-Max / K-Plus / K-Pro, ZP6 Special, J-Ultra, J-Max, JX-Pro / JX-Pro S, X-Pro / X-Pro S, Q2 / J / JE
+  - Timemore: Chestnut S3, C3 ESP / ESP Pro, C2, C3 / C3S, Chestnut X Lite
   - KINGrinder: K6 / K4, K2, P2
   - Option-O Lagom: 01, P64, Mini
   - Exagrind และแบบ "กำหนดเอง" (ใส่ µm/คลิกเอง)
