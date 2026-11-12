@@ -929,7 +929,7 @@ const G=[
  {id:'c60gc',b:'Comandante',n:'C60 Baracuda + Gold Clix',um:10.9,flag:'Gold Clix ทำให้คลิกละเอียดขึ้นเท่าตัว (คลิก Gold Clix = 2 คลิกมาตรฐาน) · ค่านี้ปรับเทียบกับ C40 จากชาร์ต Honest Coffee Guide'},
  {id:'kultra',b:'1Zpresso',n:'K-Ultra',um:8.3,cpr:100,cpn:10,flag:'ผู้ผลิตบอก 20 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
  {id:'kmax',b:'1Zpresso',n:'K-Max / K-Plus / K-Pro',um:8.8,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 22 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
- {id:'zp6',b:'1Zpresso',n:'ZP6 Special',um:9.9,o:270,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 22 µm/คลิก แต่นั่นคือระยะเฟืองขยับ เฟือง hexagonal ของ ZP6 ทำให้ผงเปลี่ยนน้อยกว่านั้นมาก ถ้าคิด 22 µm จะแปลงไปเครื่องอื่นหยาบเกินจริงราว 1.5 เท่า · ค่านี้ (~270 + 9.9 µm/คลิก) ฟิตจากชาร์ตช่วงบดตามวิธีชงของ ZP6 Special เทียบกับ C40 (Honest Coffee Guide) และตรงกับที่แชมป์ระบุคู่กัน เช่น Tay WAC 2023: ZP6 65 คลิก ≈ C40 29 คลิก · อ่านเบอร์แบบ 5.8 = เลข 5 + 8 คลิก = 58 คลิก'},
+ {id:'zp6',b:'1Zpresso',n:'ZP6 Special',um:9.9,o:270,cpr:90,cpn:10,numDial:1,lo:20,loMsg:'เบอร์ต่ำกว่า 2.0 เฟืองเริ่มเสียดกัน ใช้ชงจริงไม่ได้ และ ZP6 Special ทำเอสเพรสโซไม่ได้ (Honest Coffee Guide) · ถ้าต้องการละเอียดขนาดนี้ใช้เครื่องอื่น เช่น J-Max/J-Ultra',flag:'ผู้ผลิตบอก 22 µm/คลิก แต่นั่นคือระยะเฟืองขยับ เฟือง hexagonal ของ ZP6 ทำให้ผงเปลี่ยนน้อยกว่านั้นมาก ถ้าคิด 22 µm จะแปลงไปเครื่องอื่นหยาบเกินจริงราว 1.5 เท่า · ค่านี้ (~270 + 9.9 µm/คลิก) ฟิตจากชาร์ตช่วงบดตามวิธีชงของ ZP6 Special เทียบกับ C40 (Honest Coffee Guide) และตรงกับที่แชมป์ระบุคู่กัน เช่น Tay WAC 2023: ZP6 65 คลิก ≈ C40 29 คลิก · อ่านเบอร์แบบ 5.8 = เลข 5 + 8 คลิก = 58 คลิก'},
  {id:'jultra',b:'1Zpresso',n:'J-Ultra',um:2.7,cpr:100,cpn:10,flag:'ผู้ผลิตบอก 8 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
  {id:'jmax',b:'1Zpresso',n:'J-Max',um:2.9,cpr:90,cpn:10,flag:'ผู้ผลิตบอก 8.8 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง)'},
  {id:'jxpro',b:'1Zpresso',n:'JX-Pro / JX-Pro S',um:5,cpr:40,cpn:4,flag:'ผู้ผลิตบอก 12.5 µm/คลิก แต่นั่นคือระยะเฟืองขยับ ผงจริงเปลี่ยนน้อยกว่า ถ้าใช้ค่านั้นแปลงข้ามเครื่องจะเพี้ยนไปทางหยาบ · ค่านี้ปรับเทียบกับ C40 จากชาร์ตช่วงบดตามวิธีชงของ Honest Coffee Guide (ฟิตทุกวิธีชง) · แยกจาก X-Pro แล้ว เพราะ X-Pro หมุนรอบละ 60 คลิก ไม่ใช่ 40'},
@@ -971,6 +971,7 @@ const offOf=sel=>byId[sel.value].o||0;
 function dial(g,clicks){
   if(!g||!g.cpr)return null;
   const c=Math.round(clicks);const rot=Math.floor(c/g.cpr);const rem=c-rot*g.cpr;
+  if(g.numDial){const num=Math.floor(c/g.cpn),cl=c-num*g.cpn;return `${num}.${cl}  (เลข.คลิก)`}
   if(g.cpn){const num=Math.floor(rem/g.cpn),cl=rem-num*g.cpn;return `${rot}.${num}.${cl}  (รอบ.เลข.คลิก)`}
   return `${rot}.${String(rem).padStart(2,'0')}  (รอบ.คลิก)`;
 }
@@ -1008,6 +1009,7 @@ function calcGrind(){
   $('#r-near').textContent=lo===hi?`${lo} คลิก พอดี`:`${lo} (ละเอียดขึ้น) หรือ ${hi} (หยาบขึ้น)`;
   const ms=methodsFor(um);$('#r-range').textContent=ms.length?ms.join(', '):'นอกช่วงที่ใช้ทั่วไป';
   const flags=[byId[gFrom.value],tg].filter(g=>g.flag).map(g=>`<b>${g.b} ${g.n}:</b> ${g.flag}`);
+  if(tg.lo&&clicks<tg.lo)flags.unshift(`<b style="color:var(--bad)">⚠ ${tg.n} ${dial(tg,clicks).split('  ')[0]||fmt(clicks,1)+' คลิก'}:</b> ${tg.loMsg}`);
   const f=$('#r-flag');f.hidden=!flags.length;f.innerHTML=flags.join('<br>');
   drawScale(um);
   $('#g-all').innerHTML=G.filter(g=>g.id!=='custom').map(g=>{const c=Math.max(0,(um-(g.o||0))/g.um);
