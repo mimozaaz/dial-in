@@ -120,6 +120,13 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .cp-w-go{font:600 12.5px var(--body);border:1px dashed var(--accent);color:var(--accent);background:transparent;border-radius:999px;padding:5px 10px;cursor:pointer}
 .cp-defc small{font-size:11px;opacity:.75;margin-left:2px}
 .cp-lv{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.cp-lv .seg button{padding:5px 10px}
+.dose{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--sunk);border-radius:12px;padding:8px 10px;margin:4px 0 10px}
+.dose .k{font-size:12.5px;font-weight:600;color:var(--muted);flex:1 0 100%}
+.dose button[data-dd]{width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:#fff;font:600 22px/1 var(--body);cursor:pointer}
+.dose input{width:84px;flex:0 0 84px;text-align:center;font:600 22px var(--mono);padding:6px;color:var(--accent)}
+.dose .u{font:600 16px var(--mono);color:var(--muted);margin-left:-4px}
+.dose-f{font-size:12.5px;color:var(--accent);font-weight:600}
+.dose-r{font:600 12px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 10px;cursor:pointer;margin-left:auto}
 .cs-flag{display:inline-block;margin-left:6px;font-size:11px;font-weight:600;padding:0 7px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
 .chip.ok{color:var(--ok)} .chip.warn{color:var(--warn)} .chip.bad{color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -730,6 +737,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
             <button class="btn" type="button" id="tm-reset">รีเซ็ต</button>
           </div>
         </div>
+        <div class="note" id="tm-dose" style="color:var(--accent);font-weight:600"></div>
         <div class="note" id="tm-next" aria-live="polite">กดเริ่มเมื่อเทน้ำครั้งแรก</div>
         <ol class="steps tl" id="tm-steps"></ol>
       </div>
@@ -1802,19 +1810,33 @@ const ASIA_DIR=`<article class="rc" style="grid-column:1/-1"><div class="meta"><
 (function(){const cnt={};R.forEach(r=>cnt[r.gr]=(cnt[r.gr]||0)+1);
   const names=Object.keys(cnt).sort((a,b)=>(a==='ไม่ระบุเครื่อง')-(b==='ไม่ระบุเครื่อง')||cnt[b]-cnt[a]||a.localeCompare(b));
   $('#r-grinder').innerHTML='<option value="">ทุกเครื่องบด ('+R.length+')</option>'+names.map(n=>`<option value="${n}">${n} (${cnt[n]})</option>`).join('');})();
+/* ---------- Dose scaling ---------- */
+const baseDose=r=>{const sp=(r.spec||[]).find(x=>/^กาแฟ/.test(x[0]));if(!sp)return null;const m=/(\d+(?:\.\d+)?)\s*g\b/.exec(String(sp[1]));return m?+m[1]:null};
+let rDose={};try{rDose=JSON.parse(localStorage.getItem('dib-rdose')||'{}')||{}}catch(e){}
+const saveDose=()=>{try{localStorage.setItem('dib-rdose',JSON.stringify(rDose))}catch(e){}};
+const doseOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]:b};
+const facOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]/b:1};
+const rnd=v=>v>=10?String(Math.round(v)):String(Math.round(v*10)/10);
+function scaleTxt(t,f){if(f===1||t==null)return t;return String(t).replace(/(\d+(?:\.\d+)?)(\s*[–-]\s*(\d+(?:\.\d+)?))?(\s*)(g|ml)(?![\/\w])/g,(all,a,rng,b,sp,u)=>rnd(+a*f)+(rng?rng.replace(b,rnd(+b*f)):'')+sp+u)}
 function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):x.r.cat===rFilter))&&(!gsel||x.r.gr===gsel)).map(({r,i})=>`<article class="rc">
   <div class="meta"><span class="chip acc">${r.t}</span><span class="chip">${r.dev}</span><span class="chip">⚙ ${r.gr}</span></div>
   <h3>${r.who}</h3>
-  <div class="specs">${r.spec.map(s=>{const m=String(s[1]).match(/^([^(]+?)\s*\((.+)\)\s*$/);return `<div class="spec"><div class="l">${s[0]}</div><div class="v">${m?m[1]:s[1]}</div>${m?`<div class="sn">${m[2]}</div>`:''}</div>`}).join('')}</div>
+  ${(()=>{const b=baseDose(r);if(!b)return '';const d=doseOf(i),f=facOf(i);return `<div class="dose" data-dose="${i}"><span class="k">ปรับปริมาณกาแฟ</span><button type="button" data-dd="-1" aria-label="ลด 1 g">−</button><input type="number" inputmode="decimal" min="1" max="200" step="0.5" value="${+d.toFixed(1)}" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-dd="1" aria-label="เพิ่ม 1 g">+</button>${f!==1?`<span class="dose-f">×${f.toFixed(2)} จากสูตร ${b} g</span><button type="button" class="dose-r" data-dr>คืนค่า</button>`:''}</div>`})()}
+  <div class="specs">${r.spec.map(s=>{const f=facOf(i);s=[s[0],/^กาแฟ/.test(s[0])&&f!==1?scaleTxt(s[1],f).replace(/^\s*\d+(?:\.\d+)?(?=\s*g)/,String(+doseOf(i).toFixed(1))):/^(น้ำ|bypass|บายพาส|เสิร์ฟ|เจือ|บลูม|bloom|เติมน้ำ)/i.test(s[0])?scaleTxt(s[1],f):s[1]];const m=String(s[1]).match(/^([^(]+?)\s*\((.+)\)\s*$/);return `<div class="spec"><div class="l">${s[0]}</div><div class="v">${m?m[1]:s[1]}</div>${m?`<div class="sn">${m[2]}</div>`:''}</div>`}).join('')}</div>
   <dl class="rinfo">${r.bean?`<dt>☕ เมล็ด</dt><dd>${r.bean}</dd>`:''}<dt>⚙ บด</dt><dd>${r.grind}</dd></dl>
-  <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(s[1])}</span></li>`).join('')}</ol></details>
+  <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(scaleTxt(s[1],facOf(i)))}</span></li>`).join('')}</ol></details>
   <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}${r.src2t?`<span class="note ch-src" style="display:block">✓ ${r.src2t}</span>`:''}
 </article>`).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');}
+function keepOpen(fn){const open=[...document.querySelectorAll('#rc-list details[open]')].map(d=>[...document.querySelectorAll('#rc-list details')].indexOf(d));const y=scrollY;fn();const ds=document.querySelectorAll('#rc-list details');open.forEach(k=>ds[k]&&(ds[k].open=true));scrollTo(0,y)}
 renderRecipes();
+$('#rc-list').addEventListener('change',e=>{const dz=e.target.closest('[data-dose]');if(!dz||e.target.tagName!=='INPUT')return;const i=+dz.dataset.dose,b=baseDose(R[i]);let d=+e.target.value;if(!(d>0)){keepOpen(renderRecipes);return}d=Math.min(200,d);if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d;saveDose();keepOpen(renderRecipes)});
 $('#r-grinder').addEventListener('change',renderRecipes);
 $('#r-filter').addEventListener('click',e=>{const btn=e.target.closest('[data-f]');if(!btn)return;rFilter=btn.dataset.f;
   $('#r-filter').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn));renderRecipes();});
-$('#rc-list').addEventListener('click',e=>{const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
+$('#rc-list').addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
+    if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d}
+    saveDose();keepOpen(renderRecipes);return}
+  const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
   gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();});
 function calcRatio(){const d=+$('#rt-dose').value||0,r=+$('#rt-ratio').value||0;$('#rt-water').textContent=fmt(d*r,0)+' g'}
 ['#rt-dose','#rt-ratio'].forEach(s=>$(s).addEventListener('input',calcRatio));
@@ -1941,7 +1963,8 @@ let tStart=0,tAcc=0,tRun=false,tInt=null;
 const mmss=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 function elapsed(){return tAcc+(tRun?(performance.now()-tStart)/1000:0)}
 function renderTimer(){
-  const r=TR[+$('#tm-recipe').value],e=elapsed();
+  const ti=+$('#tm-recipe').value,f=facOf(ti),r={...TR[ti],steps:TR[ti].steps.map(s=>({...s,txt:scaleTxt(s.txt,f)}))},e=elapsed();
+  $('#tm-dose').textContent=f!==1?`ปรับปริมาณแล้ว: กาแฟ ${rnd(doseOf(ti))} g (×${f.toFixed(2)}) · น้ำทุกขั้นคูณตามสัดส่วน`:'';
   $('#tm-clock').textContent=mmss(e);
   const timed=r.steps.map((s,i)=>({...s,i})).filter(s=>s.t!=null);
   let cur=-1;timed.forEach(s=>{if(s.t<=e)cur=s.i});
