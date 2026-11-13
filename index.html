@@ -127,6 +127,12 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .dose .u{font:600 16px var(--mono);color:var(--muted);margin-left:-4px}
 .dose-f{font-size:12.5px;color:var(--accent);font-weight:600}
 .dose-r{font:600 12px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 10px;cursor:pointer;margin-left:auto}
+.mg-pt{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start}.mg-pt>span{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font:600 13px/26px var(--mono);text-align:center}.mg-pt p{margin:0;font-size:14.5px}
+.mg-d>summary{font-family:var(--display);font-weight:600;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mg-d>summary::-webkit-details-marker{display:none}.mg-d>summary::after{content:"＋";color:var(--accent);font-weight:700}.mg-d[open]>summary::after{content:"－"}
+.mg-d[open]>summary{margin-bottom:10px}
+.mg-ul{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.mg-rc{display:grid;gap:8px}.mg-rcard{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.mg-rcard>b{display:block;margin-bottom:6px}.mg-rg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px 6px}.mg-rg span{display:flex;flex-direction:column;font:600 14px var(--mono);text-transform:none}.mg-rg i{font:400 11px var(--sans,inherit);font-style:normal;color:var(--muted);text-transform:none}.mg-rg span.k{color:var(--accent)}
 .cs-flag{display:inline-block;margin-left:6px;font-size:11px;font-weight:600;padding:0 7px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
 .chip.ok{color:var(--ok)} .chip.warn{color:var(--warn)} .chip.bad{color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -574,6 +580,146 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
         <tbody id="min-body"></tbody>
       </table></div>
       <p class="note" style="margin-top:10px">ข้อควรรู้: ที่ระดับหยดแร่ (หลักสิบ ppm) เกลือส่วนใหญ่ยังต่ำกว่าระดับที่ลิ้นรับรสตัวเกลือเองได้ ผลหลักจึงมาจาก (1) ไอออนบวกช่วยดึงสารรสออกจากกาแฟ และ (2) ไบคาร์บอเนตกดความเปรี้ยว มากกว่ารสของตัวเกลือ งานวิจัยส่วนใหญ่ทำที่ความเข้มข้นสูงกว่าที่ใช้จริงมาก</p>
+    </div>
+
+    <div data-sub="mguide" data-sublabel="คู่มือน้ำ" data-order="5.5" class="section stack mg">
+      <div><h3 style="margin:0">คู่มือแร่ปรุงน้ำ · ฉบับย่อ</h3><p class="note" style="margin:4px 0 0">สรุปจากเอกสาร "สรุปแร่ธาตุสำหรับปรุงน้ำกาแฟ" ของ @Chaya Supannarat (11 พ.ย. 2026) · แตะหัวข้อเพื่อเปิด</p></div>
+
+      <div class="mg-key panel stack" style="gap:8px">
+        <b>สรุปสั้นที่สุด</b>
+        <div class="mg-pt"><span>1</span><p><b>ไบคาร์บอเนต (HCO₃⁻ / KH) คือตัวแปรเดียวที่มีหลักฐานชัดว่าเปลี่ยนรสกาแฟ</b> ยิ่งสูง ยิ่งกดเปรี้ยว ผลไม้หาย ขม/คั่วเด่นขึ้น (Rune et al. 2026)</p></div>
+        <div class="mg-pt"><span>2</span><p>Mg, Ca, Na, K, Cl, SO₄ และซิลิกา ที่ระดับน้ำชงทั่วไป (0–65 mg/L) <b>ยังไม่มีหลักฐานว่าเปลี่ยนรส</b> และต่ำกว่าระดับที่ลิ้นรับรสตัวเกลือเองมาก</p></div>
+        <div class="mg-pt"><span>3</span><p>คู่ที่ต้องระวัง: <b>Ca + HCO₃</b> (ต้มแล้วตกตะกอน KH หาย) และ <b>Ca + ฟอสเฟต</b> · Mg เข้าได้กับทุกตัว</p></div>
+        <div class="mg-pt"><span>4</span><p>จัดกลุ่มน้ำปรุงได้ 2 แกน: <b>ระดับบัฟเฟอร์</b> × <b>แหล่ง GH</b> (Mg ล้วน / Ca+Mg / Ca ล้วน)</p></div>
+      </div>
+
+      <details class="mg-d panel"><summary>แปลงหน่วย GH / KH ↔ mg/L</summary>
+        <div class="tbl"><table><thead><tr><th>ค่า</th><th>เป็น</th><th>สูตร</th></tr></thead><tbody>
+          <tr><td>GH ส่วน Ca (ppm as CaCO₃)</td><td>Ca²⁺ mg/L</td><td class="readout">× 0.40</td></tr>
+          <tr><td>GH ส่วน Mg (ppm as CaCO₃)</td><td>Mg²⁺ mg/L</td><td class="readout">× 0.243</td></tr>
+          <tr><td>KH (ppm as CaCO₃)</td><td>HCO₃⁻ mg/L</td><td class="readout">× 1.22</td></tr>
+          <tr><td>1 dKH</td><td>ppm as CaCO₃</td><td class="readout">= 17.9</td></tr>
+        </tbody></table></div>
+        <ul class="mg-ul"><li><b>ค่า TDS meter ≠ GH + KH</b> เครื่องวัดค่าการนำไฟฟ้าแล้วคูณแฟกเตอร์ ไอออนแต่ละชนิดนำไฟฟ้าไม่เท่ากัน (Cl⁻ ดันค่าที่อ่านได้มาก) และซิลิกาไม่ขึ้นเลย</li>
+        <li>ชดเชยอุณหภูมิ: TDS₂₅ ≈ TDS ที่วัด − 0.021 × (อุณหภูมิ − 25) <span class="cs-flag" style="margin:0">ตามเอกสาร ยังไม่ได้เช็กต้นทาง</span></li></ul>
+      </details>
+
+      <details class="mg-d panel"><summary>แต่ละไอออนทำอะไร · ระดับหลักฐาน</summary>
+        <div class="tbl"><table><thead><tr><th>ไอออน</th><th>มาจาก</th><th>หน้าที่</th><th>ผลต่อรสกาแฟ</th><th>หลักฐาน</th><th>ลิ้นเริ่มรับรสในน้ำเปล่า</th></tr></thead><tbody>
+          <tr><td>HCO₃⁻</td><td>NaHCO₃, KHCO₃</td><td>บัฟเฟอร์หลัก กดกรดที่ละลายออกมา ความเปรี้ยวลดลง</td><td>&gt;120 mg/L เริ่มต่าง · 240 mg/L ต่างมาก · 15–60 mg/L แยกไม่ออก</td><td><span class="chip ok">สูง (Rune 2026)</span></td><td>—</td></tr>
+          <tr><td>ซิเตรต</td><td>เกลือซิเตรต</td><td>บัฟเฟอร์ pKa 4.8 และ 6.4</td><td>ตามหลักเคมีกดความเปรี้ยว</td><td><span class="chip">ยังไม่มีงานวิจัยกาแฟ</span></td><td>—</td></tr>
+          <tr><td>ฟอสเฟต</td><td>K/Na phosphate</td><td>บัฟเฟอร์ pKa ~7.2</td><td>ตามหลักเคมีกดความเปรี้ยว</td><td><span class="chip">ยังไม่มีงานวิจัยกาแฟ</span></td><td>—</td></tr>
+          <tr><td>Mg²⁺</td><td>MgSO₄, MgCl₂</td><td>จับสารรสได้ในแบบจำลอง</td><td>480 mg/L ยังแยกไม่ออก</td><td><span class="chip warn">ปานกลาง (Hendon 2014 = ต่าง, Rune 2026 = ไม่ต่าง)</span></td><td>หลักร้อย mg/L</td></tr>
+          <tr><td>Ca²⁺</td><td>CaCl₂</td><td>คล้าย Mg ในแบบจำลอง</td><td>ถึง 264 mg/L ยังแยกไม่ออก</td><td><span class="chip warn">ปานกลาง</span></td><td>~100–300 mg/L</td></tr>
+          <tr><td>Na⁺</td><td>NaHCO₃, NaCl</td><td>ตัวคู่ประจุ</td><td>ไม่มีผลที่ระดับน้ำชง</td><td><span class="chip">ต่ำ</span></td><td>~200 mg/L</td></tr>
+          <tr><td>K⁺</td><td>KHCO₃, KCl</td><td>ตัวคู่ประจุ</td><td>ไม่มีผลที่ระดับน้ำชง</td><td><span class="chip">ต่ำ</span></td><td>หลักร้อย mg/L</td></tr>
+          <tr><td>Cl⁻</td><td>เกลือคลอไรด์</td><td>ตัวคู่ประจุ</td><td>ไม่มีผลที่ระดับน้ำชง</td><td><span class="chip">ต่ำ</span></td><td>~200–300 mg/L</td></tr>
+          <tr><td>SO₄²⁻</td><td>เกลือซัลเฟต</td><td>ตัวคู่ประจุ</td><td>ไม่มีผลที่ระดับน้ำชง</td><td><span class="chip">ต่ำ</span></td><td>~250–1,000 mg/L</td></tr>
+          <tr><td>ซิลิกา</td><td>น้ำแร่ธรรมชาติ</td><td>ไม่แตกตัวเป็นไอออน</td><td>ไม่มีรส</td><td><span class="chip">ต่ำ</span></td><td>—</td></tr>
+        </tbody></table></div>
+        <ul class="mg-ul"><li><b>ที่มาของความเชื่อผิด:</b> แนวคิด "ซัลเฟตเน้นความสด / คลอไรด์เน้นบอดี้" มาจากการต้มเบียร์ ที่ความเข้มข้นหลักร้อย mg/L ไม่ใช่ระดับน้ำกาแฟ</li>
+        <li>การชิมเทียบหน้าบาร์ส่วนใหญ่เปลี่ยนน้ำทั้งขวด ทำให้ KH เปลี่ยนไปด้วย ผลที่รับรู้จึงน่าจะมาจากบัฟเฟอร์ ไม่ใช่ Mg หรือ Ca (ตัวแปรรบกวน)</li>
+        <li>ข้อมูลชุดนี้ต่างจากตาราง "แร่คืออะไร" ในบางจุด (เช่นผลของ Mg) เพราะตารางนั้นรวมความเห็นในวงการด้วย ส่วนคู่มือนี้ยึดงานวิจัยล่าสุด</li></ul>
+      </details>
+
+      <details class="mg-d panel"><summary>ใช้คู่กันได้ไหม</summary>
+        <div class="tbl"><table><thead><tr><th>คู่</th><th>สถานะ</th><th>เหตุผล</th></tr></thead><tbody>
+          <tr><td>Ca + HCO₃</td><td><span class="chip warn">ระวัง</span></td><td>CaCO₃ ละลายน้ำได้น้อยและยิ่งร้อนยิ่งละลายน้อยลง ต้มแล้ว KH หายไปพร้อม Ca hardness จากการตกตะกอน รสน้ำจึงเพี้ยนจากที่คำนวณ</td></tr>
+          <tr><td>Ca + ฟอสเฟต</td><td><span class="chip warn">หลีกเลี่ยง</span></td><td>แคลเซียมฟอสเฟตละลายน้ำได้น้อยมาก</td></tr>
+          <tr><td>Ca กับ HCO₃ เข้มข้นในขวดเดียว</td><td><span class="chip bad">ห้าม (DIY)</span></td><td>ตกตะกอนในขวดทันที · ต้องแยกขวดน้ำแร่เข้มข้น</td></tr>
+          <tr><td>Ca + SO₄</td><td><span class="chip ok">ได้</span></td><td>ระดับน้ำชงต่ำกว่าจุดอิ่มตัวของยิปซัมมาก</td></tr>
+          <tr><td>Ca + ซิเตรต</td><td><span class="chip ok">ได้</span></td><td>ซิเตรตจับ Ca ไว้ได้</td></tr>
+          <tr><td>Mg + HCO₃</td><td><span class="chip ok">ได้</span></td><td>ละลายได้ดีกว่า CaCO₃ ~1,000 เท่า · Mg(OH)₂ ตกตะกอนเมื่อ pH เกินราว 10</td></tr>
+          <tr><td>Mg + SO₄ / ฟอสเฟต / ซิลิกา</td><td><span class="chip ok">ได้</span></td><td>—</td></tr>
+          <tr><td>Na หรือ K + ทุกตัว</td><td><span class="chip ok">ได้</span></td><td>เกลือละลายง่าย</td></tr>
+          <tr><td>HCO₃ + ซิเตรต</td><td><span class="chip ok">ได้ (บวกกัน)</span></td><td>บัฟเฟอร์รวมกัน · ดูแค่ KH อย่างเดียวจะประเมินความสามารถต้านกรดต่ำกว่าจริง</td></tr>
+        </tbody></table></div>
+      </details>
+
+      <details class="mg-d panel"><summary>ข้อเท็จจริงอื่นที่ควรรู้</summary>
+        <ul class="mg-ul">
+          <li><b>การต้ม:</b> น้ำที่ไม่มี Ca รักษาค่า KH ได้หลังต้ม · ความเข้มข้นเปลี่ยนแค่ราว 1–5% จากน้ำระเหย</li>
+          <li><b>การอุ่น:</b> น้ำปรุงที่ไม่มี Ca ต้มซ้ำได้หลายรอบ</li>
+          <li><b>น้ำ bypass / น้ำเจือ:</b> เติมบัฟเฟอร์เข้าแก้วด้วย ต้องนับรวมตอนคำนวณ</li>
+          <li><b>การวัด KH:</b> ชุดหยดตู้ปลาละเอียดแค่ 1 dKH (≈17.9 ppm) · ให้วัดน้ำเข้มข้น 10 เท่าแล้วหาร 10 · ชุดทดสอบนับซิเตรตและฟอสเฟตบางส่วนเข้าไปด้วย</li>
+          <li><b>เช็กความสมดุล:</b> ผลรวมประจุบวกควรเท่าประจุลบ แล้วเทียบกับค่า TDS ที่วัดได้</li>
+          <li><b>ช่วงที่แนะนำ:</b> TDS ราว 35–120 ppm ค่ากลางราว 80</li>
+          <li><b>อุณหภูมิน้ำชง:</b> ที่ TDS และ EY เท่ากัน ช่วง 87–93°C แทบไม่เปลี่ยนโปรไฟล์รส (Batali et al., UC Davis)</li>
+          <li><b>น้ำกาแฟแต่ละช่วง:</b> ช่วงแรกเปรี้ยวและฝาดกว่า ช่วงหลังหวานและหอมดอกไม้กว่า (Batali et al., UC Davis)</li>
+        </ul>
+      </details>
+
+      <details class="mg-d panel"><summary>Lotus · ค่าต่อหยด และสูตรสำเร็จ</summary>
+        <p class="note" style="margin:0 0 6px">แร่เดี่ยว (หลอดหยดแบบกลม) · 1 หยดต่อน้ำ 1 L</p>
+        <div class="tbl"><table><thead><tr><th>ขวด</th><th>ค่าที่เพิ่ม</th><th>ไอออน</th></tr></thead><tbody>
+          <tr><td>Calcium</td><td class="readout">GH +8.5</td><td class="readout">Ca ~3.4 mg</td></tr>
+          <tr><td>Magnesium</td><td class="readout">GH +8.2</td><td class="readout">Mg ~2.0 mg</td></tr>
+          <tr><td>Sodium bicarbonate</td><td class="readout">KH +4.2</td><td class="readout">Na ~1.9 mg</td></tr>
+          <tr><td>Potassium bicarbonate</td><td class="readout">KH +4.2</td><td class="readout">K ~3.3 mg</td></tr>
+        </tbody></table></div>
+        <p class="note">หลอดหยดทรงตาแมว: 1 หยด / 450 ml = GH 10 / KH 5 ppm (หยดใหญ่กว่าหลอดกลมราว 1.9 เท่า)</p>
+        <p class="note" style="margin:8px 0 6px"><b>สูตรสำเร็จ (mg/L)</b></p>
+        <div class="mg-rc"><div class="mg-rcard"><b>Ultra Light</b><div class="mg-rg"><span><i>Ca</i>8</span><span><i>Mg</i>4</span><span><i>Na</i>0</span><span><i>K</i>8</span><span><i>HCO₃</i>12</span><span><i>Cl</i>25</span><span class=k><i>GH</i>35</span><span class=k><i>KH</i>10</span><span class=k><i>GH:KH</i>3.5</span></div></div><div class="mg-rcard"><b>Bright &amp; Juicy</b><div class="mg-rg"><span><i>Ca</i>14</span><span><i>Mg</i>9</span><span><i>Na</i>4</span><span><i>K</i>7</span><span><i>HCO₃</i>22</span><span><i>Cl</i>51</span><span class=k><i>GH</i>72</span><span class=k><i>KH</i>18</span><span class=k><i>GH:KH</i>4.0</span></div></div><div class="mg-rcard"><b>Rao (ฉบับปรับปรุง)</b><div class="mg-rg"><span><i>Ca</i>16</span><span><i>Mg</i>8</span><span><i>Na</i>6</span><span><i>K</i>6</span><span><i>HCO₃</i>25</span><span><i>Cl</i>51</span><span class=k><i>GH</i>72</span><span class=k><i>KH</i>20</span><span class=k><i>GH:KH</i>3.6</span></div></div><div class="mg-rcard"><b>Light &amp; Bright</b><div class="mg-rg"><span><i>Ca</i>24</span><span><i>Mg</i>0</span><span><i>Na</i>0</span><span><i>K</i>20</span><span><i>HCO₃</i>31</span><span><i>Cl</i>43</span><span class=k><i>GH</i>60</span><span class=k><i>KH</i>25</span><span class=k><i>GH:KH</i>2.4</span></div></div><div class="mg-rcard"><b>Simple &amp; Sweet</b><div class="mg-rg"><span><i>Ca</i>24</span><span><i>Mg</i>7</span><span><i>Na</i>11</span><span><i>K</i>12</span><span><i>HCO₃</i>49</span><span><i>Cl</i>64</span><span class=k><i>GH</i>90</span><span class=k><i>KH</i>40</span><span class=k><i>GH:KH</i>2.3</span></div></div><div class="mg-rcard"><b>L&amp;B espresso</b><div class="mg-rg"><span><i>Ca</i>0</span><span><i>Mg</i>5</span><span><i>Na</i>0</span><span><i>K</i>35</span><span><i>HCO₃</i>55</span><span><i>Cl</i>~15</span><span class=k><i>GH</i>~21</span><span class=k><i>KH</i>~45</span><span class=k><i>GH:KH</i>0.5</span></div></div></div>
+      </details>
+
+      <details class="mg-d panel"><summary>APAX · เนื้อแร่และบัฟเฟอร์แต่ละขวด</summary>
+        <p class="note" style="margin:0 0 6px">ความเข้มข้น 30,000 ppm · 3–4 g/L ≈ 90–120 ppm · เอกสารคิด 1 หยด ≈ 0.065 g (1 หยด / 200 ml ≈ +10 ppm) <span class="cs-flag" style="margin:0">แอปใช้ค่าที่วัดเอง 1 g ≈ 12 หยด (≈0.083 g/หยด) ในเครื่องคิด</span></p>
+        <div class="tbl"><table><thead><tr><th>ขวด</th><th>ประเภท</th><th>แหล่ง GH</th><th>บัฟเฟอร์</th><th>ไอออนอื่น</th><th>Body</th><th>Brightness</th><th>ระดับบัฟเฟอร์ (อนุมาน)</th></tr></thead><tbody>
+          <tr><td>Tonik</td><td>core</td><td>Mg+Ca</td><td>HCO₃</td><td>NaCl</td><td>~2.5</td><td>~4.5</td><td>ต่ำสุด</td></tr>
+          <tr><td>Julith</td><td>custom</td><td>Mg</td><td>HCO₃ + ซิเตรต</td><td>SO₄, KCl, NaCl</td><td>2</td><td>4</td><td>ต่ำ</td></tr>
+          <tr><td>TDC</td><td>custom</td><td>Mg+Ca</td><td>HCO₃ + ซิเตรต</td><td>NaCl, ซิลิกา</td><td>4</td><td>4</td><td>ต่ำ</td></tr>
+          <tr><td>April</td><td>custom</td><td>ไม่ทราบ</td><td>ไม่ทราบ</td><td>—</td><td>2.5</td><td>3.5</td><td>ต่ำ–กลาง</td></tr>
+          <tr><td>Motors</td><td>custom</td><td>Mg</td><td>HCO₃ + ซิเตรต + ฟอสเฟต</td><td>SO₄, KCl, ซิลิกา</td><td>3.5</td><td>3.5</td><td>ต่ำ–กลาง</td></tr>
+          <tr><td>Hydrangea</td><td>custom</td><td>Mg</td><td>HCO₃</td><td>SO₄, KCl, NaCl, ซิลิกา</td><td>—</td><td>—</td><td>กลาง (คล้าย Lylac)</td></tr>
+          <tr><td>Lylac</td><td>core</td><td>Mg</td><td>HCO₃</td><td>SO₄, KCl, NaCl</td><td>~3</td><td>~3.2</td><td>กลาง</td></tr>
+          <tr><td>Hatch</td><td>custom</td><td>ไม่ทราบ</td><td>ไม่ทราบ</td><td>—</td><td>3.5</td><td>3</td><td>กลาง</td></tr>
+          <tr><td>Jamm</td><td>core</td><td>Mg+Ca</td><td>HCO₃</td><td>KCl</td><td>~4.5</td><td>~2.6</td><td>สูง</td></tr>
+          <tr><td>Tanat</td><td>custom</td><td>Mg</td><td>HCO₃ + ซิเตรต</td><td>SO₄, KCl</td><td>3</td><td>2.5</td><td>สูง</td></tr>
+          <tr><td>Konflux</td><td>core</td><td>Ca</td><td>HCO₃</td><td>KCl, NaCl, ซิลิกา</td><td>~3.5</td><td>~1.7</td><td>สูงสุด</td></tr>
+        </tbody></table></div>
+        <p class="note">ระดับบัฟเฟอร์ของ APAX <b>อนุมานจากคะแนน Brightness บนชาร์ตผู้ผลิต</b> ไม่ใช่ค่า KH ที่วัดจริง</p>
+      </details>
+
+      <details class="mg-d panel"><summary>จัดกลุ่มน้ำที่ใกล้เคียงกัน</summary>
+        <p class="note" style="margin:0 0 6px"><b>ตามระดับบัฟเฟอร์</b></p>
+        <div class="tbl"><table><thead><tr><th>กลุ่ม</th><th>สมาชิก</th></tr></thead><tbody>
+          <tr><td>ต่ำ</td><td>Lotus Ultra Light, Bright &amp; Juicy, Rao · APAX Tonik, Julith, TDC</td></tr>
+          <tr><td>กลาง</td><td>Lotus Light &amp; Bright · APAX Lylac, Hydrangea, Motors, April, Hatch</td></tr>
+          <tr><td>สูง</td><td>Lotus Simple &amp; Sweet, L&amp;B espresso · APAX Jamm, Tanat, Konflux</td></tr>
+          <tr><td>สูงมาก</td><td>Aura</td></tr>
+        </tbody></table></div>
+        <p class="note" style="margin:10px 0 6px"><b>ตามแหล่ง GH</b></p>
+        <div class="tbl"><table><thead><tr><th>กลุ่ม</th><th>สมาชิก</th></tr></thead><tbody>
+          <tr><td>Mg ล้วน</td><td>APAX Julith, Tanat, Lylac, Hydrangea, Motors</td></tr>
+          <tr><td>Ca + Mg</td><td>APAX Tonik, Jamm, TDC · สูตร Lotus ส่วนใหญ่</td></tr>
+          <tr><td>Ca ล้วน</td><td>APAX Konflux · Lotus Light &amp; Bright</td></tr>
+        </tbody></table></div>
+        <ul class="mg-ul"><li><b>FOMO:</b> ฉลากบอกว่าเป็นสารแต่งกลิ่นรส ไม่ใช่แร่ธาตุ → เช็กกติกาการแข่งขันก่อนใช้</li>
+        <li><b>Aura:</b> Ca 57, Mg 6.5, HCO₃ 220 mg/L → GH ~170, KH ~180 (บัฟเฟอร์สูงมาก)</li>
+        <li><b>Koffeeplus:</b> ตัวเลขบนฉลากขัดกันเอง (hardness สูงกว่า TDS) ข้อมูลไม่น่าเชื่อถือ</li></ul>
+      </details>
+
+      <details class="mg-d panel"><summary>วิธีเลือกน้ำ 5 ขั้น</summary>
+        <ol class="mg-ul">
+          <li><b>เลือกระดับบัฟเฟอร์ตามความเปรี้ยวของกาแฟ</b> แล้วจูนด้วยการเพิ่มทีละน้อย 0.5 และ 10 ppm (ชิมก่อนเปลี่ยนเยอะ)</li>
+          <li>ถ้าน้ำใช้ Mg ล้วน เพิ่มเติม KH ได้โดยไม่ต้องกังวลเรื่อง CaCO₃</li>
+          <li>กำหนด TDS ด้วย GH ช่วงที่ใช้กันทั่วไป 35–120 ppm</li>
+          <li>ไม่ต้องกังวลเรื่องไอออนรอง (Na/K/Cl/SO₄) ระดับน้ำชงไม่มีผลกับรส</li>
+          <li>วัด TDS และ KH ทุกครั้ง อย่าเชื่อตัวเลขบนฉลากอย่างเดียว</li>
+        </ol>
+        <p class="note"><b>ข้อมูลที่ยังขาด:</b> ค่า KH และ GH ที่แท้จริงของ APAX แต่ละขวด (ละลาย 10 g/L แล้ววัดเองได้) · ส่วนประกอบของ FOMO</p>
+      </details>
+
+      <details class="mg-d panel"><summary>แหล่งอ้างอิงในเอกสาร</summary>
+        <ul class="mg-ul" style="font-size:13px">
+          <li>Rune et al. (2026), <i>Journal of Food Science</i> · ผลของบัฟเฟอร์และแร่ต่อรสกาแฟ</li>
+          <li>Hendon et al. (2014), <i>J. Agric. Food Chem.</i> · The Role of Dissolved Cations in Coffee Extraction</li>
+          <li>Bratthäll et al. (2024) อ้างใน Rune et al.</li>
+          <li>Batali et al., UC Davis Coffee Center · อุณหภูมิน้ำชงที่ความเข้มและ EY คงที่ · การวิเคราะห์รสและน้ำตาลของน้ำกาแฟแต่ละช่วง</li>
+          <li>WHO, Guidelines for Drinking-water Quality · เกณฑ์การรับรสของไอออน</li>
+          <li>Lotus product instructions · Scott Rao: Lotus water drops · APAX Lab User Guide · Sigma Coffee: APAX Lab single bottles · ชาร์ตผู้ผลิต APAX</li>
+        </ul>
+      </details>
     </div>
 
     <div data-sub="travel" data-sublabel="เดินทาง" data-order="3" class="section panel stack">
