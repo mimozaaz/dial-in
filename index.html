@@ -38,7 +38,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .stack{display:flex;flex-direction:column;gap:14px}
 label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted);min-width:0}
 label.f span.k{font-size:13px;font-weight:600;color:var(--muted)}
-select,input[type=number],input[type=text],input[type=search],input[type=date],input[type=datetime-local]{font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-width:0}
+select,input[type=number],input[type=text],input[type=password],input[type=search],input[type=date],input[type=datetime-local]{font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-width:0}
 input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .row>*{flex:1 1 140px}
@@ -189,7 +189,7 @@ details.howto{background:var(--surface);border:1px solid var(--line);border-radi
 
 /* ---- form system (iOS-safe) ---- */
 input,select,textarea{min-width:0;max-width:100%;box-sizing:border-box}
-input[type=text],input[type=number],input[type=search],input[type=date],input[type=datetime-local],select,textarea{min-height:48px;border-radius:12px}
+input[type=text],input[type=number],input[type=text],input[type=password],input[type=search],input[type=date],input[type=datetime-local],select,textarea{min-height:48px;border-radius:12px}
 input[type=date],input[type=datetime-local]{-webkit-appearance:none;appearance:none;display:block;width:100%;text-align:left;line-height:1.2}
 input::-webkit-date-and-time-value{text-align:left;margin:0}
 input[type=date]:invalid::-webkit-datetime-edit,input[type=date]:not(:valid)::-webkit-datetime-edit{color:var(--muted)}
@@ -345,8 +345,30 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
   .tbl.stack td:first-child{font-weight:600;font-size:15px}
   .tbl.stack td>*{justify-self:start;align-self:start}
 }
+#gate{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+#gate form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px}
+#gate h1{margin:0 0 4px;font-size:28px}#gate .err{color:var(--bad);min-height:20px;font-size:14px;margin:0}
+#gate button{min-height:48px;border-radius:14px;border:0;background:var(--accent);color:#fff;font-family:inherit;font-weight:600;font-size:16px}
+html:not([data-role]) .wrap{visibility:hidden}
+html[data-role="tools"] .bnav a:not([data-tab="tools"]){display:none}
+html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
+.logout{display:none}html[data-role] .logout{display:flex}
 </style>
 
+<div id="gate" hidden><form id="gate-f" autocomplete="on">
+  <h1>Dial-In Bench</h1><p class="note" style="margin:0 0 6px">เข้าสู่ระบบ</p>
+  <label class="f"><span class="k">ชื่อผู้ใช้</span><input id="gate-u" type="text" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+  <label class="f"><span class="k">รหัสผ่าน</span><input id="gate-p" name="password" type="password" autocomplete="current-password" required></label>
+  <p class="err" id="gate-e" aria-live="polite"></p><button type="submit">เข้าใช้งาน</button></form></div>
+<script>(function(){const A={"c037101ee59497722fe636e780ca86b846a10bad341a0c2ef06cbb694085dfb4": "tools", "f96190d4804eb3f8103f7b6657862d73b44d7f1331b88f6de6da030775c15178": "full"};
+  const set=r=>{if(r){document.documentElement.dataset.role=r;document.getElementById('gate').hidden=true;window.__route&&window.__route()}};
+  let r=null;try{r=localStorage.getItem('dib-role')}catch(e){}
+  if(r==='tools'||r==='full')set(r);else document.getElementById('gate').hidden=false;
+  const sha=async t=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
+  document.getElementById('gate-f').addEventListener('submit',async e=>{e.preventDefault();const u=document.getElementById('gate-u').value.trim().toLowerCase(),p=document.getElementById('gate-p').value;
+    const role=A[await sha('dib|'+u+'|'+p)];if(!role){document.getElementById('gate-e').textContent='ชื่อผู้ใช้หรือรหัสผ่านไม่ถูก';return}
+    try{localStorage.setItem('dib-role',role)}catch(e){}if(role==='tools')location.hash='#tools';set(role)});
+  window.dibLogout=()=>{try{localStorage.removeItem('dib-role')}catch(e){}location.hash='';location.reload()};})();</script>
 <div class="wrap">
   <header class="top">
     <h1>Dial-In Bench</h1>
@@ -927,6 +949,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
         <tbody id="ts-body"></tbody>
       </table></div>
     </div>
+    <p class="logout" style="justify-content:center;align-items:center;gap:6px;margin:24px 0 8px;font-size:13px;color:var(--muted)">เข้าใช้งานแล้ว · <button type="button" class="linkbtn" onclick="dibLogout()">ออกจากระบบ</button></p>
   </section>
 
   <!-- ============ LOG ============ -->
@@ -2370,10 +2393,10 @@ document.querySelectorAll('section[data-view]').forEach(sec=>{const subs=[...sec
   const saved=store.get('sub-'+sec.id,'');showSub(sec,subs.some(s=>s.dataset.sub===saved)?saved:subs[0].dataset.sub);});
 
 /* ---------- Tabs (hash) ---------- */
-function route(){const h=(location.hash||'#grind').slice(1);const v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';
+function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='tools'&&v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   const nv=v==='brewers'?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
-window.addEventListener('hashchange',route);
+window.addEventListener('hashchange',route);window.__route=route;
 route();calcGrind();calcWater();calcDiy();calcRatio();calcEY();renderTimer();
 })();
 
