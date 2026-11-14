@@ -351,6 +351,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
 #gate button{min-height:48px;border-radius:14px;border:0;background:var(--accent);color:#fff;font-family:inherit;font-weight:600;font-size:16px}
 html:not([data-role]) .wrap{visibility:hidden}
 html[data-role="tools"] .bnav a:not([data-tab="tools"]){display:none}
+html[data-role="tools"] #v-tools .subnav button:is([data-go="timer"],[data-go="fix"]),html[data-role="tools"] #v-tools :is([data-sub="timer"],[data-sub="fix"]),html[data-role="tools"] #v-tools .howto li:is(:nth-child(3),:nth-child(4)){display:none!important}
 html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
 .logout{display:none}html[data-role] .logout{display:flex}
 </style>
@@ -2393,7 +2394,7 @@ document.querySelectorAll('section[data-view]').forEach(sec=>{const subs=[...sec
   const saved=store.get('sub-'+sec.id,'');showSub(sec,subs.some(s=>s.dataset.sub===saved)?saved:subs[0].dataset.sub);});
 
 /* ---------- Tabs (hash) ---------- */
-function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='tools'&&v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}
+function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   const nv=v==='brewers'?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
 window.addEventListener('hashchange',route);window.__route=route;
