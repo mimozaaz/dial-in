@@ -1,4 +1,4 @@
-# Dial-In Bench — มีอะไรบ้าง (dib-v55 · 14 พ.ย. 2026)
+# Dial-In Bench — มีอะไรบ้าง (dib-v56 · 14 พ.ย. 2026)
 
 แอปช่วยซ้อมชงกาแฟแข่ง ใช้บน iPhone เป็น PWA ผ่าน GitHub Pages
 มี 5 แท็บล่าง: **บด · น้ำ · สูตร · เครื่องมือ · สมุด**
@@ -73,6 +73,7 @@
 ---
 
 ## อัปเดต
+- v56: สูตร AeroPress แบบเจือเพิ่ม 11 สูตร (WAC 2016–2021: Filip, Hugo, Paulina, Narisawa, Jeongsu Park, Benja (ไทย), Maru, Brandon · ระดับประเทศ 2024: Kevin Soto, Daniel Grinemaer, Federico Serodio) · ตัวกรอง "ชงเข้มแล้วเจือ" รวม AeroPress ด้วย
 - v55: ตัวกรองสูตร "ชงเข้มแล้วเจือ" (สูตรดริปที่เติมน้ำ/น้ำแข็งหลังชง ไม่รวม AeroPress) + สูตรใหม่ 7 สูตร: Matteo D'Ottavio Bypass, Drip Roast, Filtr, Partners Coffee, No Sleep Iced, BrewCoffeeHome Iced, OREA OG Iced
 - v54: ผู้ใช้ทดสอบ (test) เห็นแค่ EY กับเจือจาง
 - v53: หน้าเข้าสู่ระบบ 2 สิทธิ์ (ผู้ใช้ทดสอบเห็นแค่หน้าเครื่องมือซ้อมแข่ง / เจ้าของเห็นทั้งหมด) · ปุ่มออกจากระบบท้ายหน้าเครื่องมือ · เป็นแค่ประตูหน้าเว็บ ไม่ใช่ระบบความปลอดภัยจริง
