@@ -118,7 +118,7 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .cp-lsub{margin-top:6px}.cp-lsn{font-size:12px;font-weight:600;color:var(--muted)}
 .cp-chip[data-lib][aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
 .cp-w-go{font:600 12.5px var(--body);border:1px dashed var(--accent);color:var(--accent);background:transparent;border-radius:999px;padding:5px 10px;cursor:pointer}
-.cp-defc small{font-size:11px;opacity:.75;margin-left:2px}
+.cp-defc small{font-size:12px;opacity:.75;margin-left:2px}
 .cp-lv{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.cp-lv .seg button{padding:5px 10px}
 .dose{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--sunk);border-radius:12px;padding:8px 10px;margin:4px 0 10px}
 .dose .k{font-size:12.5px;font-weight:600;color:var(--muted);flex:1 0 100%}
@@ -128,20 +128,23 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .dose-f{font-size:12.5px;color:var(--accent);font-weight:600}
 .dose-r{font:600 12px var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 10px;cursor:pointer;margin-left:auto}
 .mg-pt{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start}.mg-pt>span{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font:600 13px/26px var(--mono);text-align:center}.mg-pt p{margin:0;font-size:14.5px}
-.mg-d>summary{font-family:var(--display);font-weight:600;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mg-d>summary{min-height:44px;font-family:var(--display);font-weight:600;font-size:16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .mg-d>summary::-webkit-details-marker{display:none}.mg-d>summary::after{content:"＋";color:var(--accent);font-weight:700}.mg-d[open]>summary::after{content:"－"}
 .mg-d[open]>summary{margin-bottom:10px}
 .mg-ul{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
 .mg-rc{display:grid;gap:8px}.mg-rcard{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.mg-rcard>b{display:block;margin-bottom:6px}.mg-rg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px 6px}.mg-rg span{display:flex;flex-direction:column;font:600 14px var(--mono);text-transform:none}.mg-rg i{font:400 11px var(--sans,inherit);font-style:normal;color:var(--muted);text-transform:none}.mg-rg span.k{color:var(--accent)}
-.cs-flag{display:inline-block;margin-left:6px;font-size:11px;font-weight:600;padding:0 7px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
+details>summary{min-height:40px;display:flex;align-items:center;gap:6px}
+input[type=range]{min-height:36px}
+.cs-flag{display:inline-block;margin-left:6px;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
 .chip.ok{color:var(--ok)} .chip.warn{color:var(--warn)} .chip.bad{color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
 .scale{position:relative;margin-top:8px}
 .scale svg{width:100%;height:auto;display:block}
 .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+.tbl.fit table{min-width:0}.tbl.fit td.n,.tbl.fit th{white-space:nowrap}
 th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
-th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--sunk)}
+th{font-size:12px;letter-spacing:.02em;color:var(--muted);font-weight:600;background:var(--sunk)}
 td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
 tr.hit td{background:var(--accent-soft)}
 tr:last-child td{border-bottom:0}
@@ -154,7 +157,7 @@ tr:last-child td{border-bottom:0}
 .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 @media (max-width:460px){.specs{grid-template-columns:repeat(2,1fr)}}
 .spec{background:var(--sunk);border-radius:8px;padding:8px 10px;min-width:0}
-.spec .l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.spec .l{font-size:11.5px;letter-spacing:.02em;color:var(--muted);font-weight:600}
 .spec .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600;font-size:15px}
 ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
 ol.steps li{display:grid;grid-template-columns:58px 1fr;gap:10px;padding:7px 0;border-top:1px dashed var(--line);font-size:14px}
@@ -172,6 +175,8 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .bnav .in{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:560px;width:100%}
 .bnav a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px 6px;border-radius:14px;color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:600;-webkit-tap-highlight-color:transparent}
 .bnav a svg{width:25px;height:25px}
+body.kb .bnav{transform:translateY(110%);opacity:0;pointer-events:none}
+.bnav{transition:transform .18s,opacity .18s}
 .bnav a[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
 .subnav{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px;margin:0 0 6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);scrollbar-width:none}
 .subnav::-webkit-scrollbar{display:none}
@@ -201,7 +206,7 @@ input[type=range]{accent-color:var(--accent);width:100%;height:30px;margin:0}
 .kpi .k{font-size:12px;font-weight:600;color:var(--muted)}
 .kpi b{font:600 17px var(--mono);line-height:1}
 .meta-line{font-size:13.5px;color:var(--muted)}
-.linkbtn{font:inherit;font-weight:600;color:var(--ink2);background:none;border:0;padding:4px 2px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.linkbtn{font:inherit;font-weight:600;color:var(--ink2);background:none;border:0;padding:10px 6px;margin:-6px -4px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .btn-primary{font:600 16px var(--body);width:100%;min-height:52px;border-radius:14px;border:0;background:var(--accent);color:#fff;cursor:pointer}
 .btn-primary.ghost{background:var(--accent-soft);color:var(--accent)}
 .btn-primary:active{transform:scale(.99)}
@@ -333,8 +338,10 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
   .tbl.stack table{min-width:0}
   .tbl.stack thead{display:none}
   .tbl.stack tr{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
-  .tbl.stack td{display:grid;grid-template-columns:88px 1fr;gap:8px;border:0;padding:5px 0;font-size:14px}
-  .tbl.stack td::before{content:attr(data-l);font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+  .tbl.stack td{display:grid;grid-template-columns:minmax(96px,34%) 1fr;gap:8px;border:0;padding:5px 0;font-size:14px}
+  .tbl.stack td{text-align:left!important}
+  .tbl.stack tr.hit{background:var(--accent-soft);border-color:var(--accent)}.tbl.stack tr.hit td{background:transparent}
+  .tbl.stack td::before{content:attr(data-l);font-size:12px;font-weight:600;color:var(--muted);padding-top:2px}
   .tbl.stack td:first-child{font-weight:600;font-size:15px}
   .tbl.stack td>*{justify-self:start;align-self:start}
 }
@@ -898,9 +905,9 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
         <label class="f"><span class="k">TDS เป้าหมาย (%)</span><input id="dl-t2" type="number" min="0.01" step="0.01" value="1.30"></label>
         <label class="f"><span class="k">กาแฟที่ใช้ (g) ไม่ใส่ก็ได้</span><input id="dl-dose" type="number" min="0" step="0.1" value="18"></label>
       </div>
-      <div class="row" style="gap:16px" aria-live="polite">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" aria-live="polite">
         <div><div class="note">เติมน้ำ</div><div class="grams" id="dl-add">—</div></div>
-        <div><div class="note">น้ำหนักรวมหลังเติม</div><div class="grams" id="dl-final" style="color:var(--fg)">—</div></div>
+        <div><div class="note">รวมหลังเติม</div><div class="grams" id="dl-final" style="color:var(--fg)">—</div></div>
         <div><div class="note">EY</div><div class="grams" id="dl-ey" style="color:var(--fg)">—</div></div>
       </div>
       <div class="note" id="dl-steps" style="background:var(--sunk);border-radius:8px;padding:10px 12px;line-height:1.8"></div>
@@ -2755,10 +2762,16 @@ render();
 /* ---- UX helpers ---- */
 (function(){const setH=()=>{const n=[...document.querySelectorAll('.subnav')].find(e=>e.offsetParent);if(n)document.documentElement.style.setProperty('--subnav-h',n.offsetHeight+'px')};
   addEventListener('hashchange',()=>setTimeout(setH,50));addEventListener('resize',setH);setTimeout(setH,300);
-  const lab=t=>{const th=[...t.querySelectorAll('thead th')].map(e=>e.textContent.trim());if(th.length<3)return;t.closest('.tbl')&&t.closest('.tbl').classList.add('stack');
+  const lab=t=>{const th=[...t.querySelectorAll('thead th')].map(e=>e.textContent.trim());if(th.length<3)return;const w=t.closest('.tbl');if(!w)return;
+    if(th.length>=5)w.classList.add('stack');else if(w.clientWidth>0){w.classList.remove('stack');w.classList.add('fit');const rs=t.querySelectorAll('tbody tr'),tall=[...rs].some(r=>r.offsetHeight>58);if(t.scrollWidth>w.clientWidth+2||tall){w.classList.remove('fit');w.classList.add('stack')}}else if(!w.dataset.m)w.classList.add('stack');if(w.clientWidth>0)w.dataset.m=1;
     t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,i)=>{if(!td.dataset.l)td.dataset.l=th[i]||''}))};
   const all=()=>{document.querySelectorAll('.tbl table').forEach(lab);document.querySelectorAll('.seg,#ap-vols').forEach(g=>g.classList.toggle('ovf',g.scrollWidth>g.clientWidth+2))};all();addEventListener('hashchange',()=>setTimeout(all,80));
-  new MutationObserver(()=>{clearTimeout(all.t);all.t=setTimeout(all,60)}).observe(document.body,{subtree:true,childList:true});})();
+  new MutationObserver(()=>{clearTimeout(all.t);all.t=setTimeout(all,60)}).observe(document.body,{subtree:true,childList:true});
+  document.addEventListener('click',e=>{if(e.target.closest('.subnav button,details>summary'))setTimeout(all,80)});addEventListener('resize',()=>{clearTimeout(all.r);all.r=setTimeout(all,120)});
+  /* iOS: fixed tab bar gets stranded mid-screen after the keyboard closes → hide it while typing, force reflow after */
+  const isField=el=>el&&el.matches&&el.matches('input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select');
+  document.addEventListener('focusin',e=>{if(isField(e.target))document.body.classList.add('kb')});
+  document.addEventListener('focusout',e=>{if(!isField(e.target))return;setTimeout(()=>{if(!isField(document.activeElement)){document.body.classList.remove('kb');window.scrollTo(window.scrollX,window.scrollY)}},120)});})();
 </script>
 
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
