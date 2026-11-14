@@ -1074,6 +1074,7 @@ html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
       <button type="button" data-f="all" aria-pressed="true">ทั้งหมด</button>
       <button type="button" data-f="wac" aria-pressed="false">แชมป์ AeroPress</button>
       <button type="button" data-f="wbrc" aria-pressed="false">แชมป์ Brewers Cup</button>
+      <button type="button" data-f="byp" aria-pressed="false">ชงเข้มแล้วเจือ</button>
       <button type="button" data-f="nat" aria-pressed="false">แชมป์ระดับประเทศ</button>
       <button type="button" data-f="classic" aria-pressed="false">สูตรคลาสสิก</button>
       <button type="button" data-f="asia" aria-pressed="false">🇨🇳🇲🇾 จีน · มาเลเซีย</button>
@@ -1931,12 +1932,41 @@ const R=[
 {cat:'nat',reg:'my',t:'Malaysia Brewers Cup 2026 · แชมป์',who:'Shaun Liew (มาเลเซีย, Curate Coffee Roasters)',dev:'OREA Z1 + Melodrip · กระดาษ Sibarist Fast · เสิร์ฟแก้ว Origami Harmony',
   bean:'เบลนด์ 90% 🇵🇦 Panama Finca Sophia Washed Geisha + 10% 🇲🇾 Malaysia Liberica (MYLiberica) Darkroom Anaerobic',spec:[['กาแฟ','12 g'],['น้ำรวม','200 g'],['อัตราส่วน','1:16.6'],['น้ำ','65 ppm ION+']],
   grind:'ไม่ระบุเครื่อง/เบอร์ · น้ำ: น้ำกลั่น + ION+ The Bricks 90% + Platina 10% ที่ 65 ppm (ION+ บอก 6 หยด/250 ml ≈ 50 ppm → ต่อ 1 L ราว Bricks 28 + Platina 3 หยด, ต่อ 250 ml ราว 7 + 1 หยด)',src:'https://www.instagram.com/p/Da7sPCTiQrj/',
-  steps:[['0:00','bloom 50 g 40 วินาที'],['0:40','เท 70 g (รวม 120 g)'],['1:20','เทที่เหลือ 80 g (รวม 200 g)']]}
+  steps:[['0:00','bloom 50 g 40 วินาที'],['0:40','เท 70 g (รวม 120 g)'],['1:20','เทที่เหลือ 80 g (รวม 200 g)']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือ · แชมป์ UK Brewers Cup',who:'Matteo D\'Ottavio — The Bypass',dev:'OREA V4 Narrow + ฐาน Open (หรือ Apex) · กระดาษ OREA Wave',
+  spec:[['กาแฟ','18 g'],['น้ำชง','260 g'],['อุณหภูมิ','96°C'],['เจือ','+15–30 g']],
+  grind:'กลางค่อนหยาบ (C40 20–24 คลิก) · กระดาษแบนให้บดหยาบขึ้น ส่วน Sibarist ใช้เบอร์เดียวกับ Wave',conv:{g:'c40',c:22},src:'https://www.orea.uk/guides-v4',
+  steps:[['0:00','เท 60 g เริ่มวนแล้วจบตรงกลาง'],['0:40','วนก่อนแล้วเทตรงกลางช้าลง (4 g/วินาที) ถึง 160 g'],['1:30','วนก่อนแล้วเทตรงกลางช้าลง (4 g/วินาที) ถึง 260 g'],['2:30–3:00','ไหลหมด'],['เจือ','เติมน้ำร้อน 15–30 g ทีละนิดแล้วชิม · เจือน้อยเข้มขึ้น เจือมากใสและนุ่มขึ้น']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือ · หลักการพื้นฐาน',who:'Drip Roast — V60 Bypass',dev:'Hario V60',
+  spec:[['กาแฟ','20 g'],['น้ำชง','200 g (1:10)'],['อุณหภูมิ','90–94°C'],['เจือ','+60–100 g']],
+  grind:'ละเอียดกว่าดริปปกติ',src:'https://www.driproast.com/best-v60-recipes/',
+  steps:[['0:00','เทน้ำ 200 g ชงแบบเข้ม (1:10–1:12)'],['ไหลหมด','ยกดริปเปอร์ออก'],['เจือ','เติมน้ำร้อน 60–100 g ลงเหยือก · ตัดช่วงท้ายของการสกัดที่ขม ฝาด ออก เหมาะกับกาแฟฟังกี้หรือคั่วเข้ม']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือ · หลักการพื้นฐาน',who:'Filtr — V60 Bypass Method',dev:'Hario V60',
+  spec:[['กาแฟ','15 g'],['น้ำชง','150 g (1:10)'],['เจือ','+90 g'],['รวม','~1:16']],
+  grind:'กลางค่อนละเอียด',src:'https://filtr.uk/post/how-to-brew-with-a-v60/',
+  steps:[['0:00','ชงตามสูตร V60 ปกติ แต่หยุดที่ 150 g'],['ไหลหมด','ยกดริปเปอร์ออก'],['เจือ','เติมน้ำร้อน 90 g · ได้ถ้วยสะอาด หวานขึ้น ไม่สกัดเกิน']]},
+ {cat:'byp',t:'ชงแล้วเจือแบบจูนรส',who:'Partners Coffee — เติมน้ำหลังชง',dev:'ดริปเปอร์อะไรก็ได้ · ใช้กับสูตรเดิมที่เข้มหรือหนักไป',
+  spec:[['เจือ','+5–20 g'],['น้ำ','ร้อน ไม่ใช้น้ำอุณหภูมิห้อง']],
+  grind:'ใช้เบอร์เดิมของสูตร',src:'https://www.partnerscoffee.com/blogs/education/bypass-brewing',
+  steps:[['ชงเสร็จ','ชิมก่อน · ถ้าเข้ม หนัก หรือผลไม้อัดแน่นไป ค่อยเจือ'],['+5–10 g','สดขึ้นนิด ใสขึ้น'],['+10–20 g','สดและบางเบาขึ้นชัด ดอกไม้กับความเปรี้ยวเด่นขึ้น'],['ข้อห้าม','ถ้ากาแฟจืด เปรี้ยว หรือโหวงอยู่แล้ว อย่าเจือ ให้แก้สูตรให้สกัดมากขึ้นแทน']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือด้วยน้ำแข็ง · ถ้วยเดียว',who:'No Sleep Roastery — Iced V60',dev:'Hario V60 · ใส่น้ำแข็งในแก้วก่อน',
+  spec:[['กาแฟ','15 g'],['น้ำร้อน','150 g'],['อุณหภูมิ','95.5°C'],['น้ำแข็ง','75 g']],
+  grind:'กลางค่อนละเอียด',src:'https://pullandpourcoffee.com/single-serve-iced-coffee-recipe/',
+  steps:[['เตรียม','ใส่น้ำแข็ง 75 g ในแก้วหรือเหยือก'],['0:00','ชง V60 ตามปกติด้วยน้ำร้อน 150 g ลงบนน้ำแข็ง'],['ไหลหมด','คน แล้วเทลงแก้วใส่น้ำแข็งใหม่']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือด้วยน้ำแข็ง · 2 แก้ว',who:'BrewCoffeeHome — Japanese Iced',dev:'Hario V60 / Kalita Wave / Chemex',
+  spec:[['กาแฟ','30 g'],['น้ำร้อน','270 g'],['อุณหภูมิ','92°C'],['น้ำแข็ง','180 g']],
+  grind:'กลางค่อนละเอียด (ละเอียดกว่าดริปร้อน เพราะน้ำแข็งเจือจาง)',src:'https://www.brewcoffeehome.com/?p=6363',
+  steps:[['เตรียม','ใส่น้ำแข็ง 180 g ในเหยือก (น้ำร้อน 60% : น้ำแข็ง 40%)'],['0:00','ชงด้วยน้ำร้อน 270 g ลงบนน้ำแข็ง'],['ไหลหมด','เทลงแก้วใส่น้ำแข็งใหม่']]},
+ {cat:'byp',t:'ชงเข้มแล้วเจือด้วยน้ำแข็ง',who:'OREA — The OG Iced',dev:'OREA V4 Narrow + ฐาน Classic',
+  spec:[['กาแฟ','18 g'],['น้ำร้อน','160 g'],['อุณหภูมิ','92°C'],['น้ำแข็ง','140 g']],
+  grind:'กลาง (C40 20–24 คลิก) · ฐาน Fast, Open, Apex บดละเอียดขึ้นนิด',conv:{g:'c40',c:22},src:'https://www.orea.uk/guides-v4',
+  steps:[['เตรียม','ใส่น้ำแข็ง 140 g ในเหยือก'],['0:00','เท 40 g วน'],['0:30','เทถึง 80 g'],['0:50','เทถึง 120 g'],['1:20','เทถึง 160 g'],['1:50–2:15','แกว่ง คน แล้วดื่ม · ถ้าเข้มไปเติมน้ำเย็นนิดหน่อย']]}
 ];
 const GR_OF={'Nemo Pop (ออสเตรเลีย)':'Comandante X25 Trailmaster','Tay Wipvasutti (ไทย, Brave Roasters)':'1Zpresso ZP6 Special','Carlos Medina (ชิลี)':'1Zpresso ZP6 Special','Jibbi Little (ออสเตรเลีย)':'Timemore + Kinu','Tuomas Merikanto (ฟินแลนด์)':'Comandante C40','Tetsu Kasuya — วิธี 4:6':'Ditting (ใช้เป็นค่าเทียบ)','Emi Fukahori — Hario Switch':'Comandante C40','George Stanica (โรมาเนีย)':'Comandante C40 + Red Clix','Sophan Nugraha (อินโดนีเซีย)':'Comandante C40','Carolina Ibarra Garay (สหรัฐฯ)':'Mahlkönig EK43S'};
 R.forEach(r=>{if(!r.gr)r.gr=GR_OF[r.who]||'ไม่ระบุเครื่อง'});
 R.forEach(r=>{if(!r.cat)r.cat=/WAC/.test(r.t)?'wac':'wbrc'});
 let rFilter='all';
+const isByp=r=>r.cat==='byp'||(!/AeroPress/i.test(r.dev||'')&&/บายพาส|เจือ|เติมน้ำ|bypass/i.test(JSON.stringify(r.steps)+JSON.stringify(r.spec)));
 const hlStep=t=>String(t).replace(/(\+?\d+(?:[.,]\d+)?(?:\s*[–-]\s*\d+(?:[.,]\d+)?)?\s*(?:g\/วินาที|g|ml|°C|วินาที))/g,'<b class="hl">$1</b>');
 const ORI_DIR=`<article class="rc" style="grid-column:1/-1"><div class="meta"><span class="chip acc">ORIGAMI CUP ประเทศอื่นที่ประกาศแค่ผล</span></div>
 <div class="note" style="font-size:13px">กติกาหลัก: ใช้กาแฟกลางที่ผู้จัดให้ (ส่วนใหญ่ไม่บอกล่วงหน้า) · ต้องใช้ดริปเปอร์และกระดาษ Origami · ชง 1 ถ้วยใน 5 นาที กรรมการ 3 คน · ญี่ปุ่นใช้น้ำ Tajima, สหรัฐฯ ใช้น้ำกลั่นผสม APAX · ปี 2026 สหรัฐฯ ให้ใช้ได้แค่ Origami S เซรามิกหรือ Air S กับกระดาษ Cone / Wave</div>
@@ -1998,7 +2028,7 @@ const doseOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]:b};
 const facOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]/b:1};
 const rnd=v=>v>=10?String(Math.round(v)):String(Math.round(v*10)/10);
 function scaleTxt(t,f){if(f===1||t==null)return t;return String(t).replace(/(\d+(?:\.\d+)?)(\s*[–-]\s*(\d+(?:\.\d+)?))?(\s*)(g|ml)(?![\/\w])/g,(all,a,rng,b,sp,u)=>rnd(+a*f)+(rng?rng.replace(b,rnd(+b*f)):'')+sp+u)}
-function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):x.r.cat===rFilter))&&(!gsel||x.r.gr===gsel)).map(({r,i})=>`<article class="rc">
+function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):(rFilter==='byp'?isByp(x.r):x.r.cat===rFilter)))&&(!gsel||x.r.gr===gsel)).map(({r,i})=>`<article class="rc">
   <div class="meta"><span class="chip acc">${r.t}</span><span class="chip">${r.dev}</span><span class="chip">⚙ ${r.gr}</span></div>
   <h3>${r.who}</h3>
   ${(()=>{const b=baseDose(r);if(!b)return '';const d=doseOf(i),f=facOf(i);return `<div class="dose" data-dose="${i}"><span class="k">ปรับปริมาณกาแฟ</span><button type="button" data-dd="-1" aria-label="ลด 1 g">−</button><input type="number" inputmode="decimal" min="1" max="200" step="0.5" value="${+d.toFixed(1)}" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-dd="1" aria-label="เพิ่ม 1 g">+</button>${f!==1?`<span class="dose-f">×${f.toFixed(2)} จากสูตร ${b} g</span><button type="button" class="dose-r" data-dr>คืนค่า</button>`:''}</div>`})()}
