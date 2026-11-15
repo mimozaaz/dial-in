@@ -2027,7 +2027,7 @@ const GR_OF={'Nemo Pop (ออสเตรเลีย)':'Comandante X25 Trailma
 R.forEach(r=>{if(!r.gr)r.gr=GR_OF[r.who]||'ไม่ระบุเครื่อง'});
 R.forEach(r=>{if(!r.cat)r.cat=/WAC/.test(r.t)?'wac':'wbrc'});
 let rFilter='all';
-const isByp=r=>{const t=JSON.stringify(r.steps)+JSON.stringify(r.spec);return (r.cat==='byp'||/บายพาส|เจือ|เติมน้ำ|bypass/i.test(t))&&!/น้ำแข็ง/.test(JSON.stringify(r.spec))};
+const isByp=r=>{const t=JSON.stringify(r.steps)+JSON.stringify(r.spec);return !/AeroPress/i.test(r.dev||'')&&(r.cat==='byp'||/บายพาส|เจือ|เติมน้ำ|bypass/i.test(t))&&!/น้ำแข็ง/.test(JSON.stringify(r.spec))};
 const hlStep=t=>String(t).replace(/(\+?\d+(?:[.,]\d+)?(?:\s*[–-]\s*\d+(?:[.,]\d+)?)?\s*(?:g\/วินาที|g|ml|°C|วินาที))/g,'<b class="hl">$1</b>');
 const ORI_DIR=`<article class="rc" style="grid-column:1/-1"><div class="meta"><span class="chip acc">ORIGAMI CUP ประเทศอื่นที่ประกาศแค่ผล</span></div>
 <div class="note" style="font-size:13px">กติกาหลัก: ใช้กาแฟกลางที่ผู้จัดให้ (ส่วนใหญ่ไม่บอกล่วงหน้า) · ต้องใช้ดริปเปอร์และกระดาษ Origami · ชง 1 ถ้วยใน 5 นาที กรรมการ 3 คน · ญี่ปุ่นใช้น้ำ Tajima, สหรัฐฯ ใช้น้ำกลั่นผสม APAX · ปี 2026 สหรัฐฯ ให้ใช้ได้แค่ Origami S เซรามิกหรือ Air S กับกระดาษ Cone / Wave</div>
