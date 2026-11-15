@@ -2871,5 +2871,5 @@ render();
   document.addEventListener('focusout',e=>{if(!isField(e.target))return;setTimeout(()=>{if(!isField(document.activeElement)){document.body.classList.remove('kb');window.scrollTo(window.scrollX,window.scrollY)}},120)});})();
 </script>
 
-<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>{const up=()=>r.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')up()});setInterval(up,30*60e3);let had=!!navigator.serviceWorker.controller,done=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!done){done=true;location.reload()}had=true})}).catch(()=>{}));</script>
 </body></html>
