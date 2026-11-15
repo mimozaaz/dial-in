@@ -2795,7 +2795,8 @@ function bind(){
   $i('cp-lbody').addEventListener('click',e=>{const b=e.target.closest('[data-lib]');if(!b)return;const id=b.dataset.lib,arr=S[wTgt],i=arr.indexOf(id);if(i>=0)arr.splice(i,1);else arr.push(id);save();drawWheel();renderSel();});
   root.querySelectorAll('[data-gofla]').forEach(b=>b.onclick=()=>{wTgt='fla';root.querySelectorAll('#cp-tgt button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v==='fla'));drawWheel();renderLib();$i('cp-wheel').scrollIntoView({behavior:'smooth',block:'center'})});
   $i('cp-sum').onclick=openSummary;
-  $i('cp-keep').onclick=()=>{const a=hist().filter(x=>x.id!==S.id);const c=JSON.parse(JSON.stringify(S));if(!c.name&&SET.s.length>1)c.name=sLabel(SET.cur);a.unshift(c);histSave(a);renderHist();msg('บันทึกลงประวัติแล้ว')};
+  $i('cp-keep').onclick=()=>{if(!sFill(S)){msg('ฟอร์มนี้ยังว่าง · กรอกก่อนแล้วค่อยบันทึก');return}const a=hist().filter(x=>x.id!==S.id);const c=JSON.parse(JSON.stringify(S));if(!c.name&&SET.s.length>1)c.name=sLabel(SET.cur);a.unshift(c);histSave(a);
+    const m=S.mode,cu=S.cups;S=fresh();S.mode=m;S.cups=cu;wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});msg('บันทึก "'+(c.name||'ไม่ตั้งชื่อ')+'" ลงประวัติแล้ว · ฟอร์มนี้ล้างพร้อมประเมินตัวใหม่ (แก้ไขได้จากประวัติด้านล่าง)')};
   const nb=$i('cp-new');nb.onclick=()=>{if(!nb.dataset.armed){nb.dataset.armed=1;nb.textContent='กดอีกครั้ง (ฟอร์มนี้จะถูกล้าง)';setTimeout(()=>{if(nb.isConnected){delete nb.dataset.armed;nb.textContent='เริ่มตัวใหม่'}},3000);return}
     const m=S.mode,c=S.cups;S=fresh();S.mode=m;S.cups=c;wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});};
   const goS=i=>{if(i<0||i>=SET.s.length)return;save();SET.cur=i;S=fixS(SET.s[i]);wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});msg('กำลังประเมิน '+sLabel(i)+(S.name?' · '+S.name:''))};
@@ -2803,7 +2804,8 @@ function bind(){
   {const ac=root.querySelector('#cp-samples [aria-pressed="true"]');if(ac)ac.scrollIntoView({block:'nearest',inline:'center'})}
   root.querySelectorAll('[data-si]').forEach(b=>b.onclick=()=>goS(+b.dataset.si));
   root.querySelectorAll('[data-sadd]').forEach(ad=>ad.onclick=()=>{if(SET.s.length>=SMAX)return;save();const n=fresh();n.mode=S.mode;n.cups=S.cups;n.date=S.date;SET.s.push(n);goS(SET.s.length-1)});
-  const ka=$i('cp-keepall');if(ka)ka.onclick=()=>{save();let a=hist();SET.s.forEach((x,i)=>{const c=JSON.parse(JSON.stringify(x));if(!c.name)c.name=sLabel(i);a=a.filter(y=>y.id!==c.id);a.unshift(c)});histSave(a);renderHist();msg('บันทึก '+SET.s.length+' ตัวลงประวัติแล้ว')};
+  const ka=$i('cp-keepall');if(ka)ka.onclick=()=>{save();let a=hist();const n=SET.s.length;let k=0;SET.s.slice().reverse().forEach((x,ri)=>{const i=n-1-ri;if(!sFill(fixS(x)))return;k++;const c=JSON.parse(JSON.stringify(x));if(!c.name)c.name=sLabel(i);a=a.filter(y=>y.id!==c.id);a.unshift(c)});histSave(a);
+    const m=S.mode,cu=S.cups;const f=fresh();f.mode=m;f.cups=cu;SET.s=[f];SET.cur=0;S=f;wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});msg('บันทึก '+k+' ตัวลงประวัติแล้ว'+(k<n?' (ข้ามตัวที่ว่าง)':'')+' · เริ่มรอบใหม่ได้เลย')};
   const sd=$i('cp-sdel');if(sd)sd.onclick=()=>{if(!sd.dataset.armed){sd.dataset.armed=1;sd.textContent='กดอีกครั้งเพื่อลบ '+sLabel(SET.cur);setTimeout(()=>{if(sd.isConnected){delete sd.dataset.armed;sd.textContent='ลบ '+sLabel(SET.cur)}},3000);return}
     SET.s.splice(SET.cur,1);SET.cur=Math.max(0,SET.cur-1);S=fixS(SET.s[SET.cur]);wFocus=null;save();render()};
 }
@@ -2821,7 +2823,9 @@ function renderHist(){const el=document.getElementById('cp-hist');const a=hist()
   el.innerHTML=a.map(s=>`<div class="cp-hi"><div><b>${esc(s.name||'ไม่ตั้งชื่อ')}</b><div class="note" style="margin:0">${s.date} · ${s.mode==='coe'?'COE':s.mode==='cva'?'CVA':'Note'}${s.roast>=0?' · '+ROAST[s.roast][0]:''}</div></div><b class="readout cp-hs">${score(fixS(s))==null?'📝':score(s).toFixed(2)}</b><div class="cp-hb"><button class="btn" type="button" data-hview="${s.id}">สรุป</button><button class="btn" type="button" data-hload="${s.id}">เปิดแก้</button><button class="btn" type="button" data-hdel="${s.id}">ลบ</button></div></div>`).join('');
   el.onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=hist();
     if(b.dataset.hview){const s=a.find(x=>x.id===b.dataset.hview);if(s)openSummary(null,s)}
-    if(b.dataset.hload){const s=a.find(x=>x.id===b.dataset.hload);if(s){S=fixS(JSON.parse(JSON.stringify(s)));wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20})}}
+    if(b.dataset.hload){const s=a.find(x=>x.id===b.dataset.hload);if(s){const ex=SET.s.findIndex(x=>x.id===s.id);const ld=fixS(JSON.parse(JSON.stringify(s)));
+      if(ex>=0){SET.cur=ex}else if(sFill(S)&&SET.s.length<SMAX){save();SET.s.push(ld);SET.cur=SET.s.length-1}else{SET.s[SET.cur]=ld}
+      S=SET.s[SET.cur]=SET.cur===ex?ld:SET.s[SET.cur];wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});msg('เปิด "'+(s.name||'ไม่ตั้งชื่อ')+'" มาแก้ไข · กดบันทึกลงประวัติอีกครั้งเพื่ออัปเดต')}}
     if(b.dataset.hdel){if(!b.dataset.armed){b.dataset.armed=1;b.textContent='ยืนยันลบ';setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent='ลบ'}},3000);return}histSave(a.filter(x=>x.id!==b.dataset.hdel));renderHist()}};}
 
 /* ---------- summary image ---------- */
