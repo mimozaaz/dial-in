@@ -142,6 +142,16 @@ input[type=range]{min-height:36px}
 .cp-samples .cp-sadd{align-items:center;color:var(--accent);border-style:dashed;font-weight:600}
 .cp-cmp{display:flex;flex-direction:column;gap:6px}.cp-cmp button{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
 .cp-cmp button[aria-pressed="true"]{border-color:var(--accent)}.cp-cmp button span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-samples button{display:grid!important;grid-template-rows:auto auto auto;align-content:center;min-width:104px!important;min-height:72px!important}
+.cp-sh{display:flex;align-items:center;gap:6px}.cp-dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}.cp-dot.on{background:var(--accent)}
+.cp-samples button em{font-style:normal;font-size:13px;color:var(--accent);font-weight:600}
+.cp-samples .cp-sadd{place-items:center;text-align:center}.cp-samples .cp-sadd b{font-size:22px;line-height:1}
+.cp-sdel{align-self:flex-start;font-size:13px;color:var(--muted)}
+.cp-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cp-nav>*:last-child{justify-self:stretch}
+.cp-score.has-sw{align-items:center}.cp-sw{display:flex;align-items:center;gap:4px;min-width:0;flex:1}
+.cp-sw button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font-size:20px;line-height:1;flex:none;cursor:pointer}.cp-sw button:disabled{opacity:.3}
+.cp-sw span{display:flex;flex-direction:column;min-width:0;padding:0 4px}.cp-sw span b{font-size:15px;color:var(--fg)}.cp-sw small{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-score.has-sw>.note{display:none}
 .cs-flag{display:inline-block;margin-left:6px;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
 .chip.ok{color:var(--ok)} .chip.warn{color:var(--warn)} .chip.bad{color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -2616,6 +2626,7 @@ if(!SET.c2){SET.s.forEach(x=>{if(x.cups===5)x.cups=2});SET.c2=1}
 S=SET.s[SET.cur];if(!S.def)S.def=[];if(!S.lv)S.lv={acid:2,sweet:2,body:2,after:2};
 const save=()=>{SET.s[SET.cur]=S;try{localStorage.setItem(SKEY,JSON.stringify(SET))}catch(e){}};
 const sLabel=i=>'กาแฟ '+(i+1);
+const sFill=x=>(x.name?1:0)+x.aro.length+x.fla.length+Object.values(x.words).reduce((a,b)=>a+b.length,0)+(x.note?1:0)+x.def.length;
 const hist=()=>{try{const a=JSON.parse(localStorage.getItem(CKEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}};
 const histSave=a=>{try{localStorage.setItem(CKEY,JSON.stringify(a))}catch(e){}};
 window.__cupHist={get:hist,set:histSave};
@@ -2636,10 +2647,10 @@ function dots(id,n,cur,from=0){let h='';for(let i=from;i<=n;i++)h+=`<button type
 function render(){
   const coe=S.mode==='coe';
   root.innerHTML=`
-  <div class="panel stack" style="gap:8px">
-    <div class="row" style="justify-content:space-between;align-items:center;gap:8px"><b>ประเมินหลายตัว</b><span class="note" style="margin:0 0 0 auto">${SET.s.length}/${SMAX} ตัว</span></div>
-    <div class="cp-samples" id="cp-samples" role="group" aria-label="เลือกตัวอย่างกาแฟ">${SET.s.map((x,i)=>{const sc=score(fixS(x));return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}"><b>${sLabel(i)}</b><small>${esc(x.name||'—')}${sc!=null&&sc?' · '+(x.mode==='coe'?sc.toFixed(2):sc):''}</small></button>`}).join('')}${SET.s.length<SMAX?'<button type="button" class="cp-sadd" data-sadd aria-label="เพิ่มกาแฟอีกตัว">+ เพิ่ม</button>':''}</div>
-    ${SET.s.length>1?'<div class="row" style="gap:8px"><button class="btn" type="button" id="cp-keepall">บันทึกทุกตัวลงประวัติ</button><button class="btn" type="button" id="cp-sdel">ลบ '+sLabel(SET.cur)+'</button></div>':''}
+  <div class="panel stack" style="gap:10px">
+    <div class="row" style="align-items:center;gap:8px;flex-wrap:nowrap"><b>ตัวอย่างกาแฟ</b><span class="note" style="margin:0 0 0 auto">${SET.s.length}/${SMAX}</span></div>
+    <div class="cp-samples" id="cp-samples" role="group" aria-label="เลือกตัวอย่างกาแฟ">${SET.s.map((x,i)=>{const f=fixS(x),sc=score(f),n=sFill(f);return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}" aria-label="${sLabel(i)} ${esc(x.name||'')}"><span class="cp-sh"><i class="cp-dot ${n?'on':''}"></i><b>${sLabel(i)}</b></span><small>${esc(x.name||(n?'ยังไม่ตั้งชื่อ':'ยังว่าง'))}</small><em class="readout">${!n?'—':sc==null?n+' รายการ':sc?(x.mode==='coe'?sc.toFixed(2):sc):'—'}</em></button>`}).join('')}${SET.s.length<SMAX?'<button type="button" class="cp-sadd" data-sadd aria-label="เพิ่มกาแฟอีกตัว"><b>+</b><small>เพิ่มตัวที่ '+(SET.s.length+1)+'</small></button>':''}</div>
+    ${SET.s.length>1?'<button type="button" class="linkbtn cp-sdel" id="cp-sdel">ลบ '+sLabel(SET.cur)+' ออกจากรอบนี้</button>':''}
   </div>
   <div class="cp-score" id="cp-score"></div>
   <div class="panel stack" style="gap:12px">
@@ -2669,10 +2680,12 @@ function render(){
     <label class="f"><span class="k">โน้ตเพิ่ม</span><textarea id="cp-note" rows="3" class="cp-ta" placeholder="เช่น เย็นแล้วยังหวาน จบยาว อยากลองคั่วอ่อนลงอีกนิด">${esc(S.note)}</textarea></label>
     <button class="btn-primary" type="button" id="cp-sum">ดูสรุป + บันทึกรูป</button>
     <div class="row" style="gap:8px"><button class="btn" type="button" id="cp-keep">บันทึกลงประวัติ</button><button class="btn" type="button" id="cp-new">เริ่มตัวใหม่</button></div>
+    ${SET.s.length>1?'<button class="btn" type="button" id="cp-keepall" style="width:100%">บันทึกทั้ง '+SET.s.length+' ตัวลงประวัติ</button>':''}
+    <div class="cp-nav">${SET.cur>0?'<button class="btn" type="button" data-si="'+(SET.cur-1)+'">‹ '+sLabel(SET.cur-1)+'</button>':'<span></span>'}${SET.cur<SET.s.length-1?'<button class="btn" type="button" data-si="'+(SET.cur+1)+'">'+sLabel(SET.cur+1)+' ›</button>':SET.s.length<SMAX?'<button class="btn" type="button" data-sadd>+ ประเมินตัวต่อไป</button>':'<span></span>'}</div>
     <span class="note" id="cp-msg" aria-live="polite"></span>
   </div>
 
-  ${SET.s.length>1?`<div class="panel stack" style="gap:8px"><h3>เทียบทุกตัว</h3><div class="cp-cmp">${SET.s.map((x,i)=>{const f=fixS(x),sc=score(f),fl=[...f.aro,...f.fla].length;return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}"><span><b>${sLabel(i)}</b> ${esc(x.name||'')}</span><span class="note" style="margin:0">${fl} กลิ่นรส</span><b class="readout">${sc==null?'Note':sc?(x.mode==='coe'?sc.toFixed(2):sc):'—'}</b></button>`}).join('')}</div></div>`:''}
+  ${SET.s.length>1?`<div class="panel stack" style="gap:8px"><h3>เทียบทุกตัว</h3><div class="cp-cmp">${SET.s.map((x,i)=>{const f=fixS(x),sc=sFill(f)?score(f):undefined,fl=[...f.aro,...f.fla].length;return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}"><span><b>${sLabel(i)}</b> ${esc(x.name||'')}</span><span class="note" style="margin:0">${fl} กลิ่นรส</span><b class="readout">${sc===undefined?'ยังว่าง':sc==null?'Note':sc?(x.mode==='coe'?sc.toFixed(2):sc):'—'}</b></button>`}).join('')}</div></div>`:''}
   <div class="panel stack" style="gap:8px"><h3>ประวัติการประเมิน</h3><div id="cp-hist" class="stack" style="gap:6px"></div></div>`;
   bind();drawWheel();renderSel();updScore();renderHist();}
 
@@ -2754,7 +2767,7 @@ function cvaCat(id){const p=id.split('>'),a=p[0],b=p[1]||'',c=p[2]||'';
 function onSeg(id,fn){const g=document.getElementById(id);if(!g)return;g.addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(!b)return;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);save();updScore();})}
 function bind(){
   const $i=id=>document.getElementById(id);
-  $i('cp-name').oninput=e=>{S.name=e.target.value;save();root.querySelectorAll(`[data-si="${SET.cur}"] small, .cp-cmp [data-si="${SET.cur}"] span:first-child`).forEach((el,k)=>{if(el.tagName==='SMALL')el.textContent=S.name||'—';else el.innerHTML='<b>'+sLabel(SET.cur)+'</b> '+esc(S.name)})};$i('cp-date').oninput=e=>{S.date=e.target.value;save()};
+  $i('cp-name').oninput=e=>{S.name=e.target.value;save();root.querySelectorAll(`[data-si="${SET.cur}"] small, .cp-cmp [data-si="${SET.cur}"] span:first-child`).forEach((el,k)=>{if(el.tagName==='SMALL')el.textContent=S.name||'ยังไม่ตั้งชื่อ';else el.innerHTML='<b>'+sLabel(SET.cur)+'</b> '+esc(S.name)})};$i('cp-date').oninput=e=>{S.date=e.target.value;save()};
   $i('cp-note').oninput=e=>{S.note=e.target.value;save()};
   onSeg('cp-cups',v=>{S.cups=+v;S.coe.defN=Math.min(S.coe.defN,S.cups);S.cva.nu=Math.min(S.cva.nu,S.cups);S.cva.df=Math.min(S.cva.df,S.cups);save();render()});
   onSeg('cp-roast',v=>{S.roast=S.roast===+v?-1:+v;$i('cp-roast').querySelectorAll('button').forEach((x,i)=>x.setAttribute('aria-pressed',i===S.roast))});
@@ -2785,9 +2798,11 @@ function bind(){
   $i('cp-keep').onclick=()=>{const a=hist().filter(x=>x.id!==S.id);const c=JSON.parse(JSON.stringify(S));if(!c.name&&SET.s.length>1)c.name=sLabel(SET.cur);a.unshift(c);histSave(a);renderHist();msg('บันทึกลงประวัติแล้ว')};
   const nb=$i('cp-new');nb.onclick=()=>{if(!nb.dataset.armed){nb.dataset.armed=1;nb.textContent='กดอีกครั้ง (ฟอร์มนี้จะถูกล้าง)';setTimeout(()=>{if(nb.isConnected){delete nb.dataset.armed;nb.textContent='เริ่มตัวใหม่'}},3000);return}
     const m=S.mode,c=S.cups;S=fresh();S.mode=m;S.cups=c;wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});};
-  const goS=i=>{save();SET.cur=i;S=fixS(SET.s[i]);wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20})};
+  const goS=i=>{if(i<0||i>=SET.s.length)return;save();SET.cur=i;S=fixS(SET.s[i]);wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});msg('กำลังประเมิน '+sLabel(i)+(S.name?' · '+S.name:''))};
+  $i('cp-score').onclick=e=>{const b=e.target.closest('[data-sstep]');if(b)goS(SET.cur+ +b.dataset.sstep)};
+  {const ac=root.querySelector('#cp-samples [aria-pressed="true"]');if(ac)ac.scrollIntoView({block:'nearest',inline:'center'})}
   root.querySelectorAll('[data-si]').forEach(b=>b.onclick=()=>goS(+b.dataset.si));
-  const ad=root.querySelector('[data-sadd]');if(ad)ad.onclick=()=>{if(SET.s.length>=SMAX)return;save();const n=fresh();n.mode=S.mode;n.cups=S.cups;n.date=S.date;SET.s.push(n);goS(SET.s.length-1)};
+  root.querySelectorAll('[data-sadd]').forEach(ad=>ad.onclick=()=>{if(SET.s.length>=SMAX)return;save();const n=fresh();n.mode=S.mode;n.cups=S.cups;n.date=S.date;SET.s.push(n);goS(SET.s.length-1)});
   const ka=$i('cp-keepall');if(ka)ka.onclick=()=>{save();let a=hist();SET.s.forEach((x,i)=>{const c=JSON.parse(JSON.stringify(x));if(!c.name)c.name=sLabel(i);a=a.filter(y=>y.id!==c.id);a.unshift(c)});histSave(a);renderHist();msg('บันทึก '+SET.s.length+' ตัวลงประวัติแล้ว')};
   const sd=$i('cp-sdel');if(sd)sd.onclick=()=>{if(!sd.dataset.armed){sd.dataset.armed=1;sd.textContent='กดอีกครั้งเพื่อลบ '+sLabel(SET.cur);setTimeout(()=>{if(sd.isConnected){delete sd.dataset.armed;sd.textContent='ลบ '+sLabel(SET.cur)}},3000);return}
     SET.s.splice(SET.cur,1);SET.cur=Math.max(0,SET.cur-1);S=fixS(SET.s[SET.cur]);wFocus=null;save();render()};
@@ -2797,7 +2812,9 @@ function openAdd(g,arr){if(g.querySelector('.cp-addin'))return;const w=document.
 function flashMsg(g,t){let n=g.querySelector('.cp-warn');if(!n){n=document.createElement('span');n.className='cp-warn note';g.appendChild(n)}n.textContent=t;setTimeout(()=>n.remove(),1800)}
 function msg(t){const m=document.getElementById('cp-msg');m.textContent=t;setTimeout(()=>{if(m.textContent===t)m.textContent=''},2500)}
 function updScore(){const el=document.getElementById('cp-score');if(!el)return;const v=score(S);
-  el.innerHTML=v==null?`<span class="note">Tasting note</span><b class="readout" style="font-size:18px">${S.aro.length+S.fla.length} กลิ่นรส · ${Object.values(S.words).reduce((a,b)=>a+b.length,0)} คำ</b>`:`<span class="note">${S.mode==='coe'?'COE':'SCA CVA'} score</span><b class="readout">${v.toFixed(2)}</b>`;
+  const sw=SET.s.length>1?`<div class="cp-sw"><button type="button" data-sstep="-1" aria-label="ตัวก่อนหน้า" ${SET.cur?'':'disabled'}>‹</button><span><b>${sLabel(SET.cur)}</b><small>${esc(S.name||'')}</small></span><button type="button" data-sstep="1" aria-label="ตัวถัดไป" ${SET.cur<SET.s.length-1?'':'disabled'}>›</button></div>`:'';
+  el.classList.toggle('has-sw',!!sw);
+  el.innerHTML=sw+(v==null?`<span class="note">Tasting note</span><b class="readout" style="font-size:18px">${S.aro.length+S.fla.length} กลิ่นรส · ${Object.values(S.words).reduce((a,b)=>a+b.length,0)} คำ</b>`:`<span class="note">${S.mode==='coe'?'COE':'SCA CVA'} score</span><b class="readout">${v.toFixed(2)}</b>`);
   const d=document.getElementById('cp-defout');if(d){const v=S.coe.defI*S.coe.defN*4;d.textContent=`${S.coe.defI} × ${S.coe.defN} × 4 = ${v?'−'+v:'0'} คะแนน`;}}
 function renderHist(){const el=document.getElementById('cp-hist');const a=hist();
   if(!a.length){el.innerHTML='<p class="note" style="margin:0">ยังไม่มี · กด "บันทึกลงประวัติ" หลังประเมินเสร็จ</p>';return}
