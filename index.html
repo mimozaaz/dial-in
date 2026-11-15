@@ -2604,7 +2604,7 @@ const LV={acid:['Low','Medium','High'],sweet:['Low','Medium','High'],body:['Ligh
 const TASTES=['Salty','Sour','Sweet','Bitter','Umami'],MFC=['Metallic','Rough','Oily','Smooth','Mouth-drying'];
 const CKEY='dib-cup',DKEY='dib-cupdraft';
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-function fresh(){return {id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:'',date:today(),cups:5,roast:-1,mode:'coe',aro:[],fla:[],
+function fresh(){return {id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:'',date:today(),cups:2,roast:-1,mode:'coe',aro:[],fla:[],
   words:{acid:[],sweet:[],mouth:[],after:[],balance:[]},note:'',def:[],lv:{acid:2,sweet:2,body:2,after:2},
   coe:{dry:2,crust:2,brk:2,acI:'M',mfI:'M',defI:1,defN:0,sc:Object.fromEntries(COE_A.map(a=>[a[0],6]))},
   cva:{aff:Object.fromEntries(CVA_A.map(a=>[a[0],5])),int:Object.fromEntries(CVA_I.map(a=>[a[0],5])),nu:0,df:0,tastes:[],mfc:[],rr:0}}}
@@ -2612,6 +2612,7 @@ const SKEY='dib-cupset',SMAX=10;let S,SET;
 try{SET=JSON.parse(localStorage.getItem(SKEY))}catch(e){}
 if(!SET||!Array.isArray(SET.s)||!SET.s.length){let d;try{d=JSON.parse(localStorage.getItem(DKEY))}catch(e){}SET={cur:0,s:[d&&d.coe&&d.cva?d:fresh()]}}
 SET.s=SET.s.slice(0,SMAX).map(x=>x&&x.coe&&x.cva?x:fresh());if(!(SET.cur>=0&&SET.cur<SET.s.length))SET.cur=0;
+if(!SET.c2){SET.s.forEach(x=>{if(x.cups===5)x.cups=2});SET.c2=1}
 S=SET.s[SET.cur];if(!S.def)S.def=[];if(!S.lv)S.lv={acid:2,sweet:2,body:2,after:2};
 const save=()=>{SET.s[SET.cur]=S;try{localStorage.setItem(SKEY,JSON.stringify(SET))}catch(e){}};
 const sLabel=i=>'กาแฟ '+(i+1);
