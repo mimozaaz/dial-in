@@ -353,6 +353,7 @@ html:not([data-role]) .wrap{visibility:hidden}
 html[data-role="tools"] .bnav a:not([data-tab="tools"]){display:none}
 html[data-role="tools"] #v-tools .subnav button:is([data-go="timer"],[data-go="fix"]),html[data-role="tools"] #v-tools :is([data-sub="timer"],[data-sub="fix"]),html[data-role="tools"] #v-tools .howto li:is(:nth-child(3),:nth-child(4)){display:none!important}
 html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
+html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role="log"] .bnav .in{grid-template-columns:1fr;max-width:200px}
 .logout{display:none}html[data-role] .logout{display:flex}
 </style>
 
@@ -361,14 +362,14 @@ html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
   <label class="f"><span class="k">ชื่อผู้ใช้</span><input id="gate-u" type="text" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
   <label class="f"><span class="k">รหัสผ่าน</span><input id="gate-p" name="password" type="password" autocomplete="current-password" required></label>
   <p class="err" id="gate-e" aria-live="polite"></p><button type="submit">เข้าใช้งาน</button></form></div>
-<script>(function(){const A={"c037101ee59497722fe636e780ca86b846a10bad341a0c2ef06cbb694085dfb4": "tools", "f96190d4804eb3f8103f7b6657862d73b44d7f1331b88f6de6da030775c15178": "full"};
+<script>(function(){const A={"c037101ee59497722fe636e780ca86b846a10bad341a0c2ef06cbb694085dfb4": "tools", "f96190d4804eb3f8103f7b6657862d73b44d7f1331b88f6de6da030775c15178": "full", "864b371ab0c2786c703d75a7bb73090c80bf394f9b93d2e0cadd31a786c5c8ed": "log"};
   const set=r=>{if(r){document.documentElement.dataset.role=r;document.getElementById('gate').hidden=true;window.__route&&window.__route()}};
   let r=null;try{r=localStorage.getItem('dib-role')}catch(e){}
-  if(r==='tools'||r==='full')set(r);else document.getElementById('gate').hidden=false;
+  if(r==='tools'||r==='full'||r==='log')set(r);else document.getElementById('gate').hidden=false;
   const sha=async t=>{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')};
   document.getElementById('gate-f').addEventListener('submit',async e=>{e.preventDefault();const u=document.getElementById('gate-u').value.trim().toLowerCase(),p=document.getElementById('gate-p').value;
     const role=A[await sha('dib|'+u+'|'+p)];if(!role){document.getElementById('gate-e').textContent='ชื่อผู้ใช้หรือรหัสผ่านไม่ถูก';return}
-    try{localStorage.setItem('dib-role',role)}catch(e){}if(role==='tools')location.hash='#tools';set(role)});
+    try{localStorage.setItem('dib-role',role)}catch(e){}if(role==='tools')location.hash='#tools';if(role==='log')location.hash='#log';set(role)});
   window.dibLogout=()=>{try{localStorage.removeItem('dib-role')}catch(e){}location.hash='';location.reload()};})();</script>
 <div class="wrap">
   <header class="top">
@@ -1058,6 +1059,7 @@ html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
       <textarea id="lg-backup" rows="4" style="font-family:var(--mono);font-size:12px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;resize:vertical" placeholder="ข้อความสำรองจะขึ้นที่นี่ หรือวางข้อความสำรองที่นี่เพื่อนำเข้า"></textarea>
       <span class="note" id="lg-bmsg" aria-live="polite"></span>
     </div>
+    <p class="logout" style="justify-content:center;align-items:center;gap:6px;margin:24px 0 8px;font-size:13px;color:var(--muted)">เข้าใช้งานแล้ว · <button type="button" class="linkbtn" onclick="dibLogout()">ออกจากระบบ</button></p>
   </section>
 
   <!-- ============ RECIPES ============ -->
@@ -2492,7 +2494,7 @@ document.querySelectorAll('section[data-view]').forEach(sec=>{const subs=[...sec
   const saved=store.get('sub-'+sec.id,'');showSub(sec,subs.some(s=>s.dataset.sub===saved)?saved:subs[0].dataset.sub);});
 
 /* ---------- Tabs (hash) ---------- */
-function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
+function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='log'&&v!=='log'){v='log';if(location.hash!=='#log')history.replaceState(null,'','#log')}if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   const nv=v==='brewers'?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
 window.addEventListener('hashchange',route);window.__route=route;
