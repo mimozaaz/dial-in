@@ -135,6 +135,13 @@ input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .mg-rc{display:grid;gap:8px}.mg-rcard{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.mg-rcard>b{display:block;margin-bottom:6px}.mg-rg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px 6px}.mg-rg span{display:flex;flex-direction:column;font:600 14px var(--mono);text-transform:none}.mg-rg i{font:400 11px var(--sans,inherit);font-style:normal;color:var(--muted);text-transform:none}.mg-rg span.k{color:var(--accent)}
 details>summary{min-height:40px;display:flex;align-items:center;gap:6px}
 input[type=range]{min-height:36px}
+.cp-samples{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.cp-samples::-webkit-scrollbar{display:none}
+.cp-samples button{flex:0 0 auto;min-width:84px;min-height:52px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.cp-samples button small{font-size:12px;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-samples button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.cp-samples .cp-sadd{align-items:center;color:var(--accent);border-style:dashed;font-weight:600}
+.cp-cmp{display:flex;flex-direction:column;gap:6px}.cp-cmp button{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.cp-cmp button[aria-pressed="true"]{border-color:var(--accent)}.cp-cmp button span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cs-flag{display:inline-block;margin-left:6px;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px dashed var(--warn);color:var(--warn);vertical-align:1px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
 .chip.ok{color:var(--ok)} .chip.warn{color:var(--warn)} .chip.bad{color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -2601,9 +2608,13 @@ function fresh(){return {id:Date.now().toString(36)+Math.random().toString(36).s
   words:{acid:[],sweet:[],mouth:[],after:[],balance:[]},note:'',def:[],lv:{acid:2,sweet:2,body:2,after:2},
   coe:{dry:2,crust:2,brk:2,acI:'M',mfI:'M',defI:1,defN:0,sc:Object.fromEntries(COE_A.map(a=>[a[0],6]))},
   cva:{aff:Object.fromEntries(CVA_A.map(a=>[a[0],5])),int:Object.fromEntries(CVA_I.map(a=>[a[0],5])),nu:0,df:0,tastes:[],mfc:[],rr:0}}}
-let S;try{S=JSON.parse(localStorage.getItem(DKEY))}catch(e){}
-if(!S||!S.coe||!S.cva)S=fresh();if(!S.def)S.def=[];if(!S.lv)S.lv={acid:2,sweet:2,body:2,after:2};
-const save=()=>{try{localStorage.setItem(DKEY,JSON.stringify(S))}catch(e){}};
+const SKEY='dib-cupset',SMAX=10;let S,SET;
+try{SET=JSON.parse(localStorage.getItem(SKEY))}catch(e){}
+if(!SET||!Array.isArray(SET.s)||!SET.s.length){let d;try{d=JSON.parse(localStorage.getItem(DKEY))}catch(e){}SET={cur:0,s:[d&&d.coe&&d.cva?d:fresh()]}}
+SET.s=SET.s.slice(0,SMAX).map(x=>x&&x.coe&&x.cva?x:fresh());if(!(SET.cur>=0&&SET.cur<SET.s.length))SET.cur=0;
+S=SET.s[SET.cur];if(!S.def)S.def=[];if(!S.lv)S.lv={acid:2,sweet:2,body:2,after:2};
+const save=()=>{SET.s[SET.cur]=S;try{localStorage.setItem(SKEY,JSON.stringify(SET))}catch(e){}};
+const sLabel=i=>'กาแฟ '+(i+1);
 const hist=()=>{try{const a=JSON.parse(localStorage.getItem(CKEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}};
 const histSave=a=>{try{localStorage.setItem(CKEY,JSON.stringify(a))}catch(e){}};
 window.__cupHist={get:hist,set:histSave};
@@ -2624,9 +2635,14 @@ function dots(id,n,cur,from=0){let h='';for(let i=from;i<=n;i++)h+=`<button type
 function render(){
   const coe=S.mode==='coe';
   root.innerHTML=`
+  <div class="panel stack" style="gap:8px">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:8px"><b>ประเมินหลายตัว</b><span class="note" style="margin:0 0 0 auto">${SET.s.length}/${SMAX} ตัว</span></div>
+    <div class="cp-samples" id="cp-samples" role="group" aria-label="เลือกตัวอย่างกาแฟ">${SET.s.map((x,i)=>{const sc=score(fixS(x));return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}"><b>${sLabel(i)}</b><small>${esc(x.name||'—')}${sc!=null&&sc?' · '+(x.mode==='coe'?sc.toFixed(2):sc):''}</small></button>`}).join('')}${SET.s.length<SMAX?'<button type="button" class="cp-sadd" data-sadd aria-label="เพิ่มกาแฟอีกตัว">+ เพิ่ม</button>':''}</div>
+    ${SET.s.length>1?'<div class="row" style="gap:8px"><button class="btn" type="button" id="cp-keepall">บันทึกทุกตัวลงประวัติ</button><button class="btn" type="button" id="cp-sdel">ลบ '+sLabel(SET.cur)+'</button></div>':''}
+  </div>
   <div class="cp-score" id="cp-score"></div>
   <div class="panel stack" style="gap:12px">
-    <label class="f"><span class="k">ชื่อกาแฟ / ตัวอย่าง</span><input type="text" id="cp-name" placeholder="เช่น Panama Geisha Natural" value="${esc(S.name)}" autocomplete="off"></label>
+    <label class="f"><span class="k">ชื่อกาแฟ / ตัวอย่าง</span><input type="text" id="cp-name" placeholder="${sLabel(SET.cur)} · เช่น Panama Geisha Natural" value="${esc(S.name)}" autocomplete="off"></label>
     <div class="cp-meta"><label class="f"><span class="k">วันที่</span><input type="date" id="cp-date" value="${S.date}"></label>
       <div class="f"><span class="k">จำนวนถ้วย</span>${dots('cp-cups',5,S.cups,1)}</div></div>
     <div class="f"><span class="k">ระดับคั่ว</span><div class="cp-roast" id="cp-roast">${ROAST.map((r,i)=>`<button type="button" data-v="${i}" aria-pressed="${S.roast===i}"><i style="background:${r[1]}"></i>${r[0]}</button>`).join('')}</div></div>
@@ -2655,6 +2671,7 @@ function render(){
     <span class="note" id="cp-msg" aria-live="polite"></span>
   </div>
 
+  ${SET.s.length>1?`<div class="panel stack" style="gap:8px"><h3>เทียบทุกตัว</h3><div class="cp-cmp">${SET.s.map((x,i)=>{const f=fixS(x),sc=score(f),fl=[...f.aro,...f.fla].length;return `<button type="button" data-si="${i}" aria-pressed="${i===SET.cur}"><span><b>${sLabel(i)}</b> ${esc(x.name||'')}</span><span class="note" style="margin:0">${fl} กลิ่นรส</span><b class="readout">${sc==null?'Note':sc?(x.mode==='coe'?sc.toFixed(2):sc):'—'}</b></button>`}).join('')}</div></div>`:''}
   <div class="panel stack" style="gap:8px"><h3>ประวัติการประเมิน</h3><div id="cp-hist" class="stack" style="gap:6px"></div></div>`;
   bind();drawWheel();renderSel();updScore();renderHist();}
 
@@ -2736,7 +2753,7 @@ function cvaCat(id){const p=id.split('>'),a=p[0],b=p[1]||'',c=p[2]||'';
 function onSeg(id,fn){const g=document.getElementById(id);if(!g)return;g.addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(!b)return;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);save();updScore();})}
 function bind(){
   const $i=id=>document.getElementById(id);
-  $i('cp-name').oninput=e=>{S.name=e.target.value;save()};$i('cp-date').oninput=e=>{S.date=e.target.value;save()};
+  $i('cp-name').oninput=e=>{S.name=e.target.value;save();root.querySelectorAll(`[data-si="${SET.cur}"] small, .cp-cmp [data-si="${SET.cur}"] span:first-child`).forEach((el,k)=>{if(el.tagName==='SMALL')el.textContent=S.name||'—';else el.innerHTML='<b>'+sLabel(SET.cur)+'</b> '+esc(S.name)})};$i('cp-date').oninput=e=>{S.date=e.target.value;save()};
   $i('cp-note').oninput=e=>{S.note=e.target.value;save()};
   onSeg('cp-cups',v=>{S.cups=+v;S.coe.defN=Math.min(S.coe.defN,S.cups);S.cva.nu=Math.min(S.cva.nu,S.cups);S.cva.df=Math.min(S.cva.df,S.cups);save();render()});
   onSeg('cp-roast',v=>{S.roast=S.roast===+v?-1:+v;$i('cp-roast').querySelectorAll('button').forEach((x,i)=>x.setAttribute('aria-pressed',i===S.roast))});
@@ -2764,9 +2781,15 @@ function bind(){
   $i('cp-lbody').addEventListener('click',e=>{const b=e.target.closest('[data-lib]');if(!b)return;const id=b.dataset.lib,arr=S[wTgt],i=arr.indexOf(id);if(i>=0)arr.splice(i,1);else arr.push(id);save();drawWheel();renderSel();});
   root.querySelectorAll('[data-gofla]').forEach(b=>b.onclick=()=>{wTgt='fla';root.querySelectorAll('#cp-tgt button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v==='fla'));drawWheel();renderLib();$i('cp-wheel').scrollIntoView({behavior:'smooth',block:'center'})});
   $i('cp-sum').onclick=openSummary;
-  $i('cp-keep').onclick=()=>{const a=hist().filter(x=>x.id!==S.id);a.unshift(JSON.parse(JSON.stringify(S)));histSave(a);renderHist();msg('บันทึกลงประวัติแล้ว')};
+  $i('cp-keep').onclick=()=>{const a=hist().filter(x=>x.id!==S.id);const c=JSON.parse(JSON.stringify(S));if(!c.name&&SET.s.length>1)c.name=sLabel(SET.cur);a.unshift(c);histSave(a);renderHist();msg('บันทึกลงประวัติแล้ว')};
   const nb=$i('cp-new');nb.onclick=()=>{if(!nb.dataset.armed){nb.dataset.armed=1;nb.textContent='กดอีกครั้ง (ฟอร์มนี้จะถูกล้าง)';setTimeout(()=>{if(nb.isConnected){delete nb.dataset.armed;nb.textContent='เริ่มตัวใหม่'}},3000);return}
     const m=S.mode,c=S.cups;S=fresh();S.mode=m;S.cups=c;wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20});};
+  const goS=i=>{save();SET.cur=i;S=fixS(SET.s[i]);wFocus=null;save();render();window.scrollTo({top:root.offsetTop-20})};
+  root.querySelectorAll('[data-si]').forEach(b=>b.onclick=()=>goS(+b.dataset.si));
+  const ad=root.querySelector('[data-sadd]');if(ad)ad.onclick=()=>{if(SET.s.length>=SMAX)return;save();const n=fresh();n.mode=S.mode;n.cups=S.cups;n.date=S.date;SET.s.push(n);goS(SET.s.length-1)};
+  const ka=$i('cp-keepall');if(ka)ka.onclick=()=>{save();let a=hist();SET.s.forEach((x,i)=>{const c=JSON.parse(JSON.stringify(x));if(!c.name)c.name=sLabel(i);a=a.filter(y=>y.id!==c.id);a.unshift(c)});histSave(a);renderHist();msg('บันทึก '+SET.s.length+' ตัวลงประวัติแล้ว')};
+  const sd=$i('cp-sdel');if(sd)sd.onclick=()=>{if(!sd.dataset.armed){sd.dataset.armed=1;sd.textContent='กดอีกครั้งเพื่อลบ '+sLabel(SET.cur);setTimeout(()=>{if(sd.isConnected){delete sd.dataset.armed;sd.textContent='ลบ '+sLabel(SET.cur)}},3000);return}
+    SET.s.splice(SET.cur,1);SET.cur=Math.max(0,SET.cur-1);S=fixS(SET.s[SET.cur]);wFocus=null;save();render()};
 }
 function openAdd(g,arr){if(g.querySelector('.cp-addin'))return;const w=document.createElement('span');w.className='cp-addin';w.innerHTML='<input type="text" placeholder="พิมพ์คำ แล้วกด Enter"><button type="button" class="cp-chip">เพิ่ม</button>';g.appendChild(w);const inp=w.querySelector('input');inp.focus();
   const go=()=>{const v=inp.value.trim();if(v&&!arr.includes(v)){arr.push(v);save()}render();};inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}});w.querySelector('button').onclick=go;}
