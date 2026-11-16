@@ -2125,7 +2125,13 @@ const R=[
   spec:[['กาแฟ','14.5 g'],['น้ำรวม','200 g'],['อุณหภูมิ','ไม่ระบุ (ต้นทางไม่บอก)'],['เสิร์ฟ','155 g (ตั้งเป้าที่ yield ไม่ใช่เวลา)']],
   grind:'หยาบ ~1000 µm (≈ C40 33 คลิกบนสเกลของแอป)',conv:{g:'c40',c:33},src:'https://www.zestcoffee.net/blogs/news/zest-coffees-simon-gautherin-wins-the-2026-australian-brewers-cup-1',
   src2t:'ต้นทางไม่บอกอุณหภูมิน้ำ · น้ำ Apax Lab สูตรเฉพาะ (silica + magnesium) · Pulsar คล้าย Hario Switch แต่ไม่มี bypass',
-  steps:[['เตรียม','ตัดกระดาษ Perme ให้พอดี Pulsar · ใส่กาแฟ 14.5 g แล้วปิดวาล์ว'],['0:00','วาล์วปิด เทน้ำ 100 g'],['1:00','เปิดวาล์ว แล้วเทน้ำอีก 100 g (รวม 200 g)'],['จบ','ตัดเมื่อได้ 155 g ในโถ (ยึดน้ำหนัก ไม่ใช่เวลา)']]}
+  steps:[['เตรียม','ตัดกระดาษ Perme ให้พอดี Pulsar · ใส่กาแฟ 14.5 g แล้วปิดวาล์ว'],['0:00','วาล์วปิด เทน้ำ 100 g'],['1:00','เปิดวาล์ว แล้วเทน้ำอีก 100 g (รวม 200 g)'],['จบ','ตัดเมื่อได้ 155 g ในโถ (ยึดน้ำหนัก ไม่ใช่เวลา)']]},
+ {cat:'wbrc',reg:'sg',gr:'Comandante C40',t:'WBrC 2022 · อันดับ 3',who:'Elysia Tan (สิงคโปร์, Homeground Coffee Roasters)',dev:'ORIGAMI Air M · กระดาษกรวย Cafec TH-3',
+  bean:'Gesha Anaerobic Natural 7 วัน จากโคลอมเบีย ปลูก 2,000 ม. (ชื่อฟาร์มในคำบรรยายฟังได้ใกล้ "Cerro Azul")',
+  spec:[['กาแฟ','15 g'],['น้ำรวม','240 g'],['อุณหภูมิ','91°C → 70°C (2 รอบแรก 91 · 2 รอบหลัง 70)'],['น้ำแร่','160 ppm (Mg + Ca)']],
+  grind:'Comandante 32 คลิก (หยาบ) แล้วร่อนฝุ่นออกทั้งหมด · ที่รอบประเทศสิงคโปร์ใช้ 23 คลิก น้ำ 70 ppm',conv:{g:'c40',c:32},src:'https://www.youtube.com/watch?v=dagxgOdRRLA',
+  src2t:'ตัวเลขจากการ์ดสูตรในคลิปของเธอเองและคำบรรยายรอบชิง (youtu.be/6uLL2Uf7fqQ) · การ์ดเขียนว่า "เว้น 30 วิระหว่างแต่ละรอบ" จึงลงเวลาเป็น 0:00 / 0:30 / 1:00 / 1:30 · ไม่ได้บอกเวลาไหลหมด',
+  steps:[['เตรียม','บด 32 คลิก ร่อนฝุ่นออก · วาง Cafec TH-3 ใน ORIGAMI Air M'],['0:00','เทน้ำ 91°C 60 g'],['0:30','เทน้ำ 91°C +70 g (รวม 130 g)'],['1:00','เปลี่ยนเป็นน้ำ 70°C เท +50 g (รวม 180 g)'],['1:30','เทน้ำ 70°C +60 g (รวม 240 g) แล้วปล่อยไหลหมด'],['เสิร์ฟ','ชงเสร็จวางชามน้ำร้อนครอบบนโถ ช่วยเก็บความร้อนและไอให้กลิ่นชัดขึ้น']]}
 ];
 const GR_OF={'Nemo Pop (ออสเตรเลีย)':'Comandante X25 Trailmaster','Tay Wipvasutti (ไทย, Brave Roasters)':'1Zpresso ZP6 Special','Carlos Medina (ชิลี)':'1Zpresso ZP6 Special','Jibbi Little (ออสเตรเลีย)':'Timemore + Kinu','Tuomas Merikanto (ฟินแลนด์)':'Comandante C40','Tetsu Kasuya — วิธี 4:6':'Ditting (ใช้เป็นค่าเทียบ)','Emi Fukahori — Hario Switch':'Comandante C40','George Stanica (โรมาเนีย)':'Comandante C40 + Red Clix','Sophan Nugraha (อินโดนีเซีย)':'Comandante C40','Carolina Ibarra Garay (สหรัฐฯ)':'Mahlkönig EK43S'};
 R.forEach(r=>{if(!r.gr)r.gr=GR_OF[r.who]||'ไม่ระบุเครื่อง'});
