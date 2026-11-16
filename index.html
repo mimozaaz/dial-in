@@ -852,7 +852,7 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
   <!-- ============ BREWERS ============ -->
   <section id="v-brewers" data-view="brewers" hidden>
     <h2>อุปกรณ์ชง</h2>
-    <div class="subnav" role="group" aria-label="สูตรและอุปกรณ์"><a href="#recipes">สูตรแชมป์</a><a href="#brewers" aria-current="true">อุปกรณ์ชง</a></div>
+    <div class="subnav" role="group" aria-label="สูตรและอุปกรณ์"><a href="#recipes">สูตรแชมป์</a><a href="#brewers" aria-current="true">อุปกรณ์ชง</a><a href="#perme">กระดาษ Perme</a></div>
     <p class="sub">ทรง กระดาษกรอง นิสัยการไหล และสูตรตั้งต้นของแต่ละตัว สูตรตั้งต้นเป็นจุดเริ่มดายอินกลางๆ ไม่ใช่สูตรของผู้ผลิต กด "ส่งไปแปลงค่าบด" เพื่อดูว่าเครื่องเราต้องตั้งเท่าไร</p>
     <div class="seg" role="group" aria-label="กรองตามประเภท" id="b-filter" style="margin-bottom:16px;flex-wrap:wrap">
       <button type="button" data-f="all" aria-pressed="true">ทั้งหมด</button>
@@ -1082,7 +1082,7 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
   <!-- ============ RECIPES ============ -->
   <section id="v-recipes" data-view="recipes" hidden>
     <h2>สูตรชง</h2>
-    <div class="subnav" role="group" aria-label="สูตรและอุปกรณ์"><a href="#recipes" aria-current="true">สูตรแชมป์</a><a href="#brewers">อุปกรณ์ชง</a></div>
+    <div class="subnav" role="group" aria-label="สูตรและอุปกรณ์"><a href="#recipes" aria-current="true">สูตรแชมป์</a><a href="#brewers">อุปกรณ์ชง</a><a href="#perme">กระดาษ Perme</a></div>
     <p class="sub">สูตรที่ชนะ World AeroPress Championship และ World Brewers Cup เรียบเรียงใหม่เป็นพารามิเตอร์และลำดับเวลา กด "แปลงค่าบด" เพื่อดูว่าเครื่องเราต้องตั้งเท่าไร</p>
     <div class="panel row" style="align-items:flex-end;margin-bottom:16px">
       <label class="f"><span class="k">กาแฟ (g)</span><input id="rt-dose" type="number" min="1" step="0.1" value="18"></label>
@@ -1099,9 +1099,53 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
       <button type="button" data-f="asia" aria-pressed="false">🇨🇳🇲🇾 จีน · มาเลเซีย</button>
       <button type="button" data-f="ori" aria-pressed="false">ORIGAMI CUP</button>
       <button type="button" data-f="th" aria-pressed="false">🇹🇭 ไทย</button>
+      <button type="button" data-f="perme" aria-pressed="false">กระดาษ Perme</button>
     </div>
     <label class="f" style="max-width:360px;margin-bottom:16px"><span class="k">เครื่องบดที่แชมป์ใช้</span><select id="r-grinder"></select></label>
     <div class="cards" id="rc-list"></div>
+  </section>
+
+  <!-- ============ PERME ============ -->
+  <section id="v-perme" data-view="perme" hidden>
+    <h2>กระดาษ Perme</h2>
+    <div class="subnav" role="group" aria-label="สูตรและอุปกรณ์"><a href="#recipes">สูตรแชมป์</a><a href="#brewers">อุปกรณ์ชง</a><a href="#perme" aria-current="true">กระดาษ Perme</a></div>
+    <p class="sub">กระดาษ non-woven แบบกันน้ำ (hydrophobic) ของ Brew Methods เทน้ำเปล่าลงไปน้ำจะค้าง ไม่ไหล จนกว่าน้ำมันจากกาแฟซึมเข้ากระดาษ จึงชงแบบ inverse bloom ได้ คือเทน้ำก่อนแล้วค่อยใส่กาแฟ</p>
+    <div class="panel stack" style="margin-bottom:16px;gap:10px">
+      <div class="meta"><span class="chip acc">ทำงานยังไง</span></div>
+      <div style="font-size:14.5px;line-height:1.6">
+        <div>• ทำจากเส้นใย <b>PP + PE</b> แบบ non-woven ตัวเนื้อไม่มีรส และ<b>ไม่ต้องล้างกระดาษ</b> (ถ้าล้างก่อน คุณสมบัติกันน้ำจะเสีย)</div>
+        <div>• ช่วงแรกน้ำแทบไม่ไหลอ้อม (bypass น้อยมาก) ผงจึงแช่น้ำทั้งเบด สกัดได้เต็มที่ตั้งแต่ช่วงแรก</div>
+        <div>• พอน้ำมันกาแฟซึมเข้ากระดาษ น้ำจะเริ่มไหล ใช้เวลาประมาณ <b class="hl">5–10 วินาที</b> บางตัวนานถึง <b class="hl">~30 วินาที</b> และหลังจากนั้นจะไหลเร็วขึ้นเรื่อยๆ</div>
+        <div>• เนื้อ non-woven แทบไม่อุดตัน จึง<b>บดละเอียดกว่ากระดาษปกติได้</b></div>
+      </div>
+    </div>
+    <div class="cards" id="pm-list"></div>
+    <div class="section"><div class="panel stack" style="gap:10px">
+      <div class="meta"><span class="chip acc">ตัวแปรที่ทำให้เปิดเร็ว/ช้า</span><span class="chip">จากผู้ผลิต</span></div>
+      <div class="tbl"><table>
+        <thead><tr><th>ตัวแปร</th><th>เปิดเร็ว</th><th>เปิดช้า</th></tr></thead>
+        <tbody>
+          <tr><td>โพรเซส</td><td>Natural (บางทีแค่ไม่กี่วินาที)</td><td>Washed</td></tr>
+          <tr><td>ระดับคั่ว</td><td>คั่วเข้ม (น้ำมันขึ้นผิวไว)</td><td>คั่วอ่อน</td></tr>
+          <tr><td>ขนาดบด</td><td>ละเอียด</td><td>หยาบมาก</td></tr>
+          <tr><td>อายุเมล็ด</td><td>สด</td><td>เกิน 2 เดือนหลังคั่ว (น้ำมันแข็งตัว)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin:0">ถ้าชงแบบปกติ (ใส่กาแฟก่อนแล้วค่อยเทน้ำ) ผู้ผลิตแนะนำให้บลูม<b>อย่างน้อย 45 วินาที</b> เพื่อให้น้ำผ่านเบดหมดก่อนเทรอบต่อไป</p>
+    </div></div>
+    <div class="section"><article class="rc">
+      <div class="meta"><span class="chip acc">ในการแข่ง</span><span class="chip warn">ยังไม่เปิดสูตรเต็ม</span></div>
+      <h3>Lakis Psomas (สวีเดน, Beans in Cup)</h3>
+      <div class="stack" style="gap:6px;font-size:14px;line-height:1.55">
+        <div><b>World Brewers Cup 2025 · อันดับ 7</b> · Gesha Natural จาก Finca Nuguo (ปานามา)</div>
+        <div>ใช้ดริปเปอร์ Timemore กับกระดาษ non-woven กันน้ำ (ไม่ได้ระบุว่ายี่ห้ออะไร) · <b class="hl">16 g</b> / <b class="hl">250 g</b> / <b class="hl">93→88°C</b> · inverse bloom แล้วเทต่ออีก 4 รอบ</div>
+        <div>เทน้ำลงกระดาษก่อน ใส่กาแฟตาม แล้วคนบลูมด้วย WDT เพื่อให้ผงเปียกทั่ว</div>
+      </div>
+      <p class="note" style="margin:8px 0 0">ไม่มีแหล่งไหนบอกน้ำทีละรอบหรือเวลา จึงยังไม่ใส่เป็นสูตรที่ทำตามได้</p>
+      <a class="note ch-src" href="https://perfectdailygrind.com/2026/02/evolution-of-coffee-paper-filters/" target="_blank" rel="noopener">ที่มา: Perfect Daily Grind ↗</a>
+      <a class="note ch-src" href="https://buythedrip.coffee/the-cutting-edge-of-coffee-world-brewers-cup/" target="_blank" rel="noopener">ที่มา: Buy the Drip ↗</a>
+    </article></div>
+    <p class="note" style="margin-top:14px">ข้อมูลกระดาษ: <a href="https://brewmethods.com.au/blogs/news/introducing-the-perme-filter" target="_blank" rel="noopener">Brew Methods – Introducing the Perme Filter ↗</a></p>
   </section>
 
   <footer>
@@ -2047,7 +2091,12 @@ const R=[
   bean:'Pink Bourbon · Washed',
   spec:[['กาแฟ','26 g'],['น้ำชง','210 ml'],['อุณหภูมิ','94°C'],['เจือ','+100 ml']],
   grind:'Hario Grinder Pro 55',src:'https://note.com/hario_pr/n/n4bbf4071d9fc',src2t:'ต้นทางเขียนกาแฟเป็น "26mL" (น่าจะพิมพ์ผิด ควรเป็น 26 g) และไม่บอกอุณหภูมิน้ำที่เจือ',
-  steps:[['0:00–0:30','วาล์วเปิด เท 75 ml ผ่านรูกลางของ Drip-Assist · ปิดวาล์วที่ 0:30'],['0:30–1:30','วาล์วปิด เท +135 ml (รวม 210) ครึ่งหนึ่งรูกลาง ครึ่งหนึ่งรูนอก'],['1:30','เปิดวาล์ว'],['เจือ','เติมน้ำ +100 ml (รวม 310)']]}
+  steps:[['0:00–0:30','วาล์วเปิด เท 75 ml ผ่านรูกลางของ Drip-Assist · ปิดวาล์วที่ 0:30'],['0:30–1:30','วาล์วปิด เท +135 ml (รวม 210) ครึ่งหนึ่งรูกลาง ครึ่งหนึ่งรูนอก'],['1:30','เปิดวาล์ว'],['เจือ','เติมน้ำ +100 ml (รวม 310)']]},
+ {cat:'perme',t:'กระดาษ Perme · Inverse Bloom',who:'Brew Methods (ผู้ผลิตกระดาษ Perme)',dev:'Origami Dripper Air + กระดาษ Perme (ไม่ต้องล้างกระดาษ)',gr:'ไม่ระบุเครื่อง',
+  spec:[['กาแฟ','15 g'],['น้ำรวม','225 g'],['อุณหภูมิ','97°C'],['บลูม','100 g (เทลงกระดาษก่อนใส่กาแฟ)']],
+  grind:'หยาบ ~900 µm (≈ C40 30 คลิกบนสเกลของแอป)',conv:{g:'c40',c:30},src:'https://www.threads.com/@brewmethods/post/DUxxdVDj9Jj/video-heres-our-go-to-recipe-on-the-perme-filter-recipe-in-comments',
+  src2t:'ต้นทางไม่ได้บอกจำนวนรอบที่คน ความเร็วเท และเวลาไหลหมด',
+  steps:[['เตรียม','วางกระดาษ Perme แห้งๆ ในดริปเปอร์ ไม่ต้องล้าง · วางบนโถรองบนตาชั่ง แล้ว tare'],['เตรียม','เทน้ำ 97°C 100 g ลงกระดาษ น้ำจะค้างอยู่ ไม่ไหลลง'],['0:00','เริ่มจับเวลา ใส่กาแฟ 15 g แล้วคนให้ทั่ว (ใช้ WDT หรือช้อน) จากนั้นกด tare แล้วรอให้น้ำเริ่มไหลเอง'],['1:30','เทน้ำที่เหลือ 125 g (รวม 225 g)'],['จบ','ปล่อยให้น้ำไหลหมด']]}
 ];
 const GR_OF={'Nemo Pop (ออสเตรเลีย)':'Comandante X25 Trailmaster','Tay Wipvasutti (ไทย, Brave Roasters)':'1Zpresso ZP6 Special','Carlos Medina (ชิลี)':'1Zpresso ZP6 Special','Jibbi Little (ออสเตรเลีย)':'Timemore + Kinu','Tuomas Merikanto (ฟินแลนด์)':'Comandante C40','Tetsu Kasuya — วิธี 4:6':'Ditting (ใช้เป็นค่าเทียบ)','Emi Fukahori — Hario Switch':'Comandante C40','George Stanica (โรมาเนีย)':'Comandante C40 + Red Clix','Sophan Nugraha (อินโดนีเซีย)':'Comandante C40','Carolina Ibarra Garay (สหรัฐฯ)':'Mahlkönig EK43S'};
 R.forEach(r=>{if(!r.gr)r.gr=GR_OF[r.who]||'ไม่ระบุเครื่อง'});
@@ -2115,7 +2164,7 @@ const doseOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]:b};
 const facOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]/b:1};
 const rnd=v=>v>=10?String(Math.round(v)):String(Math.round(v*10)/10);
 function scaleTxt(t,f){if(f===1||t==null)return t;return String(t).replace(/(\d+(?:\.\d+)?)(\s*[–-]\s*(\d+(?:\.\d+)?))?(\s*)(g|ml)(?![\/\w])/g,(all,a,rng,b,sp,u)=>rnd(+a*f)+(rng?rng.replace(b,rnd(+b*f)):'')+sp+u)}
-function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):(rFilter==='byp'?isByp(x.r):x.r.cat===rFilter)))&&(!gsel||x.r.gr===gsel)).map(({r,i})=>`<article class="rc">
+function rcCard({r,i}){return `<article class="rc">
   <div class="meta"><span class="chip acc">${r.t}</span><span class="chip">${r.dev}</span><span class="chip">⚙ ${r.gr}</span></div>
   <h3>${r.who}</h3>
   ${(()=>{const b=baseDose(r);if(!b)return '';const d=doseOf(i),f=facOf(i);return `<div class="dose" data-dose="${i}"><span class="k">ปรับปริมาณกาแฟ</span><button type="button" data-dd="-1" aria-label="ลด 1 g">−</button><input type="number" inputmode="decimal" min="1" max="200" step="0.5" value="${+d.toFixed(1)}" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-dd="1" aria-label="เพิ่ม 1 g">+</button>${f!==1?`<span class="dose-f">×${f.toFixed(2)} จากสูตร ${b} g</span><button type="button" class="dose-r" data-dr>คืนค่า</button>`:''}</div>`})()}
@@ -2123,18 +2172,19 @@ function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTM
   <dl class="rinfo">${r.bean?`<dt>☕ เมล็ด</dt><dd>${r.bean}</dd>`:''}<dt>⚙ บด</dt><dd>${r.grind}</dd></dl>
   <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(scaleTxt(s[1],facOf(i)))}</span></li>`).join('')}</ol></details>
   <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}${r.src2t?`<span class="note ch-src" style="display:block">✓ ${r.src2t}</span>`:''}
-</article>`).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');}
-function keepOpen(fn){const open=[...document.querySelectorAll('#rc-list details[open]')].map(d=>[...document.querySelectorAll('#rc-list details')].indexOf(d));const y=scrollY;fn();const ds=document.querySelectorAll('#rc-list details');open.forEach(k=>ds[k]&&(ds[k].open=true));scrollTo(0,y)}
+</article>`}
+function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):(rFilter==='byp'?isByp(x.r):x.r.cat===rFilter)))&&(!gsel||x.r.gr===gsel)).map(rcCard).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');{const pm=document.getElementById('pm-list');if(pm)pm.innerHTML=R.map((r,i)=>({r,i})).filter(x=>x.r.cat==='perme').map(rcCard).join('');}}
+function keepOpen(fn){const open=[...document.querySelectorAll('#rc-list details[open],#pm-list details[open]')].map(d=>[...document.querySelectorAll('#rc-list details,#pm-list details')].indexOf(d));const y=scrollY;fn();const ds=document.querySelectorAll('#rc-list details,#pm-list details');open.forEach(k=>ds[k]&&(ds[k].open=true));scrollTo(0,y)}
 renderRecipes();
-$('#rc-list').addEventListener('change',e=>{const dz=e.target.closest('[data-dose]');if(!dz||e.target.tagName!=='INPUT')return;const i=+dz.dataset.dose,b=baseDose(R[i]);let d=+e.target.value;if(!(d>0)){keepOpen(renderRecipes);return}d=Math.min(200,d);if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d;saveDose();keepOpen(renderRecipes)});
+document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('change',e=>{const dz=e.target.closest('[data-dose]');if(!dz||e.target.tagName!=='INPUT')return;const i=+dz.dataset.dose,b=baseDose(R[i]);let d=+e.target.value;if(!(d>0)){keepOpen(renderRecipes);return}d=Math.min(200,d);if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d;saveDose();keepOpen(renderRecipes)}));
 $('#r-grinder').addEventListener('change',renderRecipes);
 $('#r-filter').addEventListener('click',e=>{const btn=e.target.closest('[data-f]');if(!btn)return;rFilter=btn.dataset.f;
   $('#r-filter').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn));renderRecipes();});
-$('#rc-list').addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
+document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
     if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d}
     saveDose();keepOpen(renderRecipes);return}
   const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
-  gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();});
+  gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();}));
 function calcRatio(){const d=+$('#rt-dose').value||0,r=+$('#rt-ratio').value||0;$('#rt-water').textContent=fmt(d*r,0)+' g'}
 ['#rt-dose','#rt-ratio'].forEach(s=>$(s).addEventListener('input',calcRatio));
 
@@ -2511,9 +2561,9 @@ document.querySelectorAll('section[data-view]').forEach(sec=>{const subs=[...sec
   const saved=store.get('sub-'+sec.id,'');showSub(sec,subs.some(s=>s.dataset.sub===saved)?saved:subs[0].dataset.sub);});
 
 /* ---------- Tabs (hash) ---------- */
-function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='log'&&v!=='log'){v='log';if(location.hash!=='#log')history.replaceState(null,'','#log')}if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
+function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','perme','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='log'&&v!=='log'){v='log';if(location.hash!=='#log')history.replaceState(null,'','#log')}if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
-  const nv=v==='brewers'?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
+  const nv=(v==='brewers'||v==='perme')?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
 window.addEventListener('hashchange',route);window.__route=route;
 route();calcGrind();calcWater();calcDiy();calcRatio();calcEY();renderTimer();
 })();
