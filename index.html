@@ -3138,7 +3138,13 @@ render();
   /* iOS: fixed tab bar gets stranded mid-screen after the keyboard closes → hide it while typing, force reflow after */
   const isField=el=>el&&el.matches&&el.matches('input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea,select');
   document.addEventListener('focusin',e=>{if(isField(e.target))document.body.classList.add('kb')});
-  document.addEventListener('focusout',e=>{if(!isField(e.target))return;setTimeout(()=>{if(!isField(document.activeElement)){document.body.classList.remove('kb');window.scrollTo(window.scrollX,window.scrollY)}},120)});})();
+  const kbOff=()=>{if(isField(document.activeElement))return;document.body.classList.remove('kb');
+    const y=window.scrollY,x=window.scrollX;window.scrollTo(x,y+1);requestAnimationFrame(()=>window.scrollTo(x,y))};
+  document.addEventListener('focusout',e=>{if(!isField(e.target))return;[150,400,800].forEach(t=>setTimeout(kbOff,t))});
+  const vv=window.visualViewport;if(vv){let lastH=vv.height;vv.addEventListener('resize',()=>{const grew=vv.height>lastH+40;lastH=vv.height;
+    if(isField(document.activeElement)&&vv.height<window.innerHeight*0.8)document.body.classList.add('kb');
+    else if(grew||!isField(document.activeElement))setTimeout(kbOff,60)})}
+  addEventListener('pageshow',()=>setTimeout(kbOff,100));addEventListener('orientationchange',()=>setTimeout(kbOff,400));})();
 </script>
 
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>{const up=()=>r.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')up()});setInterval(up,30*60e3);let had=!!navigator.serviceWorker.controller,done=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!done){done=true;location.reload()}had=true})}).catch(()=>{}));</script>
