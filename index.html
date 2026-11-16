@@ -1,4 +1,31 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.ct .ct-card{gap:14px}
+.ct-h{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.ct-n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px;flex:0 0 auto}
+.ct-f{display:flex;flex-direction:column;gap:8px}
+.ct-f>.k{font-weight:600;font-size:14.5px}.ct-f small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.ct-step{display:flex;align-items:center;gap:10px}
+.ct-step button{width:48px;height:48px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:24px;line-height:1;cursor:pointer;flex:0 0 auto}
+.ct-step input,.ct-in input{width:100%;min-width:0;font-family:var(--mono);font-size:24px;font-weight:600;text-align:center;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);color:var(--fg)}
+.ct-step input{flex:1}
+.ct .u{color:var(--muted);font-family:var(--mono);font-size:18px}
+.ct-in{display:flex;align-items:center;gap:8px;max-width:220px}
+.ct-chips{display:flex;gap:6px;flex-wrap:wrap}
+.ct-chips button{font:inherit;font-family:var(--mono);font-size:14px;min-height:38px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;flex:1 0 auto}
+.ct-chips button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.ct-seg{display:flex}.ct-seg button{flex:1;font-size:15px;padding:10px 12px;min-height:44px}
+.ct-do{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;counter-reset:d}
+.ct-do li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);counter-increment:d}
+.ct-do li:last-child{border-bottom:0}
+.ct-do li>span{flex:1;font-size:15px;line-height:1.45}.ct-do li>span::before{content:counter(d) ". ";color:var(--muted);font-weight:600}
+.ct-do .grams{font-size:30px;white-space:nowrap}
+.ct-do li:nth-child(2) .grams{color:var(--ink2)}.ct-do li:nth-child(3) .grams{color:var(--fg)}
+.ct-bar{display:flex;height:14px;border-radius:999px;overflow:hidden;background:var(--sunk)}
+.ct-bar i{display:block;height:100%;transition:width .25s}.ct-bar .c,.ct-leg .c{background:var(--accent)}.ct-bar .b,.ct-leg .b{background:var(--ink2)}
+.ct-leg{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.ct-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.ct-leg #ct-sum{margin-left:auto}
+.ct-warn{background:var(--accent-soft);border-radius:8px;padding:10px 12px;color:var(--fg);line-height:1.6}
+.ct-more{padding:14px 16px}.ct-more summary{cursor:pointer;font-weight:600}
+</style></head><body>
 <title>Dial-In Bench</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -959,33 +986,59 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
       <p class="note" style="margin:0">เติมทีละน้อยแล้ววัดซ้ำ ดีกว่าเติมทีเดียวหมด เพราะเติมเกินแล้วดึงกลับไม่ได้ น้ำบายพาสที่มีแร่ราว 50–100 ppm ทำให้ TDS ที่วัดได้สูงขึ้นแค่ประมาณ 0.005–0.01% แทบไม่มีผล</p>
     </div>
 
-    <div data-sub="cut" data-sublabel="เป้า EY" data-order="2.5" class="section panel stack">
-      <h3>ตั้งเป้า EY → ตัดหัวเชื้อที่กี่กรัม</h3>
-      <p class="note" style="margin:0" id="ct-from">ใส่ EY ที่อยากได้กับความเข้มของแก้ว แอปบอกว่าต้องยกดริปเปอร์ออก (ตัดหัวเชื้อ) ตอนน้ำกาแฟในเหยือกได้กี่กรัม แล้วบายพาสอีกเท่าไร</p>
-      <div class="row">
-        <label class="f"><span class="k">กาแฟ (g)</span><input id="ct-dose" type="number" inputmode="decimal" min="0.1" step="0.1" value="20"></label>
-        <label class="f"><span class="k">EY เป้า (%)</span><input id="ct-ey" type="number" inputmode="decimal" min="1" step="0.1" value="12.4"></label>
-        <label class="f"><span class="k">TDS แก้วที่อยากได้ (%)</span><input id="ct-cup" type="number" inputmode="decimal" min="0.1" step="0.01" value="1.30"></label>
-        <label class="f"><span class="k">TDS หัวเชื้อ (%) วัดได้/คาด</span><input id="ct-conc" type="number" inputmode="decimal" min="0.1" step="0.01" value="2.40"></label>
+    <div data-sub="cut" data-sublabel="เป้า EY" data-order="2.5" class="section stack ct">
+      <div class="panel stack" style="gap:6px">
+        <h3 style="margin:0">ตั้งเป้า EY</h3>
+        <p class="note" style="margin:0" id="ct-from">ตอบ 2 ข้อข้างล่าง แอปบอกว่าต้อง<b>ยกดริปเปอร์ออกตอนกี่กรัม</b> แล้ว<b>เติมน้ำเท่าไร</b></p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" aria-live="polite">
-        <div><div class="note">ตัดหัวเชื้อที่</div><div class="grams" id="ct-out">—</div></div>
-        <div><div class="note">บายพาส</div><div class="grams" id="ct-by" style="color:var(--fg)">—</div></div>
-        <div><div class="note">แก้วรวม</div><div class="grams" id="ct-fin" style="color:var(--fg)">—</div></div>
+
+      <div class="panel stack ct-card">
+        <div class="ct-h"><span class="ct-n">1</span>อยากได้แก้วแบบไหน</div>
+        <div class="ct-f"><span class="k">กาแฟ</span>
+          <div class="ct-step"><button type="button" data-ctd="-0.5" aria-label="ลดกาแฟ">−</button><input id="ct-dose" type="number" inputmode="decimal" min="1" step="0.5" value="15" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-ctd="0.5" aria-label="เพิ่มกาแฟ">+</button></div></div>
+        <div class="ct-f"><span class="k">EY เป้า <small>สกัดออกมากี่ %</small></span>
+          <div class="ct-in"><input id="ct-ey" type="number" inputmode="decimal" min="1" step="0.1" value="12.4" aria-label="EY เป้า (%)"><span class="u">%</span></div>
+          <div class="ct-chips" data-for="ct-ey"><button type="button">12</button><button type="button">14</button><button type="button">16</button><button type="button">18</button><button type="button">20</button></div></div>
+        <div class="ct-f"><span class="k">ความเข้มแก้ว (TDS) <small>ยิ่งสูงยิ่งเข้ม · ดริปทั่วไป 1.25–1.45</small></span>
+          <div class="ct-in"><input id="ct-cup" type="number" inputmode="decimal" min="0.1" step="0.01" value="1.30" aria-label="TDS แก้ว (%)"><span class="u">%</span></div>
+          <div class="ct-chips" data-for="ct-cup"><button type="button">1.25</button><button type="button">1.30</button><button type="button">1.35</button><button type="button">1.40</button><button type="button">1.45</button></div></div>
       </div>
-      <div class="note" id="ct-steps" style="background:var(--sunk);border-radius:8px;padding:10px 12px;line-height:1.8"></div>
-      <div class="note" style="font-weight:600;color:var(--fg)">ถ้ายังไม่รู้ TDS หัวเชื้อ ดูจากตารางนี้</div>
-      <div class="tbl"><table>
-        <thead><tr><th>TDS หัวเชื้อ</th><th style="text-align:right">ตัดที่ (g)</th><th style="text-align:right">บายพาส (g)</th></tr></thead>
-        <tbody id="ct-table"></tbody>
-      </table></div>
-      <details class="note"><summary style="cursor:pointer;font-weight:600">ใช้ยังไงให้ได้เป้าจริง</summary><ol style="margin:8px 0 0;padding-left:20px;line-height:1.7">
-        <li>รอบแรกเดา TDS หัวเชื้อไว้ก่อน (ดริปที่ตัดเร็วมักได้ 2–3%) ชงแล้วยกดริปเปอร์ออกตอนเหยือกได้ตามน้ำหนักในช่อง "ตัดหัวเชื้อที่"</li>
-        <li>คนหัวเชื้อให้ทั่ว วัด TDS แล้วกรอกค่าจริงในช่อง TDS หัวเชื้อ แอปจะคำนวณใหม่ว่ารอบหน้าต้องตัดที่เท่าไร</li>
-        <li>ยิ่งตัดเร็ว หัวเชื้อยิ่งเข้ม เพราะน้ำช่วงแรกเข้มสุด พอเปลี่ยนจุดตัด TDS หัวเชื้อก็เปลี่ยนตาม ปกติ 2–3 รอบจะเข้าเป้า</li>
-        <li>บดและอุณหภูมิเหมือนเดิมทุกรอบ เปลี่ยนแค่จุดตัด EY จะได้ขยับตามที่ตั้งใจ</li>
-        <li>EY ในนี้คิดจากน้ำกาแฟในแก้ว (ไม่รวมน้ำที่ค้างในกาก) แบบเดียวกับที่วัดด้วยรีแฟรกโตมิเตอร์ทั่วไป</li>
-      </ol></details>
+
+      <div class="panel stack ct-card">
+        <div class="ct-h"><span class="ct-n">2</span>หัวเชื้อเข้มแค่ไหน</div>
+        <div class="seg ct-seg" role="group" aria-label="รู้ TDS หัวเชื้อไหม">
+          <button type="button" id="ct-m-guess" aria-pressed="true">ยังไม่เคยวัด</button>
+          <button type="button" id="ct-m-meas" aria-pressed="false">วัดแล้ว</button>
+        </div>
+        <p class="note" id="ct-guess-note" style="margin:0">ใช้ค่ากลาง <b>2.40%</b> ไปก่อน ชงรอบแรกเสร็จ ให้วัด TDS ของหัวเชื้อ (ก่อนเติมน้ำ) แล้วกด "วัดแล้ว" ใส่ค่าจริง รอบหน้าจะแม่นขึ้น</p>
+        <div class="ct-f" id="ct-meas-box" hidden><span class="k">TDS หัวเชื้อที่วัดได้ <small>วัดก่อนเติมน้ำ</small></span>
+          <div class="ct-in"><input id="ct-conc" type="number" inputmode="decimal" min="0.1" step="0.01" value="2.40" aria-label="TDS หัวเชื้อ (%)"><span class="u">%</span></div></div>
+      </div>
+
+      <div class="panel stack ct-card ct-res" aria-live="polite">
+        <div class="ct-h"><span class="ct-n">3</span>ชงตามนี้</div>
+        <ol class="ct-do">
+          <li><span>ชงตามสูตร แล้ว<b>ยกดริปเปอร์ออก</b>เมื่อเหยือกถึง</span><b class="grams" id="ct-out">—</b></li>
+          <li><span><b>เติมน้ำร้อน</b> แล้วคนให้ทั่ว</span><b class="grams" id="ct-by">—</b></li>
+          <li><span>ได้แก้วพร้อมเสิร์ฟ</span><b class="grams" id="ct-fin">—</b></li>
+        </ol>
+        <div class="ct-bar" id="ct-bar" aria-hidden="true"><i class="c"></i><i class="b"></i></div>
+        <div class="ct-leg note"><span><i class="c"></i>หัวเชื้อ</span><span><i class="b"></i>น้ำบายพาส</span><span id="ct-sum"></span></div>
+        <div class="note ct-warn" id="ct-warn" hidden></div>
+      </div>
+
+      <details class="panel ct-more"><summary>ดูวิธีคิด</summary><div class="note" id="ct-steps" style="line-height:1.8;margin-top:8px"></div></details>
+      <details class="panel ct-more"><summary>ถ้าหัวเชื้อเข้มต่างจากนี้ ต้องตัดที่เท่าไร</summary>
+        <p class="note" style="margin:8px 0">ยิ่งตัดเร็ว หัวเชื้อยิ่งเข้ม เพราะน้ำช่วงแรกเข้มสุด ใช้ตารางนี้กะคร่าวๆ ได้</p>
+        <div class="tbl"><table>
+          <thead><tr><th>TDS หัวเชื้อ</th><th style="text-align:right">ตัดที่ (g)</th><th style="text-align:right">เติมน้ำ (g)</th></tr></thead>
+          <tbody id="ct-table"></tbody>
+        </table></div></details>
+      <details class="panel ct-more"><summary>เคล็ดลับให้เข้าเป้าเร็ว</summary><ul class="note" style="margin:8px 0 0;padding-left:20px;line-height:1.7">
+        <li>บดและอุณหภูมิเหมือนเดิมทุกรอบ เปลี่ยนแค่จุดตัด ปกติ 2–3 รอบเข้าเป้า</li>
+        <li>คนหัวเชื้อให้ทั่วก่อนวัด TDS</li>
+        <li>บายพาสไม่เปลี่ยน EY แค่ทำให้จางลง · EY ในนี้คือ EY ในแก้ว (ไม่รวมน้ำที่ค้างในกาก)</li>
+      </ul></details>
     </div>
 
     <div data-sub="fix" data-sublabel="แก้รส" data-order="4" class="section">
@@ -2247,7 +2300,7 @@ $('#r-filter').addEventListener('click',e=>{const btn=e.target.closest('[data-f]
 document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
     if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d}
     saveDose();keepOpen(renderRecipes);return}
-  const ct=e.target.closest('[data-cut]');if(ct){const i=+ct.dataset.cut;$('#ct-dose').value=+(doseOf(i)).toFixed(1);$('#ct-from').innerHTML='จากสูตร <b>'+(R[i].who||'')+'</b> กาแฟ '+fmt(doseOf(i),1)+' g · ใส่ EY ที่อยากได้ แอปบอกว่าต้องยกดริปเปอร์ออกตอนเหยือกได้กี่กรัม แล้วบายพาสอีกเท่าไร';calcCut();showSub('v-tools','cut');location.hash='tools';scrollTo(0,0);return}const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
+  const ct=e.target.closest('[data-cut]');if(ct){const i=+ct.dataset.cut;$('#ct-dose').value=+(doseOf(i)).toFixed(1);$('#ct-from').innerHTML='จากสูตร <b>'+(R[i].who||'')+'</b> กาแฟ '+fmt(doseOf(i),1)+' g · ตอบ 2 ข้อข้างล่าง แอปบอกว่าต้องยกดริปเปอร์ออกตอนกี่กรัม แล้วเติมน้ำเท่าไร';calcCut();showSub('v-tools','cut');location.hash='tools';scrollTo(0,0);return}const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
   gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();}));
 function calcRatio(){const d=+$('#rt-dose').value||0,r=+$('#rt-ratio').value||0;$('#rt-water').textContent=fmt(d*r,0)+' g'}
 ['#rt-dose','#rt-ratio'].forEach(s=>$(s).addEventListener('input',calcRatio));
@@ -2459,19 +2512,32 @@ function calcDl(){
 calcDl();
 
 /* ---------- Target EY → cut-out ---------- */
+let ctMeas=false;
+try{const v=JSON.parse(store.get('cut','null'));if(v){['dose','ey','cup','conc'].forEach(k=>{if(v[k]>0)$('#ct-'+k).value=v[k]});ctMeas=!!v.meas}}catch(e){}
+function ctMode(m){ctMeas=m;$('#ct-m-guess').setAttribute('aria-pressed',!m);$('#ct-m-meas').setAttribute('aria-pressed',m);$('#ct-meas-box').hidden=!m;$('#ct-guess-note').hidden=m;calcCut()}
+$('#ct-m-guess').onclick=()=>ctMode(false);$('#ct-m-meas').onclick=()=>ctMode(true);
+document.querySelectorAll('[data-ctd]').forEach(bt=>bt.onclick=()=>{const x=$('#ct-dose');x.value=Math.max(1,Math.min(200,(+x.value||0)+ +bt.dataset.ctd));calcCut()});
+document.querySelectorAll('.ct-chips').forEach(g=>g.addEventListener('click',e=>{const bt=e.target.closest('button');if(!bt)return;$('#'+g.dataset.for).value=bt.textContent;calcCut()}));
 function calcCut(){
-  const dose=+$('#ct-dose').value||0,ey=+$('#ct-ey').value||0,cup=+$('#ct-cup').value||0,conc=+$('#ct-conc').value||0;
+  const dose=+$('#ct-dose').value||0,ey=+$('#ct-ey').value||0,cup=+$('#ct-cup').value||0,conc=ctMeas?(+$('#ct-conc').value||0):2.4;
+  store.set('cut',JSON.stringify({dose,ey,cup,conc:+$('#ct-conc').value||2.4,meas:ctMeas}));
+  document.querySelectorAll('.ct-chips').forEach(g=>{const v=+$('#'+g.dataset.for).value;g.querySelectorAll('button').forEach(bt=>bt.setAttribute('aria-pressed',Math.abs(+bt.textContent-v)<1e-6))});
   const set=(a,b,c)=>{$('#ct-out').textContent=a;$('#ct-by').textContent=b;$('#ct-fin').textContent=c};
-  if(!(dose>0&&ey>0&&cup>0&&conc>0)){set('—','—','—');$('#ct-steps').textContent='กรอกให้ครบทั้ง 4 ช่อง';$('#ct-table').innerHTML='';return}
+  const W=$('#ct-warn'),bar=$('#ct-bar');W.hidden=true;
+  if(!(dose>0&&ey>0&&cup>0&&conc>0)){set('—','—','—');$('#ct-steps').textContent='กรอกให้ครบ';$('#ct-table').innerHTML='';$('#ct-sum').textContent='';return}
   const sol=dose*ey/100,fin=sol/(cup/100),out=sol/(conc/100),by=fin-out;
-  if(conc<=cup){set('—','—',fmt(fin,0)+' g');$('#ct-steps').innerHTML=`TDS หัวเชื้อ (${fmt(conc,2)}%) ต้องเข้มกว่าแก้วที่อยากได้ (${fmt(cup,2)}%) ถึงจะบายพาสได้ ถ้าหัวเชื้อจางแค่นี้ ให้ชงปกติจนได้ <b>${fmt(fin,0)} g</b> โดยไม่ต้องบายพาส`;}
+  if(conc<=cup){set('—','—',fmt(fin,0)+' g');bar.children[0].style.width='100%';bar.children[1].style.width='0';$('#ct-sum').textContent='';
+    W.hidden=false;W.innerHTML=`หัวเชื้อ ${fmt(conc,2)}% จางกว่าหรือเท่ากับแก้วที่อยากได้ (${fmt(cup,2)}%) เลยเติมน้ำไม่ได้ ให้ชงปกติจนเหยือกได้ <b>${fmt(fin,0)} g</b> แล้วไม่ต้องบายพาส`;}
   else{set(fmt(out,0)+' g','+'+fmt(by,0)+' g',fmt(fin,0)+' g');
-    $('#ct-steps').innerHTML=`<b>1.</b> สารกาแฟที่ต้องสกัดได้ = ${fmt(dose,1)} g × ${fmt(ey,1)}% = <b>${fmt(sol,2)} g</b><br><b>2.</b> แก้วรวม = ${fmt(sol,2)} ÷ ${fmt(cup,2)}% = <b>${fmt(fin,0)} g</b><br><b>3.</b> ตัดหัวเชื้อ = ${fmt(sol,2)} ÷ ${fmt(conc,2)}% = <b>${fmt(out,0)} g</b><br><b>4.</b> บายพาส = ${fmt(fin,0)} − ${fmt(out,0)} = <b>${fmt(by,0)} g</b> · อัตราส่วนรวม 1:${fmt(fin/dose,1)}`;}
+    bar.children[0].style.width=(out/fin*100)+'%';bar.children[1].style.width=(by/fin*100)+'%';
+    $('#ct-sum').textContent='TDS '+fmt(cup,2)+'% · EY '+fmt(ey,1)+'% · 1:'+fmt(fin/dose,1);
+    if(ey>24){W.hidden=false;W.textContent='EY เกิน 24% สูงกว่าที่ดริปทั่วไปทำได้ ลองเช็กตัวเลขอีกที'}}
+  $('#ct-steps').innerHTML=`<b>1.</b> สารกาแฟที่ต้องได้ = ${fmt(dose,1)} g × ${fmt(ey,1)}% = <b>${fmt(sol,2)} g</b><br><b>2.</b> แก้วรวม = ${fmt(sol,2)} ÷ ${fmt(cup,2)}% = <b>${fmt(fin,0)} g</b><br><b>3.</b> จุดตัดหัวเชื้อ = ${fmt(sol,2)} ÷ ${fmt(conc,2)}% = <b>${fmt(out,0)} g</b><br><b>4.</b> เติมน้ำ = ${fmt(fin,0)} − ${fmt(out,0)} = <b>${fmt(Math.max(0,by),0)} g</b>`;
   const rows=[];for(let t=1.6;t<=3.61;t+=0.2)rows.push(+t.toFixed(1));
   $('#ct-table').innerHTML=rows.filter(t=>t>cup).map(t=>{const o=sol/(t/100);return `<tr class="${Math.abs(t-conc)<0.1?'hit':''}"><td class="readout">${t.toFixed(2)}%</td><td class="n">${fmt(o,0)}</td><td class="n">+${fmt(fin-o,0)}</td></tr>`}).join('');
 }
 ['#ct-dose','#ct-ey','#ct-cup','#ct-conc'].forEach(x=>$(x).addEventListener('input',calcCut));
-calcCut();
+ctMode(ctMeas);
 
 let tsCat='all';
 $('#ts-cats').innerHTML=`<button type="button" data-c="all" aria-pressed="true">ทั้งหมด</button>`+Object.entries(TSC).map(([k,v])=>`<button type="button" data-c="${k}" aria-pressed="false">${v}</button>`).join('');
