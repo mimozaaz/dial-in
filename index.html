@@ -368,7 +368,7 @@ ol.steps b.hl{font-family:var(--mono);font-weight:700;color:var(--fg);white-spac
 #gate button{min-height:48px;border-radius:14px;border:0;background:var(--accent);color:#fff;font-family:inherit;font-weight:600;font-size:16px}
 html:not([data-role]) .wrap{visibility:hidden}
 html[data-role="tools"] .bnav a:not([data-tab="tools"]){display:none}
-html[data-role="tools"] #v-tools .subnav button:is([data-go="timer"],[data-go="fix"]),html[data-role="tools"] #v-tools :is([data-sub="timer"],[data-sub="fix"]),html[data-role="tools"] #v-tools .howto li:is(:nth-child(3),:nth-child(4)){display:none!important}
+html[data-role="tools"] #v-tools .subnav button:is([data-go="timer"],[data-go="fix"],[data-go="cut"]),html[data-role="tools"] #v-tools :is([data-sub="timer"],[data-sub="fix"],[data-sub="cut"]),html[data-role="tools"] #v-tools .howto li:is(:nth-child(3),:nth-child(4)){display:none!important}
 html[data-role="tools"] .bnav .in{grid-template-columns:1fr;max-width:200px}
 html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role="log"] .bnav .in{grid-template-columns:1fr;max-width:200px}
 .logout{display:none}html[data-role] .logout{display:flex}
@@ -957,6 +957,35 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
         <tbody id="dl-table"></tbody>
       </table></div>
       <p class="note" style="margin:0">เติมทีละน้อยแล้ววัดซ้ำ ดีกว่าเติมทีเดียวหมด เพราะเติมเกินแล้วดึงกลับไม่ได้ น้ำบายพาสที่มีแร่ราว 50–100 ppm ทำให้ TDS ที่วัดได้สูงขึ้นแค่ประมาณ 0.005–0.01% แทบไม่มีผล</p>
+    </div>
+
+    <div data-sub="cut" data-sublabel="เป้า EY" data-order="2.5" class="section panel stack">
+      <h3>ตั้งเป้า EY → ตัดหัวเชื้อที่กี่กรัม</h3>
+      <p class="note" style="margin:0" id="ct-from">ใส่ EY ที่อยากได้กับความเข้มของแก้ว แอปบอกว่าต้องยกดริปเปอร์ออก (ตัดหัวเชื้อ) ตอนน้ำกาแฟในเหยือกได้กี่กรัม แล้วบายพาสอีกเท่าไร</p>
+      <div class="row">
+        <label class="f"><span class="k">กาแฟ (g)</span><input id="ct-dose" type="number" inputmode="decimal" min="0.1" step="0.1" value="20"></label>
+        <label class="f"><span class="k">EY เป้า (%)</span><input id="ct-ey" type="number" inputmode="decimal" min="1" step="0.1" value="12.4"></label>
+        <label class="f"><span class="k">TDS แก้วที่อยากได้ (%)</span><input id="ct-cup" type="number" inputmode="decimal" min="0.1" step="0.01" value="1.30"></label>
+        <label class="f"><span class="k">TDS หัวเชื้อ (%) วัดได้/คาด</span><input id="ct-conc" type="number" inputmode="decimal" min="0.1" step="0.01" value="2.40"></label>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" aria-live="polite">
+        <div><div class="note">ตัดหัวเชื้อที่</div><div class="grams" id="ct-out">—</div></div>
+        <div><div class="note">บายพาส</div><div class="grams" id="ct-by" style="color:var(--fg)">—</div></div>
+        <div><div class="note">แก้วรวม</div><div class="grams" id="ct-fin" style="color:var(--fg)">—</div></div>
+      </div>
+      <div class="note" id="ct-steps" style="background:var(--sunk);border-radius:8px;padding:10px 12px;line-height:1.8"></div>
+      <div class="note" style="font-weight:600;color:var(--fg)">ถ้ายังไม่รู้ TDS หัวเชื้อ ดูจากตารางนี้</div>
+      <div class="tbl"><table>
+        <thead><tr><th>TDS หัวเชื้อ</th><th style="text-align:right">ตัดที่ (g)</th><th style="text-align:right">บายพาส (g)</th></tr></thead>
+        <tbody id="ct-table"></tbody>
+      </table></div>
+      <details class="note"><summary style="cursor:pointer;font-weight:600">ใช้ยังไงให้ได้เป้าจริง</summary><ol style="margin:8px 0 0;padding-left:20px;line-height:1.7">
+        <li>รอบแรกเดา TDS หัวเชื้อไว้ก่อน (ดริปที่ตัดเร็วมักได้ 2–3%) ชงแล้วยกดริปเปอร์ออกตอนเหยือกได้ตามน้ำหนักในช่อง "ตัดหัวเชื้อที่"</li>
+        <li>คนหัวเชื้อให้ทั่ว วัด TDS แล้วกรอกค่าจริงในช่อง TDS หัวเชื้อ แอปจะคำนวณใหม่ว่ารอบหน้าต้องตัดที่เท่าไร</li>
+        <li>ยิ่งตัดเร็ว หัวเชื้อยิ่งเข้ม เพราะน้ำช่วงแรกเข้มสุด พอเปลี่ยนจุดตัด TDS หัวเชื้อก็เปลี่ยนตาม ปกติ 2–3 รอบจะเข้าเป้า</li>
+        <li>บดและอุณหภูมิเหมือนเดิมทุกรอบ เปลี่ยนแค่จุดตัด EY จะได้ขยับตามที่ตั้งใจ</li>
+        <li>EY ในนี้คิดจากน้ำกาแฟในแก้ว (ไม่รวมน้ำที่ค้างในกาก) แบบเดียวกับที่วัดด้วยรีแฟรกโตมิเตอร์ทั่วไป</li>
+      </ol></details>
     </div>
 
     <div data-sub="fix" data-sublabel="แก้รส" data-order="4" class="section">
@@ -2206,7 +2235,7 @@ function rcCard({r,i}){return `<article class="rc">
   <div class="specs">${r.spec.map(s=>{const f=facOf(i);s=[s[0],/^กาแฟ/.test(s[0])&&f!==1?scaleTxt(s[1],f).replace(/^\s*\d+(?:\.\d+)?(?=\s*g)/,String(+doseOf(i).toFixed(1))):/^(น้ำ|bypass|บายพาส|เสิร์ฟ|เจือ|บลูม|bloom|เติมน้ำ)/i.test(s[0])?scaleTxt(s[1],f):s[1]];const m=String(s[1]).match(/^([^(]+?)\s*\((.+)\)\s*$/);return `<div class="spec"><div class="l">${s[0]}</div><div class="v">${m?m[1]:s[1]}</div>${m?`<div class="sn">${m[2]}</div>`:''}</div>`}).join('')}</div>
   <dl class="rinfo">${r.bean?`<dt>☕ เมล็ด</dt><dd>${r.bean}</dd>`:''}<dt>⚙ บด</dt><dd>${r.grind}</dd></dl>
   <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(scaleTxt(s[1],facOf(i)))}</span></li>`).join('')}</ol></details>
-  <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}${r.src2t?`<span class="note ch-src" style="display:block">✓ ${r.src2t}</span>`:''}
+  <div class="card-actions"><button class="btn act-main" type="button" data-timer="${i}">จับเวลาสูตรนี้</button>${doseOf(i)?`<button class="btn" type="button" data-cut="${i}">🎯 เป้า EY</button>`:''}${r.conv?`<button class="btn" type="button" data-conv="${i}">แปลงค่าบด</button>`:''}</div>${r.src?`<a class="note ch-src" href="${r.src}" target="_blank" rel="noopener">ที่มา ↗</a>`:''}${r.src2t?`<span class="note ch-src" style="display:block">✓ ${r.src2t}</span>`:''}
 </article>`}
 function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):(rFilter==='byp'?isByp(x.r):rFilter==='perme'?(x.r.pm||x.r.cat==='perme'):x.r.cat===rFilter)))&&(!gsel||x.r.gr===gsel)).map(rcCard).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');{const pm=document.getElementById('pm-list');if(pm)pm.innerHTML=R.map((r,i)=>({r,i})).filter(x=>x.r.pm||x.r.cat==='perme').map(rcCard).join('');}}
 function keepOpen(fn){const open=[...document.querySelectorAll('#rc-list details[open],#pm-list details[open]')].map(d=>[...document.querySelectorAll('#rc-list details,#pm-list details')].indexOf(d));const y=scrollY;fn();const ds=document.querySelectorAll('#rc-list details,#pm-list details');open.forEach(k=>ds[k]&&(ds[k].open=true));scrollTo(0,y)}
@@ -2218,7 +2247,7 @@ $('#r-filter').addEventListener('click',e=>{const btn=e.target.closest('[data-f]
 document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
     if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d}
     saveDose();keepOpen(renderRecipes);return}
-  const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
+  const ct=e.target.closest('[data-cut]');if(ct){const i=+ct.dataset.cut;$('#ct-dose').value=+(doseOf(i)).toFixed(1);$('#ct-from').innerHTML='จากสูตร <b>'+(R[i].who||'')+'</b> กาแฟ '+fmt(doseOf(i),1)+' g · ใส่ EY ที่อยากได้ แอปบอกว่าต้องยกดริปเปอร์ออกตอนเหยือกได้กี่กรัม แล้วบายพาสอีกเท่าไร';calcCut();showSub('v-tools','cut');location.hash='tools';scrollTo(0,0);return}const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
   gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();}));
 function calcRatio(){const d=+$('#rt-dose').value||0,r=+$('#rt-ratio').value||0;$('#rt-water').textContent=fmt(d*r,0)+' g'}
 ['#rt-dose','#rt-ratio'].forEach(s=>$(s).addEventListener('input',calcRatio));
@@ -2429,6 +2458,21 @@ function calcDl(){
 ['#dl-w','#dl-t1','#dl-t2','#dl-dose'].forEach(s=>$(s).addEventListener('input',calcDl));
 calcDl();
 
+/* ---------- Target EY → cut-out ---------- */
+function calcCut(){
+  const dose=+$('#ct-dose').value||0,ey=+$('#ct-ey').value||0,cup=+$('#ct-cup').value||0,conc=+$('#ct-conc').value||0;
+  const set=(a,b,c)=>{$('#ct-out').textContent=a;$('#ct-by').textContent=b;$('#ct-fin').textContent=c};
+  if(!(dose>0&&ey>0&&cup>0&&conc>0)){set('—','—','—');$('#ct-steps').textContent='กรอกให้ครบทั้ง 4 ช่อง';$('#ct-table').innerHTML='';return}
+  const sol=dose*ey/100,fin=sol/(cup/100),out=sol/(conc/100),by=fin-out;
+  if(conc<=cup){set('—','—',fmt(fin,0)+' g');$('#ct-steps').innerHTML=`TDS หัวเชื้อ (${fmt(conc,2)}%) ต้องเข้มกว่าแก้วที่อยากได้ (${fmt(cup,2)}%) ถึงจะบายพาสได้ ถ้าหัวเชื้อจางแค่นี้ ให้ชงปกติจนได้ <b>${fmt(fin,0)} g</b> โดยไม่ต้องบายพาส`;}
+  else{set(fmt(out,0)+' g','+'+fmt(by,0)+' g',fmt(fin,0)+' g');
+    $('#ct-steps').innerHTML=`<b>1.</b> สารกาแฟที่ต้องสกัดได้ = ${fmt(dose,1)} g × ${fmt(ey,1)}% = <b>${fmt(sol,2)} g</b><br><b>2.</b> แก้วรวม = ${fmt(sol,2)} ÷ ${fmt(cup,2)}% = <b>${fmt(fin,0)} g</b><br><b>3.</b> ตัดหัวเชื้อ = ${fmt(sol,2)} ÷ ${fmt(conc,2)}% = <b>${fmt(out,0)} g</b><br><b>4.</b> บายพาส = ${fmt(fin,0)} − ${fmt(out,0)} = <b>${fmt(by,0)} g</b> · อัตราส่วนรวม 1:${fmt(fin/dose,1)}`;}
+  const rows=[];for(let t=1.6;t<=3.61;t+=0.2)rows.push(+t.toFixed(1));
+  $('#ct-table').innerHTML=rows.filter(t=>t>cup).map(t=>{const o=sol/(t/100);return `<tr class="${Math.abs(t-conc)<0.1?'hit':''}"><td class="readout">${t.toFixed(2)}%</td><td class="n">${fmt(o,0)}</td><td class="n">+${fmt(fin-o,0)}</td></tr>`}).join('');
+}
+['#ct-dose','#ct-ey','#ct-cup','#ct-conc'].forEach(x=>$(x).addEventListener('input',calcCut));
+calcCut();
+
 let tsCat='all';
 $('#ts-cats').innerHTML=`<button type="button" data-c="all" aria-pressed="true">ทั้งหมด</button>`+Object.entries(TSC).map(([k,v])=>`<button type="button" data-c="${k}" aria-pressed="false">${v}</button>`).join('');
 function renderTS(){const q=($('#ts-q').value||'').trim();
@@ -2596,7 +2640,7 @@ document.querySelectorAll('section[data-view]').forEach(sec=>{const subs=[...sec
   const saved=store.get('sub-'+sec.id,'');showSub(sec,subs.some(s=>s.dataset.sub===saved)?saved:subs[0].dataset.sub);});
 
 /* ---------- Tabs (hash) ---------- */
-function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','perme','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='log'&&v!=='log'){v='log';if(location.hash!=='#log')history.replaceState(null,'','#log')}if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix)$/.test(cur.dataset.sub))showSub(T,'ey')}
+function route(){const h=(location.hash||'#grind').slice(1);let v=['grind','water','brewers','recipes','perme','tools','log'].includes(h)?h:'grind';if(document.documentElement.dataset.role==='log'&&v!=='log'){v='log';if(location.hash!=='#log')history.replaceState(null,'','#log')}if(document.documentElement.dataset.role==='tools'){if(v!=='tools'){v='tools';if(location.hash!=='#tools')history.replaceState(null,'','#tools')}const T=document.getElementById('v-tools'),cur=T.querySelector('[data-sub]:not([hidden])');if(!cur||/^(timer|fix|cut)$/.test(cur.dataset.sub))showSub(T,'ey')}
   document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
   const nv=(v==='brewers'||v==='perme')?'recipes':v;{const ft=document.querySelector('footer');if(ft)ft.hidden=v!=='grind';}document.querySelectorAll('.bnav a').forEach(a=>{if(a.dataset.tab===nv)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});window.scrollTo({top:0});}
 window.addEventListener('hashchange',route);window.__route=route;
