@@ -2213,7 +2213,12 @@ const R=[
   spec:[['กาแฟ','15 g'],['น้ำรวม','240 g'],['อุณหภูมิ','91°C → 70°C (2 รอบแรก 91 · 2 รอบหลัง 70)'],['น้ำแร่','160 ppm (Mg + Ca)']],
   grind:'Comandante 32 คลิก (หยาบ) แล้วร่อนฝุ่นออกทั้งหมด · ที่รอบประเทศสิงคโปร์ใช้ 23 คลิก น้ำ 70 ppm',conv:{g:'c40',c:32},src:'https://www.youtube.com/watch?v=dagxgOdRRLA',
   src2t:'ตัวเลขจากการ์ดสูตรในคลิปของเธอเองและคำบรรยายรอบชิง (youtu.be/6uLL2Uf7fqQ) · การ์ดเขียนว่า "เว้น 30 วิระหว่างแต่ละรอบ" จึงลงเวลาเป็น 0:00 / 0:30 / 1:00 / 1:30 · ไม่ได้บอกเวลาไหลหมด',
-  steps:[['เตรียม','บด 32 คลิก ร่อนฝุ่นออก · วาง Cafec TH-3 ใน ORIGAMI Air M'],['0:00','เทน้ำ 91°C 60 g'],['0:30','เทน้ำ 91°C +70 g (รวม 130 g)'],['1:00','เปลี่ยนเป็นน้ำ 70°C เท +50 g (รวม 180 g)'],['1:30','เทน้ำ 70°C +60 g (รวม 240 g) แล้วปล่อยไหลหมด'],['เสิร์ฟ','ชงเสร็จวางชามน้ำร้อนครอบบนโถ ช่วยเก็บความร้อนและไอให้กลิ่นชัดขึ้น']]}
+  steps:[['เตรียม','บด 32 คลิก ร่อนฝุ่นออก · วาง Cafec TH-3 ใน ORIGAMI Air M'],['0:00','เทน้ำ 91°C 60 g'],['0:30','เทน้ำ 91°C +70 g (รวม 130 g)'],['1:00','เปลี่ยนเป็นน้ำ 70°C เท +50 g (รวม 180 g)'],['1:30','เทน้ำ 70°C +60 g (รวม 240 g) แล้วปล่อยไหลหมด'],['เสิร์ฟ','ชงเสร็จวางชามน้ำร้อนครอบบนโถ ช่วยเก็บความร้อนและไอให้กลิ่นชัดขึ้น']]},
+ {cat:'classic',gr:'Comandante C60',t:'สูตรจาก Instagram · brewbrag',who:'brewbrag — สูตรเดียวใช้ได้ 3 ดริปเปอร์',dev:'ดริปเปอร์กรวย (ในคลิปเทียบ 3 ตัว ตัวที่เห็นคือ ORIGAMI) · ตั้งต้นที่ 20 g ตามที่ปรับไว้',def:20,
+  spec:[['กาแฟ','12 g'],['น้ำรวม','150 g (1:12.5)'],['อุณหภูมิ','93°C']],
+  grind:'Comandante C60 27 คลิก',conv:{g:'c60',c:27},
+  src2t:'ตัวเลขจากการ์ดสูตรในคลิป (สูตรต้นทาง 12 g) · คลิปไม่ได้บอกเวลาเทรอบ 3 และเวลาจบ',
+  steps:[['0:00','บลูม เทน้ำ 93°C 30 g'],['0:30','เทถึง 75 g'],['รอบ 3','พอน้ำลดลง เทต่อจนรวม 150 g (คลิปไม่ได้บอกเวลา)'],['จบ','รอน้ำไหลหมด']]},
 ];
 const GR_OF={'Nemo Pop (ออสเตรเลีย)':'Comandante X25 Trailmaster','Tay Wipvasutti (ไทย, Brave Roasters)':'1Zpresso ZP6 Special','Carlos Medina (ชิลี)':'1Zpresso ZP6 Special','Jibbi Little (ออสเตรเลีย)':'Timemore + Kinu','Tuomas Merikanto (ฟินแลนด์)':'Comandante C40','Tetsu Kasuya — วิธี 4:6':'Ditting (ใช้เป็นค่าเทียบ)','Emi Fukahori — Hario Switch':'Comandante C40','George Stanica (โรมาเนีย)':'Comandante C40 + Red Clix','Sophan Nugraha (อินโดนีเซีย)':'Comandante C40','Carolina Ibarra Garay (สหรัฐฯ)':'Mahlkönig EK43S'};
 R.forEach(r=>{if(!r.gr)r.gr=GR_OF[r.who]||'ไม่ระบุเครื่อง'});
@@ -2277,14 +2282,14 @@ const ASIA_DIR=`<article class="rc" style="grid-column:1/-1"><div class="meta"><
 const baseDose=r=>{const sp=(r.spec||[]).find(x=>/^กาแฟ/.test(x[0]));if(!sp)return null;const m=/(\d+(?:\.\d+)?)\s*g\b/.exec(String(sp[1]));return m?+m[1]:null};
 let rDose={};try{rDose=JSON.parse(localStorage.getItem('dib-rdose')||'{}')||{}}catch(e){}
 const saveDose=()=>{try{localStorage.setItem('dib-rdose',JSON.stringify(rDose))}catch(e){}};
-const doseOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]:b};
-const facOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]/b:1};
+const doseOf=i=>{const b=baseDose(R[i]);return b&&rDose[i]?rDose[i]:(b&&R[i].def)||b};
+const facOf=i=>{const b=baseDose(R[i]);return b?doseOf(i)/b:1};
 const rnd=v=>v>=10?String(Math.round(v)):String(Math.round(v*10)/10);
 function scaleTxt(t,f){if(f===1||t==null)return t;return String(t).replace(/(\d+(?:\.\d+)?)(\s*[–-]\s*(\d+(?:\.\d+)?))?(\s*)(g|ml)(?![\/\w])/g,(all,a,rng,b,sp,u)=>rnd(+a*f)+(rng?rng.replace(b,rnd(+b*f)):'')+sp+u)}
 function rcCard({r,i}){return `<article class="rc">
   <div class="meta"><span class="chip acc">${r.t}</span><span class="chip">${r.dev}</span><span class="chip">⚙ ${r.gr}</span></div>
   <h3>${r.who}</h3>
-  ${(()=>{const b=baseDose(r);if(!b)return '';const d=doseOf(i),f=facOf(i);return `<div class="dose" data-dose="${i}"><span class="k">ปรับปริมาณกาแฟ</span><button type="button" data-dd="-1" aria-label="ลด 1 g">−</button><input type="number" inputmode="decimal" min="1" max="200" step="0.5" value="${+d.toFixed(1)}" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-dd="1" aria-label="เพิ่ม 1 g">+</button>${f!==1?`<span class="dose-f">×${f.toFixed(2)} จากสูตร ${b} g</span><button type="button" class="dose-r" data-dr>คืนค่า</button>`:''}</div>`})()}
+  ${(()=>{const b=baseDose(r);if(!b)return '';const d=doseOf(i),f=facOf(i);return `<div class="dose" data-dose="${i}"><span class="k">ปรับปริมาณกาแฟ</span><button type="button" data-dd="-1" aria-label="ลด 1 g">−</button><input type="number" inputmode="decimal" min="1" max="200" step="0.5" value="${+d.toFixed(1)}" aria-label="กาแฟ (กรัม)"><span class="u">g</span><button type="button" data-dd="1" aria-label="เพิ่ม 1 g">+</button>${f!==1?`<span class="dose-f">×${f.toFixed(2)} จากสูตร ${b} g</span>`:''}${rDose[i]?`<button type="button" class="dose-r" data-dr>คืนค่า</button>`:''}</div>`})()}
   <div class="specs">${r.spec.map(s=>{const f=facOf(i);s=[s[0],/^กาแฟ/.test(s[0])&&f!==1?scaleTxt(s[1],f).replace(/^\s*\d+(?:\.\d+)?(?=\s*g)/,String(+doseOf(i).toFixed(1))):/^(น้ำ|bypass|บายพาส|เสิร์ฟ|เจือ|บลูม|bloom|เติมน้ำ)/i.test(s[0])?scaleTxt(s[1],f):s[1]];const m=String(s[1]).match(/^([^(]+?)\s*\((.+)\)\s*$/);return `<div class="spec"><div class="l">${s[0]}</div><div class="v">${m?m[1]:s[1]}</div>${m?`<div class="sn">${m[2]}</div>`:''}</div>`}).join('')}</div>
   <dl class="rinfo">${r.bean?`<dt>☕ เมล็ด</dt><dd>${r.bean}</dd>`:''}<dt>⚙ บด</dt><dd>${r.grind}</dd></dl>
   <details class="steps-d"><summary>ขั้นตอน ${r.steps.length} สเต็ป</summary><ol class="steps">${r.steps.map(s=>`<li><span class="t">${s[0]}</span><span>${hlStep(scaleTxt(s[1],facOf(i)))}</span></li>`).join('')}</ol></details>
@@ -2293,12 +2298,12 @@ function rcCard({r,i}){return `<article class="rc">
 function renderRecipes(){const gsel=$('#r-grinder').value;$('#rc-list').innerHTML=R.map((r,i)=>({r,i})).filter(x=>(rFilter==='all'||(rFilter==='asia'?['cn','my','hk'].includes(x.r.reg):rFilter==='th'?(x.r.reg==='th'||/ไทย/.test(x.r.who)):(rFilter==='byp'?isByp(x.r):rFilter==='perme'?(x.r.pm||x.r.cat==='perme'):x.r.cat===rFilter)))&&(!gsel||x.r.gr===gsel)).map(rcCard).join('')+(rFilter==='asia'?ASIA_DIR:rFilter==='ori'?ORI_DIR:'');{const pm=document.getElementById('pm-list');if(pm)pm.innerHTML=R.map((r,i)=>({r,i})).filter(x=>x.r.pm||x.r.cat==='perme').map(rcCard).join('');}}
 function keepOpen(fn){const open=[...document.querySelectorAll('#rc-list details[open],#pm-list details[open]')].map(d=>[...document.querySelectorAll('#rc-list details,#pm-list details')].indexOf(d));const y=scrollY;fn();const ds=document.querySelectorAll('#rc-list details,#pm-list details');open.forEach(k=>ds[k]&&(ds[k].open=true));scrollTo(0,y)}
 renderRecipes();
-document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('change',e=>{const dz=e.target.closest('[data-dose]');if(!dz||e.target.tagName!=='INPUT')return;const i=+dz.dataset.dose,b=baseDose(R[i]);let d=+e.target.value;if(!(d>0)){keepOpen(renderRecipes);return}d=Math.min(200,d);if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d;saveDose();keepOpen(renderRecipes)}));
+document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('change',e=>{const dz=e.target.closest('[data-dose]');if(!dz||e.target.tagName!=='INPUT')return;const i=+dz.dataset.dose,b=baseDose(R[i]);let d=+e.target.value;if(!(d>0)){keepOpen(renderRecipes);return}d=Math.min(200,d);if(Math.abs(d-(R[i].def||b))<1e-9)delete rDose[i];else rDose[i]=d;saveDose();keepOpen(renderRecipes)}));
 $('#r-grinder').addEventListener('change',renderRecipes);
 $('#r-filter').addEventListener('click',e=>{const btn=e.target.closest('[data-f]');if(!btn)return;rFilter=btn.dataset.f;
   $('#r-filter').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn));renderRecipes();});
 document.querySelectorAll('#rc-list,#pm-list').forEach(L=>L.addEventListener('click',e=>{const dz=e.target.closest('[data-dose]');if(dz&&e.target.closest('button')){const i=+dz.dataset.dose,b=baseDose(R[i]);
-    if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-b)<1e-9)delete rDose[i];else rDose[i]=d}
+    if(e.target.closest('[data-dr]'))delete rDose[i];else{const d=Math.max(1,Math.min(200,(doseOf(i)||b)+ +e.target.closest('button').dataset.dd));if(Math.abs(d-(R[i].def||b))<1e-9)delete rDose[i];else rDose[i]=d}
     saveDose();keepOpen(renderRecipes);return}
   const ct=e.target.closest('[data-cut]');if(ct){const i=+ct.dataset.cut;$('#ct-dose').value=+(doseOf(i)).toFixed(1);$('#ct-from').innerHTML='จากสูตร <b>'+(R[i].who||'')+'</b> กาแฟ '+fmt(doseOf(i),1)+' g · ตอบ 2 ข้อข้างล่าง แอปบอกว่าต้องยกดริปเปอร์ออกตอนกี่กรัม แล้วเติมน้ำเท่าไร';calcCut();showSub('v-tools','cut');location.hash='tools';scrollTo(0,0);return}const tm=e.target.closest('[data-timer]');if(tm){$('#tm-recipe').value=tm.dataset.timer;$('#tm-reset').onclick();showSub('v-tools','timer');location.hash='tools';return}const b=e.target.closest('[data-conv]');if(!b)return;const c=R[+b.dataset.conv].conv;
   gFrom.value=c.g;if(mode!=='clicks')setMode('clicks');gVal.value=c.c;showSub('v-grind','conv');location.hash='grind';calcGrind();}));
