@@ -452,6 +452,7 @@ html[data-role="log"] .bnav a:not([data-tab="log"]){display:none}html[data-role=
           </div>
         </div>
         <label class="f"><span class="k" id="g-val-label">จำนวนคลิก (นับจาก 0)</span><input id="g-val" type="number" min="0" step="0.5" value="24"></label>
+        <button type="button" class="btn" id="g-swap" style="align-self:flex-start">⇅ สลับต้นทาง ↔ ปลายทาง</button>
         <label class="f"><span class="k">เครื่องปลายทาง</span><select id="g-to"></select></label>
         <div class="row" id="g-to-custom" hidden>
           <label class="f"><span class="k">µm ต่อคลิก (เครื่องปลายทาง)</span><input id="g-to-um" type="number" min="1" step="0.1" value="20"></label>
@@ -1306,7 +1307,7 @@ const M=[
  {k:'French press',a:840,z:1050},{k:'Cold brew',a:900,z:1200}
 ];
 
-function fill(sel,def){sel.innerHTML=G.map(g=>`<option value="${g.id}">${label(g)}</option>`).join('');sel.value=def}
+function fill(sel,def){const bs=[...new Set(G.map(g=>g.b))];sel.innerHTML=bs.map(b=>{const o=G.filter(g=>g.b===b).map(g=>`<option value="${g.id}">${label(g)}</option>`).join('');return b?`<optgroup label="${b}">${o}</optgroup>`:o}).join('');sel.value=def}
 const gFrom=$('#g-from'),gTo=$('#g-to'),gVal=$('#g-val');
 let mode='clicks';
 const store={get(k,d){try{const v=localStorage.getItem('dib-'+k);return v==null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem('dib-'+k,v)}catch(e){}}};
@@ -1340,7 +1341,10 @@ function drawScale(um){
   $('#r-scale').innerHTML=s;
 }
 
+const isDialG=g=>g&&/เลขหน้าปัด/.test(g.n);
+function gLabel(){const d=isDialG(byId[gFrom.value]);$('#mode-clicks').textContent=d?'หน้าปัด':'คลิก';if(mode!=='clicks')return;$('#g-val-label').textContent=d?'เลขบนหน้าปัด (เช่น 6.5)':'จำนวนคลิก (นับจาก 0)';gVal.step=d?'0.1':'0.5'}
 function calcGrind(){
+  gLabel();
   $('#g-from-custom').hidden=gFrom.value!=='custom';
   $('#g-to-custom').hidden=gTo.value!=='custom';
   const fu=umOf(gFrom,'#g-from-um'),tu=umOf(gTo,'#g-to-um');
@@ -1349,11 +1353,11 @@ function calcGrind(){
   const clicks=Math.max(0,(um-offOf(gTo))/tu), tg=byId[gTo.value];
   $('#r-to-name').textContent=label(tg);
   window.__grind={name:label(tg),clicks,dial:dial(tg,clicks)?dial(tg,clicks).split('  ')[0]:''};
-  $('#r-clicks').innerHTML=`${fmt(clicks,1)}<span class="u">คลิก</span>`;
+  const tD=isDialG(tg);$('#r-clicks').innerHTML=`${fmt(clicks,1)}<span class="u">${tD?'บนหน้าปัด':'คลิก'}</span>`;
   $('#r-dial').textContent=dial(tg,clicks)||'นับคลิกจากจุดเฟืองชิด';
   $('#r-um').textContent=fmt(um,0)+' µm';
   const lo=Math.floor(clicks),hi=Math.ceil(clicks);
-  $('#r-near').textContent=lo===hi?`${lo} คลิก พอดี`:`${lo} (ละเอียดขึ้น) หรือ ${hi} (หยาบขึ้น)`;
+  $('#r-near').textContent=tD?`หมุนไปที่ ${fmt(clicks,1)} (stepless ปรับละเอียดได้ทีละ 0.1)`:lo===hi?`${lo} คลิก พอดี`:`${lo} (ละเอียดขึ้น) หรือ ${hi} (หยาบขึ้น)`;
   const ms=methodsFor(um);$('#r-range').textContent=ms.length?ms.join(', '):'นอกช่วงที่ใช้ทั่วไป';
   const flags=[byId[gFrom.value],tg].filter(g=>g.flag).map(g=>`<b>${g.b} ${g.n}:</b> ${g.flag}`);
   if(tg.lo&&clicks<tg.lo)flags.unshift(`<b style="color:var(--bad)">⚠ ${tg.n} ${dial(tg,clicks).split('  ')[0]||fmt(clicks,1)+' คลิก'}:</b> ${tg.loMsg}`);
@@ -1374,6 +1378,9 @@ function setMode(m){
   $('#g-val-label').textContent=m==='clicks'?'จำนวนคลิก (นับจาก 0)':'ระยะเฟือง (µm)';
   gVal.step=m==='clicks'?'0.5':'10';calcGrind();
 }
+$('#g-swap').onclick=()=>{const fu=umOf(gFrom,'#g-from-um'),v=Math.max(0,+gVal.value||0),um=mode==='clicks'?offOf(gFrom)+v*fu:v,tu=umOf(gTo,'#g-to-um');
+  const f=gFrom.value;gFrom.value=gTo.value;gTo.value=f;const fu2=$('#g-from-um').value;$('#g-from-um').value=$('#g-to-um').value;$('#g-to-um').value=fu2;
+  if(mode==='clicks'){const c=Math.max(0,(um-offOf(gFrom))/umOf(gFrom,'#g-from-um'));gVal.value=+c.toFixed(isDialG(byId[gFrom.value])?1:0)}calcGrind()};
 $('#mode-clicks').onclick=()=>setMode('clicks');$('#mode-um').onclick=()=>setMode('um');
 ['#g-from','#g-to','#g-val','#g-from-um','#g-to-um'].forEach(s=>$(s).addEventListener('input',calcGrind));
 
